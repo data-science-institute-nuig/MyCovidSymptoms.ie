@@ -1,3 +1,16 @@
+# Insight
+
+Add the following to `.git/config`
+
+```conf
+[remote "fevermap"]
+	url = https://gitlab.com/fevermap/fevermap.git
+    fetch = +refs/heads/*:refs/remotes/origin/*
+```
+
+to be able to pull from the main fevermap project using the command  
+`git pull fevermap master`
+
 ![Fevermap.net](hero.png)
 
 # Fevermap
@@ -10,7 +23,7 @@ With Fevermap’s data, authorities can create appropriate plans of action and m
 
 ## How to participate?
 
-To participate, just sign up at  https://fevermap.net/ and use 1 minute once a day on the app.
+To participate, just sign up at https://fevermap.net/ and use 1 minute once a day on the app.
 
 ## How to collaborate?
 
@@ -28,10 +41,10 @@ Ways to contribute from the easiest to harder:
 
 Following our social media accounts and share our announcements:
 
-* Twitter: https://twitter.com/fevermap
-* Instagram: https://www.instagram.com/fevermap/
-* Facebook: https://www.facebook.com/Fevermap-106608140981693/
-* Youtube: https://www.youtube.com/channel/UCSGgeNTHswP5alT1NXu-SfA
+- Twitter: https://twitter.com/fevermap
+- Instagram: https://www.instagram.com/fevermap/
+- Facebook: https://www.facebook.com/Fevermap-106608140981693/
+- Youtube: https://www.youtube.com/channel/UCSGgeNTHswP5alT1NXu-SfA
 
 ### 2. Translate the app into your own language
 
