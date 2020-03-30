@@ -9,7 +9,9 @@ Add the following to `.git/config`
 ```
 
 to be able to pull from the main fevermap project using the command  
-`git pull fevermap master`
+`git pull fevermap master`  
+
+---
 
 ![Fevermap.net](hero.png)
 
