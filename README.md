@@ -3,8 +3,8 @@
 Add the following to `.git/config`
 
 ```conf
-[remote "fevermap"]
-	url = https://gitlab.com/fevermap/fevermap.git
+[remote "fevermap"]  
+    url = https://gitlab.com/fevermap/fevermap.git  
     fetch = +refs/heads/*:refs/remotes/origin/*
 ```
 
