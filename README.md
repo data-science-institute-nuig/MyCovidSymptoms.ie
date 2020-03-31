@@ -3,13 +3,15 @@
 Add the following to `.git/config`
 
 ```conf
-[remote "fevermap"]
-	url = https://gitlab.com/fevermap/fevermap.git
+[remote "fevermap"]  
+    url = https://gitlab.com/fevermap/fevermap.git  
     fetch = +refs/heads/*:refs/remotes/origin/*
 ```
 
 to be able to pull from the main fevermap project using the command  
-`git pull fevermap master`
+`git pull fevermap master`  
+
+---
 
 ![Fevermap.net](hero.png)
 
