@@ -59,10 +59,10 @@
       "location_information": "Location information",
       "whats_your_location": "What's your location?",
       "city": "City",
-      "country": "Country",
+      "county": "County",
       "postal_code": "Postal code",
       "location_determination_subtitle": "Location is determined using location API. Make sure to allow location sensors.",
-      "location_change_subtitle": "To update location information, update the value in the country and postal code field or press the button below.",
+      "location_change_subtitle": "To update location information, update the value in the county and postal code field or press the button below.",
       "update_location": "Update location",
       "use_gps": "Get location from GPS",
       "set_location_and_submit": "Set location and submit"

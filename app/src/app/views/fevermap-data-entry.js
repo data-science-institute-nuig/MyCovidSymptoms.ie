@@ -16,6 +16,7 @@ import FeverDataUtil from '../util/fever-data-util.js';
 import '../components/gender-input.js';
 import GoogleAnalyticsService from '../services/google-analytics-service.js';
 import PWAService from '../services/pwa-service.js';
+import IrishTownsService from '../services/irish-towns-service.js';
 
 class FevermapDataEntry extends LitElement {
   static get properties() {
@@ -66,7 +67,8 @@ class FevermapDataEntry extends LitElement {
 
     this.firstTimeSubmitting = this.gender == null || this.birthYear == null;
 
-    this.createCountrySelectOptions();
+    this.createCountySelectOptions();
+    // this.createCountrySelectOptions();
     this.queuedEntries = [];
 
     this.currentQuestion = 1;
@@ -83,6 +85,14 @@ class FevermapDataEntry extends LitElement {
         this.nextQuestion();
       });
     }
+  }
+
+  createCountySelectOptions() {
+    this.countySelectionOptions = IrishTownsService.getCounties().map(entry => ({
+      id: entry.county.county_id,
+      name: `${entry.county.county_name} (${entry.county.county_id})`,
+    }));
+    this.selectedCountyIndex = 0;
   }
 
   createCountrySelectOptions() {
@@ -105,11 +115,11 @@ class FevermapDataEntry extends LitElement {
 
         delete this.geoCodingInfo.success;
 
-        const countryInSelect = this.countrySelectionOptions.find(
-          opt => opt.id === this.geoCodingInfo.countryShort,
+        const countyInSelect = this.countySelectionOptions.find(
+          opt => opt.id === this.geoCodingInfo.countyShort,
         );
-        if (countryInSelect) {
-          this.selectedCountryIndex = this.countrySelectionOptions.indexOf(countryInSelect) + 1; // Take into account the empty option
+        if (countyInSelect) {
+          this.selectedCountyIndex = this.countySelectionOptions.indexOf(countyInSelect) + 1; // Take into account the empty option
         }
 
         this.performUpdate();
@@ -118,11 +128,11 @@ class FevermapDataEntry extends LitElement {
         }
       });
     } else {
-      const countryInSelect = this.countrySelectionOptions.find(
-        opt => opt.id === this.geoCodingInfo.countryShort,
+      const countyInSelect = this.countySelectionOptions.find(
+        opt => opt.id === this.geoCodingInfo.countyShort,
       );
-      if (countryInSelect) {
-        this.selectedCountryIndex = this.countrySelectionOptions.indexOf(countryInSelect) + 1; // Take into account the empty option
+      if (countyInSelect) {
+        this.selectedCountyIndex = this.countySelectionOptions.indexOf(countyInSelect) + 1; // Take into account the empty option
       }
     }
   }
@@ -229,10 +239,13 @@ class FevermapDataEntry extends LitElement {
     feverData.birth_year = this.birthYear;
     feverData.gender = this.gender;
 
-    feverData.location_country_code = geoCodingInfo.country_code;
-    feverData.location_postal_code = geoCodingInfo.postal_code;
-    feverData.location_lng = geoCodingInfo.location_lng.toFixed(7);
-    feverData.location_lat = geoCodingInfo.location_lat.toFixed(7);
+    // feverData.location_country_code = geoCodingInfo.country_code;
+    // feverData.location_postal_code = geoCodingInfo.postal_code;
+    // feverData.location_lng = geoCodingInfo.location_lng.toFixed(7);
+    // feverData.location_lat = geoCodingInfo.location_lat.toFixed(7);
+
+    feverData.location_county_code = geoCodingInfo.county_code;
+    feverData.location_town_name = geoCodingInfo.town_name;
 
     const possibleSymptoms = [
       'symptom_difficult_to_breath',
@@ -306,12 +319,13 @@ class FevermapDataEntry extends LitElement {
   }
 
   locationDataIsInvalid(feverData) {
-    return (
-      !feverData.location_country_code ||
-      !feverData.location_postal_code ||
-      !feverData.location_lng ||
-      !feverData.location_lat
-    );
+    // return (
+    //   !feverData.location_country_code ||
+    //   !feverData.location_postal_code ||
+    //   !feverData.location_lng ||
+    //   !feverData.location_lat
+    // );
+    return !feverData.location_county_code || !feverData.location_town_name;
   }
 
   async handleSubmit() {
@@ -457,26 +471,32 @@ class FevermapDataEntry extends LitElement {
   }
 
   async getGeoCodingInputInfo() {
-    const postalCode = this.querySelector('#location-postal-code').getValue();
-    const country = this.querySelector('#location-country').getValue();
-
-    const geoCodingInfo = await GeolocatorService.getGeoCodingInfoByPostalCodeAndCountry(
-      postalCode,
-      country.value.id,
-    );
-    localStorage.setItem('LAST_LOCATION', JSON.stringify(geoCodingInfo));
-
-    if (!geoCodingInfo.countryShort || !geoCodingInfo.coords || !geoCodingInfo.postal_code) {
-      SnackBar.error(Translator.get('system_messages.error.location_data_invalid'));
-      return null;
-    }
-
-    return {
-      country_code: geoCodingInfo.countryShort,
-      location_lat: geoCodingInfo.coords.lat,
-      location_lng: geoCodingInfo.coords.lng,
-      postal_code: geoCodingInfo.postal_code,
+    // const postalCode = this.querySelector('#location-postal-code').getValue();
+    // const country = this.querySelector('#location-country').getValue();
+    const town = this.querySelector('#location-town').getValue();
+    const county = this.querySelector('#location-county').getValue();
+    const locationData = {
+      county_code: county,
+      town_name: town,
     };
+    // const geoCodingInfo = await GeolocatorService.getGeoCodingInfoByPostalCodeAndCountry(
+    //   postalCode,
+    //   country.value.id,
+    // );
+    localStorage.setItem('LAST_LOCATION', JSON.stringify(locationData));
+
+    // if (!geoCodingInfo.countryShort || !geoCodingInfo.coords || !geoCodingInfo.postal_code) {
+    //   SnackBar.error(Translator.get('system_messages.error.location_data_invalid'));
+    //   return null;
+    // }
+
+    // return {
+    //   county_code: geoCodingInfo.countyShort,
+    //   location_lat: geoCodingInfo.coords.lat,
+    //   location_lng: geoCodingInfo.coords.lng,
+    //   postal_code: geoCodingInfo.postal_code,
+    // };
+    return locationData;
   }
 
   handlePersonalInfoSubmit() {
@@ -801,10 +821,10 @@ class FevermapDataEntry extends LitElement {
       <div class="entry-field">
         <div class="location-select-fields">
           <select-field
-            id="location-country"
-            label="${Translator.get('entry.questions.country')}"
-            .options="${this.countrySelectionOptions}"
-            selectedValueIndex="${this.selectedCountryIndex}"
+            id="location-county"
+            label="${Translator.get('entry.questions.county')}"
+            .options="${this.countySelectionOptions}"
+            selectedValueIndex="${this.selectedCountyIndex}"
           ></select-field>
           <input-field
             placeHolder="${Translator.get('entry.questions.postal_code')}"

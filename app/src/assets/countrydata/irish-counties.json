@@ -1,0 +1,292 @@
+{
+  "counties": [
+    {
+      "county": {
+        "county_id": "CW",
+        "county_name": "Carlow"
+      }
+    },
+    {
+      "county": {
+        "county_id": "CN",
+        "county_name": "Cavan"
+      }
+    },
+    {
+      "county": {
+        "county_id": "CE",
+        "county_name": "Clare"
+      }
+    },
+    {
+      "county": {
+        "county_id": "CK",
+        "county_name": "Cork"
+      }
+    },
+    {
+      "county": {
+        "county_id": "DL",
+        "county_name": "Donegal"
+      }
+    },
+    {
+      "county": {
+        "county_id": "DN1",
+        "county_name": "Dublin 1"
+      }
+    },
+    {
+      "county": {
+        "county_id": "DN10",
+        "county_name": "Dublin 10"
+      }
+    },
+    {
+      "county": {
+        "county_id": "DN11",
+        "county_name": "Dublin 11"
+      }
+    },
+    {
+      "county": {
+        "county_id": "DN12",
+        "county_name": "Dublin 12"
+      }
+    },
+    {
+      "county": {
+        "county_id": "DN13",
+        "county_name": "Dublin 13"
+      }
+    },
+    {
+      "county": {
+        "county_id": "DN14",
+        "county_name": "Dublin 14"
+      }
+    },
+    {
+      "county": {
+        "county_id": "DN15",
+        "county_name": "Dublin 15"
+      }
+    },
+    {
+      "county": {
+        "county_id": "DN16",
+        "county_name": "Dublin 16"
+      }
+    },
+    {
+      "county": {
+        "county_id": "DN17",
+        "county_name": "Dublin 17"
+      }
+    },
+    {
+      "county": {
+        "county_id": "DN18",
+        "county_name": "Dublin 18"
+      }
+    },
+    {
+      "county": {
+        "county_id": "DN2",
+        "county_name": "Dublin 2"
+      }
+    },
+    {
+      "county": {
+        "county_id": "DN20",
+        "county_name": "Dublin 20"
+      }
+    },
+    {
+      "county": {
+        "county_id": "DN22",
+        "county_name": "Dublin 22"
+      }
+    },
+    {
+      "county": {
+        "county_id": "DN24",
+        "county_name": "Dublin 24"
+      }
+    },
+    {
+      "county": {
+        "county_id": "DN3",
+        "county_name": "Dublin 3"
+      }
+    },
+    {
+      "county": {
+        "county_id": "DN4",
+        "county_name": "Dublin 4"
+      }
+    },
+    {
+      "county": {
+        "county_id": "DN5",
+        "county_name": "Dublin 5"
+      }
+    },
+    {
+      "county": {
+        "county_id": "DN6",
+        "county_name": "Dublin 6"
+      }
+    },
+    {
+      "county": {
+        "county_id": "DN7",
+        "county_name": "Dublin 7"
+      }
+    },
+    {
+      "county": {
+        "county_id": "DN8",
+        "county_name": "Dublin 8"
+      }
+    },
+    {
+      "county": {
+        "county_id": "DN9",
+        "county_name": "Dublin 9"
+      }
+    },
+    {
+      "county": {
+        "county_id": "FL",
+        "county_name": "Fingal"
+      }
+    },
+    {
+      "county": {
+        "county_id": "GY",
+        "county_name": "Galway"
+      }
+    },
+    {
+      "county": {
+        "county_id": "KY",
+        "county_name": "Kerry"
+      }
+    },
+    {
+      "county": {
+        "county_id": "KE",
+        "county_name": "Kildare"
+      }
+    },
+    {
+      "county": {
+        "county_id": "KK",
+        "county_name": "Kilkenny"
+      }
+    },
+    {
+      "county": {
+        "county_id": "LS",
+        "county_name": "Laois"
+      }
+    },
+    {
+      "county": {
+        "county_id": "LM",
+        "county_name": "Leitrim"
+      }
+    },
+    {
+      "county": {
+        "county_id": "LK",
+        "county_name": "Limerick"
+      }
+    },
+    {
+      "county": {
+        "county_id": "LD",
+        "county_name": "Longford"
+      }
+    },
+    {
+      "county": {
+        "county_id": "LH",
+        "county_name": "Louth"
+      }
+    },
+    {
+      "county": {
+        "county_id": "MO",
+        "county_name": "Mayo"
+      }
+    },
+    {
+      "county": {
+        "county_id": "MH",
+        "county_name": "Meath"
+      }
+    },
+    {
+      "county": {
+        "county_id": "MN",
+        "county_name": "Monaghan"
+      }
+    },
+    {
+      "county": {
+        "county_id": "OY",
+        "county_name": "Offaly"
+      }
+    },
+    {
+      "county": {
+        "county_id": "RN",
+        "county_name": "Roscommon"
+      }
+    },
+    {
+      "county": {
+        "county_id": "SO",
+        "county_name": "Sligo"
+      }
+    },
+    {
+      "county": {
+        "county_id": "DNS",
+        "county_name": "South Dublin"
+      }
+    },
+    {
+      "county": {
+        "county_id": "TY",
+        "county_name": "Tipperary"
+      }
+    },
+    {
+      "county": {
+        "county_id": "WD",
+        "county_name": "Waterford"
+      }
+    },
+    {
+      "county": {
+        "county_id": "WH",
+        "county_name": "Westmeath"
+      }
+    },
+    {
+      "county": {
+        "county_id": "WX",
+        "county_name": "Wexford"
+      }
+    },
+    {
+      "county": {
+        "county_id": "WW",
+        "county_name": "Wicklow"
+      }
+    }
+  ]
+}
