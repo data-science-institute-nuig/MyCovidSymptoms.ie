@@ -68,7 +68,8 @@ class FevermapDataEntry extends LitElement {
     this.firstTimeSubmitting = this.gender == null || this.birthYear == null;
 
     this.createCountySelectOptions();
-    // this.createCountrySelectOptions();
+    this.createTownSelectOptions();
+    this.createCountrySelectOptions();
     this.queuedEntries = [];
 
     this.currentQuestion = 1;
@@ -91,8 +92,29 @@ class FevermapDataEntry extends LitElement {
     this.countySelectionOptions = IrishTownsService.getCounties().map(entry => ({
       id: entry.county.county_id,
       name: `${entry.county.county_name} (${entry.county.county_id})`,
+      towns: entry.county.towns,
     }));
     this.selectedCountyIndex = 0;
+  }
+
+  createTownSelectOptions() {
+    this.townSelectionOptions = [
+      {
+        id: 0,
+        name: `Please select a county first`,
+      },
+    ];
+    this.selectedTownIndex = 0;
+  }
+
+  updateTownSelectOpts(countyName) {
+    let selectedCounty = IrishTownsService.getCounties().filter(
+      county => county.county.county_name === countyName,
+    );
+    this.townSelectionOptions = selectedCounty.towns.map(town => ({
+      id: town,
+      name: town,
+    }));
   }
 
   createCountrySelectOptions() {
@@ -239,11 +261,6 @@ class FevermapDataEntry extends LitElement {
     feverData.birth_year = this.birthYear;
     feverData.gender = this.gender;
 
-    // feverData.location_country_code = geoCodingInfo.country_code;
-    // feverData.location_postal_code = geoCodingInfo.postal_code;
-    // feverData.location_lng = geoCodingInfo.location_lng.toFixed(7);
-    // feverData.location_lat = geoCodingInfo.location_lat.toFixed(7);
-
     feverData.location_county_code = geoCodingInfo.county_code;
     feverData.location_town_name = geoCodingInfo.town_name;
 
@@ -319,12 +336,6 @@ class FevermapDataEntry extends LitElement {
   }
 
   locationDataIsInvalid(feverData) {
-    // return (
-    //   !feverData.location_country_code ||
-    //   !feverData.location_postal_code ||
-    //   !feverData.location_lng ||
-    //   !feverData.location_lat
-    // );
     return !feverData.location_county_code || !feverData.location_town_name;
   }
 
@@ -471,31 +482,13 @@ class FevermapDataEntry extends LitElement {
   }
 
   async getGeoCodingInputInfo() {
-    // const postalCode = this.querySelector('#location-postal-code').getValue();
-    // const country = this.querySelector('#location-country').getValue();
     const town = this.querySelector('#location-town').getValue();
     const county = this.querySelector('#location-county').getValue();
     const locationData = {
       county_code: county,
       town_name: town,
     };
-    // const geoCodingInfo = await GeolocatorService.getGeoCodingInfoByPostalCodeAndCountry(
-    //   postalCode,
-    //   country.value.id,
-    // );
     localStorage.setItem('LAST_LOCATION', JSON.stringify(locationData));
-
-    // if (!geoCodingInfo.countryShort || !geoCodingInfo.coords || !geoCodingInfo.postal_code) {
-    //   SnackBar.error(Translator.get('system_messages.error.location_data_invalid'));
-    //   return null;
-    // }
-
-    // return {
-    //   county_code: geoCodingInfo.countyShort,
-    //   location_lat: geoCodingInfo.coords.lat,
-    //   location_lng: geoCodingInfo.coords.lng,
-    //   postal_code: geoCodingInfo.postal_code,
-    // };
     return locationData;
   }
 
@@ -624,9 +617,7 @@ class FevermapDataEntry extends LitElement {
       <div
         class="fevermap-entry-window mdc-elevation--z9 fevermap-location-questions"
         id="question-4"
-      >
-        ${this.getGeoLocationInput()}
-      </div>
+      ></div>
     `;
   }
 
@@ -640,7 +631,7 @@ class FevermapDataEntry extends LitElement {
       <div class="question-number-holder">
         1/${this.questionCount}
       </div>
-      ${this.getYearOfBirthInput()} ${this.getGenderInput()}
+      ${this.getYearOfBirthInput()} ${this.getGenderInput()} ${this.getIrishLocationInput()}
       <div class="proceed-button">
         <button class="mdc-button mdc-button--raised" @click="${this.handlePersonalInfoSubmit}">
           <div class="mdc-button__ripple"></div>
@@ -806,6 +797,34 @@ class FevermapDataEntry extends LitElement {
     `;
   }
 
+  getIrishLocationInput() {
+    return html`
+      <div class="title-holder">
+        <p>${Translator.get('entry.questions.whats_your_location')}</p>
+      </div>
+      <div class="entry-field">
+        <div class="location-select-fields">
+          <select-field
+            id="location-county"
+            label="${Translator.get('entry.questions.county')}"
+            .options="${this.countySelectionOptions}"
+            selectedValueIndex="${this.selectedCountyIndex}"
+          ></select-field>
+
+          <select-field
+            @update-town="${e => {
+              console.log(e.detail.message);
+            }}"
+            id="location-town"
+            label="${Translator.get('entry.questions.town')}"
+            .options="${this.townSelectionOptions}"
+            selectedValueIndex="${this.selectedTownIndex}"
+          ></select-field>
+        </div>
+      </div>
+    `;
+  }
+
   getGeoLocationInput() {
     return html`
       <div class="back-button" @click="${this.previousQuestion}">
@@ -826,29 +845,20 @@ class FevermapDataEntry extends LitElement {
             .options="${this.countySelectionOptions}"
             selectedValueIndex="${this.selectedCountyIndex}"
           ></select-field>
-          <input-field
-            placeHolder="${Translator.get('entry.questions.postal_code')}"
-            fieldId="location-postal-code"
-            id="location-postal-code"
-            value="${this.geoCodingInfo && this.geoCodingInfo.postal_code
-              ? this.geoCodingInfo.postal_code
-              : ''}"
-          ></input-field>
+
+          <select-field
+            @update-town="${e => {
+              console.log(e.detail.message);
+            }}"
+            id="location-town"
+            label="${Translator.get('entry.questions.town')}"
+            .options="${this.townSelectionOptions}"
+            selectedValueIndex="${this.selectedTownIndex}"
+          ></select-field>
         </div>
         <p class="subtitle">
           ${Translator.get('entry.questions.location_change_subtitle')}
         </p>
-        <div class="geolocation-button">
-          <button
-            class="mdc-button mdc-button--outlined"
-            @click="${() => this.getGeoLocationInfo(true)}"
-          >
-            <div class="mdc-button__ripple"></div>
-
-            <i class="material-icons mdc-button__icon" aria-hidden="true">my_location</i>
-            <span class="mdc-button__label">${Translator.get('entry.questions.use_gps')}</span>
-          </button>
-        </div>
       </div>
 
       <div class="proceed-button">

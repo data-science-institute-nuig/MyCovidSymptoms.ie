@@ -1,4 +1,3 @@
-import irishTowns from '../../assets/countrydata/irish-data.json';
 import countyList from '../../assets/countrydata/irish-counties.json';
 
 export default class IrishTownsService {
@@ -27,7 +26,7 @@ export default class IrishTownsService {
     });
   }
 
-  static getTowns() {
-    return irishTowns;
+  static getCounty(countyName) {
+    return countyList.filter(a => a.county.county_name === countyName);
   }
 }
