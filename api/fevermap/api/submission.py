@@ -34,6 +34,13 @@ class SubmissionResource(Resource):
                 'symptom_cough': s.symptom_cough,
                 'symptom_sore_throat': s.symptom_sore_throat,
                 'symptom_muscle_pain': s.symptom_muscle_pain,
+                'symptom_new1': s.symptom_new1,
+                'symptom_new2': s.symptom_new2,
+                'symptom_new3': s.symptom_new3,
+                'symptom_new4': s.symptom_new4,
+                'symptom_new5': s.symptom_new5,
+                'symptom_new6': s.symptom_new6,
+                'symptom_new7': s.symptom_new7,
                 'diagnosed_covid19': s.diagnosed_covid19,
             }]
         return history
@@ -90,6 +97,13 @@ class SubmissionResource(Resource):
             'symptom_cough',
             'symptom_sore_throat',
             'symptom_muscle_pain',
+            'symptom_new1',
+            'symptom_new2',
+            'symptom_new3',
+            'symptom_new4',
+            'symptom_new5',
+            'symptom_new6',
+            'symptom_new7',
             'diagnosed_covid19',
         ]
         for f in boolean_fields:
@@ -165,6 +179,13 @@ class SubmissionResource(Resource):
         symptom_cough = bool(data['symptom_cough'])
         symptom_sore_throat = bool(data['symptom_sore_throat'])
         symptom_muscle_pain = bool(data['symptom_muscle_pain'])
+        symptom_new1 = bool(data['symptom_new1'])
+        symptom_new2 = bool(data['symptom_new2'])
+        symptom_new3 = bool(data['symptom_new3'])
+        symptom_new4 = bool(data['symptom_new4'])
+        symptom_new5 = bool(data['symptom_new5'])
+        symptom_new6 = bool(data['symptom_new6'])
+        symptom_new7 = bool(data['symptom_new7'])
         diagnosed_covid19 = bool(data['diagnosed_covid19'])
 
         if 'fever_temp' in data and data['fever_temp']:
@@ -242,6 +263,13 @@ class SubmissionResource(Resource):
             symptom_cough=symptom_cough,
             symptom_sore_throat=symptom_sore_throat,
             symptom_muscle_pain=symptom_muscle_pain,
+            symptom_new1=symptom_new1,
+            symptom_new2=symptom_new2,
+            symptom_new3=symptom_new3,
+            symptom_new4=symptom_new4,
+            symptom_new5=symptom_new5,
+            symptom_new6=symptom_new6,
+            symptom_new7=symptom_new7,
             diagnosed_covid19=diagnosed_covid19,
             location_country_code=location_country_code,
             location_postal_code=location_postal_code,
@@ -271,6 +299,13 @@ class SubmissionResource(Resource):
             'symptom_cough': symptom_cough,
             'symptom_sore_throat': symptom_sore_throat,
             'symptom_muscle_pain': symptom_muscle_pain,
+            'symptom_new1': symptom_new1,
+            'symptom_new2': symptom_new2,
+            'symptom_new3': symptom_new3,
+            'symptom_new4': symptom_new4,
+            'symptom_new5': symptom_new5,
+            'symptom_new6': symptom_new6,
+            'symptom_new7': symptom_new7,
             'diagnosed_covid19': diagnosed_covid19,
             'birth_year': birth_year,
             'location_country_code': location_country_code,

@@ -24,6 +24,13 @@ class Submission(Base):
     symptom_cough = Column(Boolean)
     symptom_sore_throat = Column(Boolean)
     symptom_muscle_pain = Column(Boolean)
+    symptom_new1 = Column(Boolean)
+    symptom_new2 = Column(Boolean)
+    symptom_new3 = Column(Boolean)
+    symptom_new4 = Column(Boolean)
+    symptom_new5 = Column(Boolean)
+    symptom_new6 = Column(Boolean)
+    symptom_new7 = Column(Boolean)
     diagnosed_covid19 = Column(Boolean)
 
     location_country_code = Column(String(2))

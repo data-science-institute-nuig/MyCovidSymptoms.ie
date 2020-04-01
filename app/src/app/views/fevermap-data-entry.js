@@ -69,7 +69,7 @@ class FevermapDataEntry extends LitElement {
     this.queuedEntries = [];
 
     this.currentQuestion = 1;
-    this.questionCount = 4;
+    this.questionCount = 5;
     this.symptoms = [];
   }
 
@@ -238,6 +238,13 @@ class FevermapDataEntry extends LitElement {
       'symptom_cough',
       'symptom_sore_throat',
       'symptom_muscle_pain',
+      'symptom_new1',
+      'symptom_new2',
+      'symptom_new3',
+      'symptom_new4',
+      'symptom_new5',
+      'symptom_new6',
+      'symptom_new7',
     ];
     possibleSymptoms.forEach(symp => {
       feverData[symp] = this.symptoms.includes(symp);
@@ -459,8 +466,12 @@ class FevermapDataEntry extends LitElement {
     this.nextQuestion();
   }
 
-  handleSymptomSubmit() {
+  handleCommonSymptomSubmit() {
     this.covidDiagnosed = this.querySelector('#covid-diagnosed').checked;
+    this.nextQuestion();
+  }
+
+  handleRareSymptomSubmit() {
     this.nextQuestion();
   }
 
@@ -531,7 +542,7 @@ class FevermapDataEntry extends LitElement {
       <div class="container view-wrapper fevermap-entry-dialog fevermap-entry-dialog--hidden">
         <div class="fevermap-data-entry-content">
           <div
-            class="fevermap-entry-carousel${this.questionCount === 4
+            class="fevermap-entry-carousel${this.questionCount === 5
               ? ' fevermap-entry-carousel--full-width'
               : ' fevermap-entry-carousel--smaller-width'}"
           >
@@ -557,11 +568,17 @@ class FevermapDataEntry extends LitElement {
         class="fevermap-entry-window mdc-elevation--z9 fevermap-other-symptoms-questions"
         id="question-3"
       >
-        ${this.getSymptomsFields()}
+        ${this.getCommonSymptomsFields()}
+      </div>
+      <div
+        class="fevermap-entry-window mdc-elevation--z9 fevermap-other-symptoms-questions"
+        id="question-4"
+      >
+        ${this.getRareSymptomsFields()}
       </div>
       <div
         class="fevermap-entry-window mdc-elevation--z9 fevermap-location-questions"
-        id="question-4"
+        id="question-5"
       >
         ${this.getGeoLocationInput()}
       </div>
@@ -667,7 +684,7 @@ class FevermapDataEntry extends LitElement {
     `;
   }
 
-  getSymptomsFields() {
+  getCommonSymptomsFields() {
     return html`
       <div class="back-button" @click="${this.previousQuestion}">
         <material-icon icon="keyboard_arrow_left"></material-icon>${Translator.get('back')}
@@ -676,8 +693,7 @@ class FevermapDataEntry extends LitElement {
         3/${this.questionCount}
       </div>
       <div class="title-holder">
-        <h2>${Translator.get('entry.new_entry')}</h2>
-        <p class="symptoms-title">${Translator.get('entry.questions.other_symptoms')}</p>
+        <h4>Common Symptoms</h4>
       </div>
       <p class="subtitle">${Translator.get('entry.questions.choose_all_that_apply')}</p>
       <div class="symptom-holder">
@@ -692,6 +708,10 @@ class FevermapDataEntry extends LitElement {
         </div>
         <div class="symptom" id="symptom_muscle_pain" @click="${this.handleSymptomAdd}">
           <p>${Translator.get('entry.questions.muscular_pain')}</p>
+        </div>
+        <div class="symptom" id="symptom_new1" @click="${this.handleSymptomAdd}">
+          <p>${Translator.get('entry.questions.symptom_new1')}</p>
+        </div>
         </div>
       </div>
 
@@ -720,7 +740,51 @@ class FevermapDataEntry extends LitElement {
         >
       </div>
       <div class="proceed-button">
-        <button class="mdc-button mdc-button--raised" @click="${this.handleSymptomSubmit}">
+        <button class="mdc-button mdc-button--raised" @click="${this.handleRareSymptomSubmit}">
+          <div class="mdc-button__ripple"></div>
+
+          <i class="material-icons mdc-button__icon" aria-hidden="true">done</i>
+          <span class="mdc-button__label">${Translator.get('entry.questions.set_symptoms')}</span>
+        </button>
+      </div>
+    `;
+  }
+
+  getRareSymptomsFields() {
+    return html`
+      <div class="back-button" @click="${this.previousQuestion}">
+        <material-icon icon="keyboard_arrow_left"></material-icon>${Translator.get('back')}
+      </div>
+      <div class="question-number-holder">
+        4/${this.questionCount}
+      </div>
+      <div class="title-holder">
+        <h4>Less Common</h4>
+      </div>
+      <p class="subtitle">${Translator.get('entry.questions.choose_all_that_apply')}</p>
+      <div class="symptom-holder">
+        <div class="symptom" id="symptom_new2" @click="${this.handleSymptomAdd}">
+          <p>${Translator.get('entry.questions.symptom_new2')}</p>
+        </div>
+        <div class="symptom" id="symptom_new3" @click="${this.handleSymptomAdd}">
+          <p>${Translator.get('entry.questions.symptom_new3')}</p>
+        </div>
+        <div class="symptom" id="symptom_new4" @click="${this.handleSymptomAdd}">
+          <p>${Translator.get('entry.questions.symptom_new4')}</p>
+        </div>
+        <div class="symptom" id="symptom_new5" @click="${this.handleSymptomAdd}">
+          <p>${Translator.get('entry.questions.symptom_new5')}</p>
+        </div>
+        <div class="symptom" id="symptom_new6" @click="${this.handleSymptomAdd}">
+          <p>${Translator.get('entry.questions.symptom_new6')}</p>
+        </div>
+        <div class="symptom" id="symptom_new7" @click="${this.handleSymptomAdd}">
+          <p>${Translator.get('entry.questions.symptom_new7')}</p>
+        </div>
+      </div>
+
+      <div class="proceed-button">
+        <button class="mdc-button mdc-button--raised" @click="${this.handleCommonSymptomSubmit}">
           <div class="mdc-button__ripple"></div>
 
           <i class="material-icons mdc-button__icon" aria-hidden="true">done</i>
@@ -736,7 +800,7 @@ class FevermapDataEntry extends LitElement {
         <material-icon icon="keyboard_arrow_left"></material-icon>${Translator.get('back')}
       </div>
       <div class="question-number-holder">
-        4/${this.questionCount}
+        5/${this.questionCount}
       </div>
       <div class="title-holder">
         <h2>${Translator.get('entry.new_entry')}</h2>
