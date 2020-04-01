@@ -61,7 +61,7 @@ api_test '{
   "symptom_cough":true,
   "symptom_sore_throat":true,
   "symptom_muscle_pain":true,
-  "diagnosed_covid19":true,
+  "diagnosed_covid19":"positive",
   "birth_year":"1996",
   "gender":"M",
   "location_country_code":"FI",
@@ -79,7 +79,7 @@ api_test '{
   "symptom_cough":false,
   "symptom_sore_throat":false,
   "symptom_muscle_pain":false,
-  "diagnosed_covid19":false,
+  "diagnosed_covid19":"negative",
   "birth_year":"2001",
   "gender":"M",
   "location_country_code":"US",
@@ -99,7 +99,7 @@ api_test '{
   "symptom_cough":true,
   "symptom_sore_throat":false,
   "symptom_muscle_pain":true,
-  "diagnosed_covid19":true,
+  "diagnosed_covid19":"positive",
   "location_country_code":"IE",
   "location_postal_code":"H91 E2K3",
   "location_lng":"-9.23",
@@ -121,7 +121,7 @@ api_test '{
   "symptom_cough": false,
   "symptom_sore_throat": false,
   "symptom_muscle_pain": false,
-  "diagnosed_covid19": false
+  "diagnosed_covid19": "awaitingTests"
 }'
 
 # Different headers et al
@@ -146,7 +146,7 @@ curl "$API_URL/api/v0/submit" \
     "symptom_cough":true,
     "symptom_sore_throat":false,
     "symptom_muscle_pain":false,
-    "diagnosed_covid19":false
+    "diagnosed_covid19":"unTested"
   }' --compressed
 
 # Ensure one submission is always a new device
@@ -158,7 +158,7 @@ api_test '{
   "symptom_cough":false,
   "symptom_sore_throat":false,
   "symptom_muscle_pain":false,
-  "diagnosed_covid19":false,
+  "diagnosed_covid19":"negative",
   "birth_year":"2001",
   "gender":"M",
   "location_country_code":"US",

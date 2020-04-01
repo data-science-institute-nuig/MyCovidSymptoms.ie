@@ -104,7 +104,6 @@ class SubmissionResource(Resource):
             'symptom_new5',
             'symptom_new6',
             'symptom_new7',
-            'diagnosed_covid19',
         ]
         for f in boolean_fields:
             if f not in data:
@@ -186,7 +185,7 @@ class SubmissionResource(Resource):
         symptom_new5 = bool(data['symptom_new5'])
         symptom_new6 = bool(data['symptom_new6'])
         symptom_new7 = bool(data['symptom_new7'])
-        diagnosed_covid19 = bool(data['diagnosed_covid19'])
+        diagnosed_covid19 = str(data['diagnosed_covid19'])
 
         if 'fever_temp' in data and data['fever_temp']:
             # Always convert to float if value exists

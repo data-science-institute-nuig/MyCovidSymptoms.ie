@@ -28,7 +28,6 @@ class FevermapDataView extends LitElement {
 
   constructor() {
     super();
-
     const submissionCount = localStorage.getItem('SUBMISSION_COUNT');
     const submissionStreak = localStorage.getItem('SUBMISSION_STREAK');
     this.submissionCount = submissionCount || 0;

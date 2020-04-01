@@ -31,7 +31,7 @@ class Submission(Base):
     symptom_new5 = Column(Boolean)
     symptom_new6 = Column(Boolean)
     symptom_new7 = Column(Boolean)
-    diagnosed_covid19 = Column(Boolean)
+    diagnosed_covid19 = Column(String(13))
 
     location_country_code = Column(String(2))
     location_postal_code = Column(String(10))
