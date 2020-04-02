@@ -31,6 +31,26 @@ class FevermapLanding extends LitElement {
     this.currentParticipantCount = stats ? stats.data.submitters.total : 0;
   }
 
+  showCookiePolicy() {
+    const dataEntryDialog = document.createElement('fevermap-landing-cookie-policy');
+    document.querySelector('fevermap-root').appendChild(dataEntryDialog);
+    setTimeout(() => {
+      dataEntryDialog
+        .querySelector('.view-wrapper')
+        .classList.remove('fevermap-entry-dialog--hidden');
+    });
+  }
+
+  showPrivacyPolicy() {
+    const dataEntryDialog = document.createElement('fevermap-landing-privacy-policy');
+    document.querySelector('fevermap-root').appendChild(dataEntryDialog);
+    setTimeout(() => {
+      dataEntryDialog
+        .querySelector('.view-wrapper')
+        .classList.remove('fevermap-entry-dialog--hidden');
+    });
+  }
+
   render() {
     return html`
       <div class="container view-wrapper">
@@ -79,9 +99,19 @@ class FevermapLanding extends LitElement {
           </div>
           <div class="data-use">
             <h2>${Translator.get('landing.how_will_my_data_be_used')}</h2>
-            <p>${Translator.get('landing.data_use_explanation')}</p>
+            <material-button
+              @button-clicked="${this.showCookiePolicy}"
+              class="policy-button"
+              icon="policy"
+              label="${Translator.get('landing.cookie_policy')}"
+            ></material-button>
+            <material-button
+              @button-clicked="${this.showPrivacyPolicy}"
+              class="policy-button"
+              icon="policy"
+              label="${Translator.get('landing.privacy_policy')}"
+            ></material-button>
           </div>
-          <a href="https://fevermap.net">>> Fevermap.net</a>
         </div>
       </div>
     `;

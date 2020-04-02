@@ -22,7 +22,10 @@
     "info_disclaimer": "We do not ask questions that could lead to you being recognized. We value your privacy and anonymity.",
 
     "how_will_my_data_be_used": "How will my data be used?",
-    "data_use_explanation": "The data will be anonymized, after which it will be shared as open data through API interface."
+    "data_use_explanation": "The data will be anonymized, after which it will be shared as open data through API interface.",
+
+    "privacy_policy": "Privacy Policy",
+    "cookie_policy": "Cookie Policy"
   },
   "entry": {
     "data_entry": "Data entry",
