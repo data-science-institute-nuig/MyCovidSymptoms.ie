@@ -3,7 +3,6 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import Translator from '../util/translator.js';
 import DBUtil, { FEVER_ENTRIES, QUEUED_ENTRIES } from '../util/db-util.js';
-import GeolocatorService from '../services/geolocator-service.js';
 import FeverDataUtil from '../util/fever-data-util.js';
 import '../components/fever-chart.js';
 import GoogleAnalyticsService from '../services/google-analytics-service.js';
@@ -57,7 +56,6 @@ class FevermapDataView extends LitElement {
   }
 
   firstUpdated() {
-    this.getGeoLocationInfo();
     document.addEventListener('update-submission-list', () => {
       this.getPreviousSubmissionsFromIndexedDb();
 
@@ -94,18 +92,6 @@ class FevermapDataView extends LitElement {
         .add(1, 'hour')
         .local()
         .format('DD-MM-YYYY : HH:mm');
-    }
-  }
-
-  async getGeoLocationInfo(forceUpdate) {
-    if (!this.geoCodingInfo || forceUpdate) {
-      navigator.geolocation.getCurrentPosition(async success => {
-        this.geoCodingInfo = await GeolocatorService.getGeoCodingInfo(
-          success.coords.latitude,
-          success.coords.longitude,
-        );
-        delete this.geoCodingInfo.success;
-      });
     }
   }
 
@@ -163,13 +149,13 @@ class FevermapDataView extends LitElement {
       'sore_throat',
       'headache',
     ];
-    console.log(sub)
+    console.log(sub);
     const symptoms = [];
-    for(let symptom of possibleSymptoms) {
-      symptoms.push( {
+    for (let symptom of possibleSymptoms) {
+      symptoms.push({
         translation: Translator.get(`entry.questions.${symptom}`),
         hasSymptom: sub[`symptom_${symptom}`],
-      })
+      });
     }
     return symptoms.filter(symp => symp.hasSymptom);
   }

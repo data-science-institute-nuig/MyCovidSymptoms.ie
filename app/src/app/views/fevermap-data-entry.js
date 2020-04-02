@@ -2,7 +2,6 @@
 import { LitElement, html } from 'lit-element';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { MDCCheckbox } from '@material/checkbox/component';
-import GeolocatorService from '../services/geolocator-service.js';
 import '../components/input-field.js';
 import '../components/select-field.js';
 import SnackBar from '../components/snackbar.js';
@@ -67,7 +66,6 @@ class FevermapDataEntry extends LitElement {
 
     this.createCountySelectOptions();
     this.createTownSelectOptions();
-    this.createCountrySelectOptions();
     this.queuedEntries = [];
 
     this.currentQuestion = 1;
@@ -77,7 +75,6 @@ class FevermapDataEntry extends LitElement {
 
   firstUpdated() {
     this.initSlider();
-    this.getGeoLocationInfo();
     this.carouselWrapper = this.querySelector('.fevermap-data-entry-content');
     if (!this.firstTimeSubmitting) {
       setTimeout(() => {
@@ -115,48 +112,6 @@ class FevermapDataEntry extends LitElement {
       name: town,
     }));
     this.requestUpdate('townSelectionOptions');
-  }
-
-  createCountrySelectOptions() {
-    this.countrySelectionOptions = GeolocatorService.getCountryList().map(entry => ({
-      id: entry.country.country_id,
-      name: `${entry.country.country_name.substring(0, 1)}${entry.country.country_name
-        .substring(1)
-        .toLowerCase()} (${entry.country.country_id})`,
-    }));
-    this.selectedCountryIndex = 0;
-  }
-
-  async getGeoLocationInfo(forceUpdate) {
-    if (!this.geoCodingInfo || forceUpdate) {
-      navigator.geolocation.getCurrentPosition(async success => {
-        this.geoCodingInfo = await GeolocatorService.getGeoCodingInfo(
-          success.coords.latitude,
-          success.coords.longitude,
-        );
-
-        delete this.geoCodingInfo.success;
-
-        const countyInSelect = this.countySelectionOptions.find(
-          opt => opt.id === this.geoCodingInfo.countyShort,
-        );
-        if (countyInSelect) {
-          this.selectedCountyIndex = this.countySelectionOptions.indexOf(countyInSelect) + 1; // Take into account the empty option
-        }
-
-        this.performUpdate();
-        if (forceUpdate) {
-          SnackBar.success(Translator.get('system_messages.success.location_update'));
-        }
-      });
-    } else {
-      const countyInSelect = this.countySelectionOptions.find(
-        opt => opt.id === this.geoCodingInfo.countyShort,
-      );
-      if (countyInSelect) {
-        this.selectedCountyIndex = this.countySelectionOptions.indexOf(countyInSelect) + 1; // Take into account the empty option
-      }
-    }
   }
 
   handleFeverButton(hasFever) {
