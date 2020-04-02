@@ -71,34 +71,61 @@ class FevermapLanding extends LitElement {
           <div class="about mb-4">
             <h2>${Translator.get('landing.about_title')}</h2>
             <p>
-              <b>${Translator.get('fevermap_title')}</b> ${Translator.get(
-                'landing.about_content_explanation',
+              <b>${Translator.get('app_title')}</b> ${Translator.get(
+                'landing.about_text',
               )}
             </p>
+          </div>
+          <div class="scope mb-4">
+            <h2>${Translator.get('landing.scope_title')}</h2>
             <p>
-              ${Translator.get('landing.about_current_methods')}
+              ${Translator.get('landing.scope_text')}
             </p>
-            <p>${Translator.get('landing.about_solution')}</p>
+          </div>
+          <div class="scope mb-4">
+            <h2>${Translator.get('landing.data_title')}</h2>
             <p>
-              ${Translator.get('landing.about_data_collection')}
+              ${Translator.get('landing.data_text_p1')}
             </p>
+            <p>
+              ${Translator.get('landing.data_text_p2')}
+            </p>
+          </div>
+          <div class="scope mb-4">
+            <h2>${Translator.get('landing.participate_title')}</h2>
+            <p>
+              ${Translator.get('landing.participate_text_p1')}
+            </p>
+            <p>
+              ${Translator.get('landing.participate_text_p2')}
+            </p>
+            <p>
+              ${Translator.get('landing.participate_text_p3')}
+            </p>
+          </div>
+          <div class="scope mb-4">
+            <h2>${Translator.get('landing.credits_title')}</h2>
+            <p>
+              ${Translator.get('landing.credits_text')}
+            </p>
+            <p>
+              ${Translator.get('landing.credits_people')}:
+            </p>
+            <ul>
+              <li>NUIG: Prof. Derek O’Keeffe, Carlos Tighe, Dr. Andrew Simpkin, Marc Mellotte</li>
+              <li>UL: Dr. Kevin Johnson</li>
+              <li>Orreco: Kevin McGinley, Conor Maguire, Gearoid Hynes</li>
+              <li>eamonwhyte.com: Eamon Whyte</li>
+            </ul>
+          </div>
+          <div class="scope mb-4">
             <p class="participant-count-subtitle">
               ${Translator.get('landing.about_current_participant_count', {
                 participantCount: this.currentParticipantCount,
               })}
             </p>
           </div>
-          <div class="participation mb-4">
-            <h2>${Translator.get('landing.how_to_participate')}</h2>
-            <p>
-              ${Translator.get('landing.participation_info')}
-            </p>
-            <p>
-              ${Translator.get('landing.info_disclaimer')}
-            </p>
-          </div>
           <div class="data-use">
-            <h2>${Translator.get('landing.how_will_my_data_be_used')}</h2>
             <material-button
               @button-clicked="${this.showCookiePolicy}"
               class="policy-button"
