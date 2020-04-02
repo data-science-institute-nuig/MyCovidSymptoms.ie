@@ -25,7 +25,6 @@ class FevermapDataView extends LitElement {
       setGender: { type: String },
       setBirthYear: { type: String },
       setCovidDiagnosis: { type: Boolean },
-      showEditFields: { type: Boolean },
 
       queuedEntries: { type: Array },
     };
@@ -48,7 +47,6 @@ class FevermapDataView extends LitElement {
     this.setBirthYear = birthYear || '';
     this.setCovidDiagnosis = covidDiagnosis === 'true';
     this.previousSubmissions = null;
-    this.showEditFields = false;
 
     this.firstTimeSubmitting = this.setGender == null || this.setBirthYear == null;
 
@@ -266,7 +264,6 @@ class FevermapDataView extends LitElement {
                   </div>
                 `
               : ''}
-            ${this.createPersistentDataFields()}
             <div class="previous-submissions-list">
               ${this.previousSubmissions &&
                 this.previousSubmissions.map((sub, i) => {
@@ -358,94 +355,6 @@ class FevermapDataView extends LitElement {
     }
     return html`
       <material-icon class="green-text" icon="done"></material-icon>
-    `;
-  }
-
-  createPersistentDataFields() {
-    if (!this.setBirthYear && !this.setGender) {
-      return html``;
-    }
-    return html`
-      <div class="persistent-info-fields">
-        <p>
-          ${Translator.get('user_description', {
-            age: this.getAge(),
-            gender: this.getGenderTranslated(),
-            diagnosis: this.getCovidStatusTranslated(),
-          })}.
-        </p>
-        <material-icon
-          icon="edit"
-          @click="${() => {
-            this.showEditFields = !this.showEditFields;
-          }}"
-        ></material-icon>
-      </div>
-      <div
-        class="persistent-info-editing-fields ${this.showEditFields
-          ? ''
-          : ' persistent-info-editing-fields--hidden'}"
-      >
-        <div class="persistent-info-editing-fields--age-input">
-          <p>${Translator.get('entry.questions.birth_year')}</p>
-          <input-field
-            @input-blur="${e => this.handleAgeChange(e.detail.age)}"
-            placeHolder=${Translator.get('entry.questions.birth_year_placeholder')}
-            fieldId="year-of-birth-input"
-            id="birth-year"
-            value="${this.setBirthYear}"
-            type="number"
-          ></input-field>
-        </div>
-
-        <div class="persistent-info-editing-fields--gender-input">
-          <p>${Translator.get('entry.questions.gender_in_passport')}</p>
-          <gender-input
-            gender="${this.setGender}"
-            @gender-changed="${e => this.handleGenderChange(e.detail.gender)}"
-          ></gender-input>
-        </div>
-        <p>${Translator.get('entry.questions.positive_covid_diagnosis')}</p>
-        <div
-          class="persistent-info-editing-fields--covid-input"
-          @click="${() => this.handleCovidDiagnosisChange()}"
-        >
-          <div class="mdc-form-field">
-            <div class="mdc-checkbox">
-              <input
-                type="checkbox"
-                class="mdc-checkbox__native-control"
-                id="covid-diagnosed"
-                ?checked="${this.covidDiagnosed}"
-              />
-              <div class="mdc-checkbox__background">
-                <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
-                  <path
-                    class="mdc-checkbox__checkmark-path"
-                    fill="none"
-                    d="M1.73,12.91 8.1,19.28 22.79,4.59"
-                  />
-                </svg>
-                <div class="mdc-checkbox__mixedmark"></div>
-              </div>
-              <div class="mdc-checkbox__ripple"></div>
-            </div>
-            <label for="checkbox-1"
-              >${Translator.get('entry.questions.positive_covid_diagnosis')}</label
-            >
-          </div>
-        </div>
-        <div class="persistent-info-editing-fields--submit-button">
-          <material-button
-            @click="${() => {
-              this.showEditFields = false;
-              ScrollService.scrollToTop();
-            }}"
-            icon="save"
-            label="${Translator.get('entry.save')}"
-          ></material-button>
-        </div>
-      </div>
     `;
   }
 
