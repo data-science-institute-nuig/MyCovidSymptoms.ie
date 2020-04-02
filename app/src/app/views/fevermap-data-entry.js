@@ -598,34 +598,28 @@ class FevermapDataEntry extends LitElement {
         ${this.getPersonalQuestions()}
       </div>
       <div class="fevermap-entry-window mdc-elevation--z9 fevermap-fever-questions" id="question-2">
-        ${this.getTestFields()}
-      </div>
-      <div class="fevermap-entry-window mdc-elevation--z9 fevermap-fever-questions" id="question-3">
         ${this.getFeverMeter()}
+      </div>
+      <div
+        class="fevermap-entry-window mdc-elevation--z9 fevermap-other-symptoms-questions"
+        id="question-3"
+      >
+        ${this.getSymptomsFields(3, symptomsPage1)}
       </div>
       <div
         class="fevermap-entry-window mdc-elevation--z9 fevermap-other-symptoms-questions"
         id="question-4"
       >
-        ${this.getSymptomsFields(4, symptomsPage1)}
+        ${this.getSymptomsFields(4, symptomsPage2)}
       </div>
       <div
         class="fevermap-entry-window mdc-elevation--z9 fevermap-other-symptoms-questions"
         id="question-5"
       >
-        ${this.getSymptomsFields(5, symptomsPage2)}
+        ${this.getSymptomsFields(5, symptomsPage3)}
       </div>
-      <div
-        class="fevermap-entry-window mdc-elevation--z9 fevermap-other-symptoms-questions"
-        id="question-6"
-      >
-        ${this.getSymptomsFields(6, symptomsPage3)}
-      </div>
-      <div
-        class="fevermap-entry-window mdc-elevation--z9 fevermap-location-questions"
-        id="question-7"
-      >
-        ${this.getGeoLocationInput()}
+      <div class="fevermap-entry-window mdc-elevation--z9 fevermap-fever-questions" id="question-6">
+        ${this.getTestFields()}
       </div>
     `;
   }
@@ -771,9 +765,8 @@ class FevermapDataEntry extends LitElement {
       </div>
 
       <div class="proceed-button">
-        <button class="mdc-button mdc-button--raised" @click="${this.nextQuestion}">
+        <button class="mdc-button mdc-button--raised" @click="${this.handleSubmit}">
           <div class="mdc-button__ripple"></div>
-
           <i class="material-icons mdc-button__icon" aria-hidden="true">done</i>
           <span class="mdc-button__label">${Translator.get('entry.questions.set_diagnosis')}</span>
         </button>
