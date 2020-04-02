@@ -95,7 +95,6 @@ class SelectField extends LitElement {
   }
 
   updated(_changedProperties) {
-    console.log('_changedProperties ', _changedProperties);
     if (_changedProperties.has('selectedValueIndex')) {
       this.elem.selectedIndex = this.selectedValueIndex;
     }

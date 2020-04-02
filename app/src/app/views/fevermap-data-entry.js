@@ -115,7 +115,7 @@ class FevermapDataEntry extends LitElement {
       id: town,
       name: town,
     }));
-    this.selectedTownIndex = 0;
+    this.requestUpdate('townSelectionOptions');
   }
 
   createCountrySelectOptions() {
@@ -806,7 +806,6 @@ class FevermapDataEntry extends LitElement {
       <div class="entry-field">
         <div
           @update-town="${e => {
-            console.log(e.detail.message);
             this.updateTownSelectOpts(e.detail.county);
           }}"
           class="location-select-fields"
@@ -851,9 +850,6 @@ class FevermapDataEntry extends LitElement {
           ></select-field>
 
           <select-field
-            @update-town="${e => {
-              console.log(e.detail.message);
-            }}"
             id="location-town"
             label="${Translator.get('entry.questions.town')}"
             .options="${this.townSelectionOptions}"
