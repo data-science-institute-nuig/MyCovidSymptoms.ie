@@ -71,7 +71,7 @@ class FevermapDataEntry extends LitElement {
     this.queuedEntries = [];
 
     this.currentQuestion = 1;
-    this.questionCount = 7;
+    this.questionCount = 6;
     this.symptoms = [];
   }
 
@@ -453,8 +453,23 @@ class FevermapDataEntry extends LitElement {
     if (!this.validateAge(this.birthYear) || !this.validateGender(this.gender)) {
       return;
     }
+    let townSelect = this.querySelector('#location-town').getValue();
+    let countySelect = this.querySelector('#location-county').getValue();
+    if (!townSelect.value || !countySelect.value) {
+      this.errorMessage = Translator.get('system_messages.error.location_data_invalid');
+      SnackBar.error(this.errorMessage);
+      return false;
+    }
     this.nextQuestion();
   }
+
+  // handlePersonalInfoSubmit() {
+  //   this.birthYear = this.querySelector('#birth-year').getValue();
+  //   if (!this.validateAge(this.birthYear) || !this.validateGender(this.gender)) {
+  //     return;
+  //   }
+  //   this.nextQuestion();
+  // }
 
   handleFeverInfoSubmit() {
     this.nextQuestion();
@@ -556,7 +571,7 @@ class FevermapDataEntry extends LitElement {
       <div class="container view-wrapper fevermap-entry-dialog fevermap-entry-dialog--hidden">
         <div class="fevermap-data-entry-content">
           <div
-            class="fevermap-entry-carousel${this.questionCount === 7
+            class="fevermap-entry-carousel${this.questionCount === 6
               ? ' fevermap-entry-carousel--full-width'
               : ' fevermap-entry-carousel--smaller-width'}"
           >
@@ -652,7 +667,7 @@ class FevermapDataEntry extends LitElement {
         <material-icon icon="keyboard_arrow_left"></material-icon>${Translator.get('back')}
       </div>
       <div class="question-number-holder">
-        3/${this.questionCount}
+        2/${this.questionCount}
       </div>
       <div class="title-holder">
         <h2>${Translator.get('entry.new_entry')}</h2>
@@ -743,7 +758,7 @@ class FevermapDataEntry extends LitElement {
         <material-icon icon="keyboard_arrow_left"></material-icon>${Translator.get('back')}
       </div>
       <div class="question-number-holder">
-        2/${this.questionCount}
+        6/${this.questionCount}
       </div>
       <div class="title-holder">
         <h3>${Translator.get('entry.questions.covid_diagnosis')}</h3>
@@ -838,50 +853,6 @@ class FevermapDataEntry extends LitElement {
             selectedValueIndex="${this.selectedTownIndex}"
           ></select-field>
         </div>
-      </div>
-    `;
-  }
-
-  getGeoLocationInput() {
-    return html`
-      <div class="back-button" @click="${this.previousQuestion}">
-        <material-icon icon="keyboard_arrow_left"></material-icon>${Translator.get('back')}
-      </div>
-      <div class="question-number-holder">
-        7/${this.questionCount}
-      </div>
-      <div class="title-holder">
-        <h2>${Translator.get('entry.new_entry')}</h2>
-        <p>${Translator.get('entry.questions.whats_your_location')}</p>
-      </div>
-      <div class="entry-field">
-        <div class="location-select-fields">
-          <select-field
-            id="location-county"
-            label="${Translator.get('entry.questions.county')}"
-            .options="${this.countySelectionOptions}"
-            selectedValueIndex="${this.selectedCountyIndex}"
-          ></select-field>
-
-          <select-field
-            id="location-town"
-            label="${Translator.get('entry.questions.town')}"
-            .options="${this.townSelectionOptions}"
-            selectedValueIndex="${this.selectedTownIndex}"
-          ></select-field>
-        </div>
-        <p class="subtitle">
-          ${Translator.get('entry.questions.location_change_subtitle')}
-        </p>
-      </div>
-
-      <div class="proceed-button">
-        <button class="mdc-button mdc-button--raised" @click="${this.handleSubmit}">
-          <i class="material-icons mdc-button__icon" aria-hidden="true">done</i>
-          <span class="mdc-button__label"
-            >${Translator.get('entry.questions.set_location_and_submit')}</span
-          >
-        </button>
       </div>
     `;
   }
