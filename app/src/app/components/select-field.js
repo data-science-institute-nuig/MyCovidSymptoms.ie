@@ -40,8 +40,6 @@ class SelectField extends LitElement {
     this.selectedText = this.querySelector('.mdc-select__selected-text');
     const handleKeyboardInputEventHandler = e => this.handleKeyboardInput(e);
     this.menuElem.listen('MDCMenuSurface:opened', () => {
-      console.log('test: ', this, this.id);
-
       if (!this.inputListenerSet) {
         window.addEventListener('keydown', handleKeyboardInputEventHandler);
         this.inputListenerSet = true;
@@ -56,6 +54,18 @@ class SelectField extends LitElement {
     });
 
     this.elem.listen('MDCSelect:change', () => {
+      if (this.id === 'location-county' && !!this.elem.value) {
+        this.dispatchEvent(
+          new CustomEvent('update-town', {
+            detail: {
+              message: 'update town list',
+              county: this.elem.value,
+            },
+            bubbles: true,
+            composed: true,
+          }),
+        );
+      }
       this.dispatchEvent(
         new CustomEvent('select-change', {
           detail: {
@@ -85,36 +95,7 @@ class SelectField extends LitElement {
   }
 
   updated(_changedProperties) {
-    this.elem.listen('MDCSelect:change', () => {
-      if (this.id === 'location-county' && !!this.elem.value) {
-        // console.log('this: ', this);
-        // console.log('thisid: ', this.id);
-        let towns = document.getElementById('location-town');
-        towns.addEventListener('update-town', e => {
-          console.log('received', e.detail);
-        });
-        console.log('towns ', towns);
-        // towns.updateTownSelectOpts(this.elem.value.split('(')[0]);
-        // console.log('thiselem: ', !!this.elem.value);
-        let event = new CustomEvent('update-town', {
-          detail: {
-            message: 'firing update',
-          },
-          bubbles: true,
-          composed: true,
-        });
-        this.dispatchEvent(event);
-      }
-
-      this.dispatchEvent(
-        new CustomEvent('select-change', {
-          detail: {
-            index: this.elem.selectedIndex,
-            value: this.options[this.elem.selectedIndex - 1],
-          },
-        }),
-      );
-    });
+    console.log('_changedProperties ', _changedProperties);
     if (_changedProperties.has('selectedValueIndex')) {
       this.elem.selectedIndex = this.selectedValueIndex;
     }

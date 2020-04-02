@@ -108,13 +108,14 @@ class FevermapDataEntry extends LitElement {
   }
 
   updateTownSelectOpts(countyName) {
-    let selectedCounty = IrishTownsService.getCounties().filter(
-      county => county.county.county_name === countyName,
-    );
+    let selectedCounty = this.countySelectionOptions.filter(
+      county => county.name.toLowerCase() === countyName,
+    )[0];
     this.townSelectionOptions = selectedCounty.towns.map(town => ({
       id: town,
       name: town,
     }));
+    this.selectedTownIndex = 0;
   }
 
   createCountrySelectOptions() {
@@ -803,7 +804,13 @@ class FevermapDataEntry extends LitElement {
         <p>${Translator.get('entry.questions.whats_your_location')}</p>
       </div>
       <div class="entry-field">
-        <div class="location-select-fields">
+        <div
+          @update-town="${e => {
+            console.log(e.detail.message);
+            this.updateTownSelectOpts(e.detail.county);
+          }}"
+          class="location-select-fields"
+        >
           <select-field
             id="location-county"
             label="${Translator.get('entry.questions.county')}"
@@ -812,9 +819,6 @@ class FevermapDataEntry extends LitElement {
           ></select-field>
 
           <select-field
-            @update-town="${e => {
-              console.log(e.detail.message);
-            }}"
             id="location-town"
             label="${Translator.get('entry.questions.town')}"
             .options="${this.townSelectionOptions}"
