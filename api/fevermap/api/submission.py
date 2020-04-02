@@ -141,10 +141,10 @@ class SubmissionResource(Resource):
         if not re.fullmatch(r'[MF]{1}', data['gender']):
             errors += ('gender', 'Value not M or F')
 
-        if not re.fullmatch(r'[A-Z]{2}', data['location_county_code']):
+        if not re.fullmatch(r'[0-9a-z-A-Z-\-\)\(. ]{2,5}', data['location_county_code']):
             errors += ('location_county_code', 'Value not two capitals')
 
-        if not re.fullmatch(r'[0-9a-z-A-Z-\. ]{4,25}', data['location_town_name']):
+        if not re.fullmatch(r'[0-9a-z-A-Z-\-\)\(. ]{4,40}', data['location_town_name']):
             errors += ('location_town_name', 'Incorrect characters or length')
 
         # Allowed values from -180 to 180 with 2 decimals

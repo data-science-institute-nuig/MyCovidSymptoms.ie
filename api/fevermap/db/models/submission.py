@@ -38,8 +38,8 @@ class Submission(Base):
     symptom_headache = Column(Boolean)
     diagnosed_covid19 = Column(String(13))
 
-    location_county_code = Column(String(2))
-    location_town_name = Column(String(25))
+    location_county_code = Column(String(5))
+    location_town_name = Column(String(40))
 
     # Convert to Column(Point) when a custom field type that matches the
     # MariaDB geospatial data type is written

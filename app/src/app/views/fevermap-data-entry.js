@@ -348,7 +348,7 @@ class FevermapDataEntry extends LitElement {
   }
 
   locationDataIsInvalid(feverData) {
-    return !feverData.location_county_code || !feverData.location_town_name;
+    return !feverData || !feverData.location_town_name;
   }
 
   async handleSubmit() {
@@ -441,8 +441,8 @@ class FevermapDataEntry extends LitElement {
     const town = this.querySelector('#location-town').getValue();
     const county = this.querySelector('#location-county').getValue();
     const locationData = {
-      county_code: county,
-      town_name: town,
+      county_code: county.value.id,
+      town_name: town.value.name,
     };
     localStorage.setItem('LAST_LOCATION', JSON.stringify(locationData));
     return locationData;
