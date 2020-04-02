@@ -19,6 +19,11 @@
     .mdc-button {
       background: $bluegreen;
     }
+    &--disabled {
+      .mdc-button {
+        background: #30bfbf99;
+      }
+    }
   }
 }
 
@@ -36,6 +41,18 @@
       width: 100%;
       height: 100%;
     }
+  }
+}
+
+.queued-entries {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 50%;
+
+  .mdc-button {
+    background: $bluegreen !important;
   }
 }
 
@@ -207,6 +224,10 @@
 
 
 @media only screen and (max-width: 780px) {
+
+  .queued-entries {
+    width: 100%;
+  }
 
   .fevermap-data-view-content {
     max-width: 100%;
