@@ -30,17 +30,22 @@ class SubmissionResource(Resource):
                 'fever_status': s.fever_status,
                 # E.g. 37.5
                 'fever_temp': s.fever_temp,
-                'symptom_difficult_to_breath': s.symptom_difficult_to_breath,
-                'symptom_cough': s.symptom_cough,
+                'symptom_chest_tightness': s.symptom_chest_tightness,
+                'symptom_chills': s.symptom_chills,
+                'symptom_disorientation': s.symptom_disorientation,
+                'symptom_dizziness': s.symptom_dizziness,
+                'symptom_diarrhoea': s.symptom_diarrhoea,
+                'symptom_dry_cough': s.symptom_dry_cough,
+                'symptom_fatigue': s.symptom_fatigue,
+                'symptom_loss_of_smell': s.symptom_loss_of_smell,
+                'symptom_loss_of_taste': s.symptom_loss_of_taste,
+                'symptom_nasal_congestion': s.symptom_nasal_congestion,
+                'symptom_nausea_vomiting': s.symptom_nausea_vomiting,
+                'symptom_muscle_joint_pain': s.symptom_muscle_joint_pain,
+                'symptom_sputum_production': s.symptom_sputum_production,
+                'symptom_shortness_breath': s.symptom_shortness_breath,
                 'symptom_sore_throat': s.symptom_sore_throat,
-                'symptom_muscle_pain': s.symptom_muscle_pain,
-                'symptom_new1': s.symptom_new1,
-                'symptom_new2': s.symptom_new2,
-                'symptom_new3': s.symptom_new3,
-                'symptom_new4': s.symptom_new4,
-                'symptom_new5': s.symptom_new5,
-                'symptom_new6': s.symptom_new6,
-                'symptom_new7': s.symptom_new7,
+                'symptom_headache': s.symptom_headache,
                 'diagnosed_covid19': s.diagnosed_covid19,
             }]
         return history
@@ -93,17 +98,22 @@ class SubmissionResource(Resource):
         # Check boolean values from multiple fields
         boolean_fields = [
             'fever_status',
-            'symptom_difficult_to_breath',
-            'symptom_cough',
+            'symptom_chest_tightness',
+            'symptom_chills',
+            'symptom_disorientation',
+            'symptom_dizziness',
+            'symptom_diarrhoea',
+            'symptom_dry_cough',
+            'symptom_fatigue',
+            'symptom_loss_of_smell',
+            'symptom_loss_of_taste',
+            'symptom_nasal_congestion',
+            'symptom_nausea_vomiting',
+            'symptom_muscle_joint_pain',
+            'symptom_sputum_production',
+            'symptom_shortness_breath',
             'symptom_sore_throat',
-            'symptom_muscle_pain',
-            'symptom_new1',
-            'symptom_new2',
-            'symptom_new3',
-            'symptom_new4',
-            'symptom_new5',
-            'symptom_new6',
-            'symptom_new7',
+            'symptom_headache',
         ]
         for f in boolean_fields:
             if f not in data:
@@ -174,17 +184,23 @@ class SubmissionResource(Resource):
 
         # Convert namespace and ensure boolean
         fever_status = bool(data['fever_status'])
-        symptom_difficult_to_breath = bool(data['symptom_difficult_to_breath'])
-        symptom_cough = bool(data['symptom_cough'])
+        symptom_chest_tightness = bool(data['symptom_chest_tightness'])
+        symptom_chills = bool(data['symptom_chills'])
+        symptom_disorientation = bool(data['symptom_disorientation'])
+        symptom_dizziness = bool(data['symptom_dizziness'])
+        symptom_diarrhoea = bool(data['symptom_diarrhoea'])
+        symptom_dry_cough = bool(data['symptom_dry_cough'])
+        symptom_fatigue = bool(data['symptom_fatigue'])
+        symptom_loss_of_smell = bool(data['symptom_loss_of_smell'])
+        symptom_loss_of_taste = bool(data['symptom_loss_of_taste'])
+        symptom_nasal_congestion = bool(data['symptom_nasal_congestion'])
+        symptom_nausea_vomiting = bool(data['symptom_nausea_vomiting'])
+        symptom_muscle_joint_pain = bool(data['symptom_muscle_joint_pain'])
+        symptom_sputum_production = bool(data['symptom_sputum_production'])
+        symptom_shortness_breath = bool(data['symptom_shortness_breath'])
         symptom_sore_throat = bool(data['symptom_sore_throat'])
-        symptom_muscle_pain = bool(data['symptom_muscle_pain'])
-        symptom_new1 = bool(data['symptom_new1'])
-        symptom_new2 = bool(data['symptom_new2'])
-        symptom_new3 = bool(data['symptom_new3'])
-        symptom_new4 = bool(data['symptom_new4'])
-        symptom_new5 = bool(data['symptom_new5'])
-        symptom_new6 = bool(data['symptom_new6'])
-        symptom_new7 = bool(data['symptom_new7'])
+        symptom_headache = bool(data['symptom_headache'])
+
         diagnosed_covid19 = str(data['diagnosed_covid19'])
 
         if 'fever_temp' in data and data['fever_temp']:
@@ -258,17 +274,24 @@ class SubmissionResource(Resource):
         submission = Submission(
             fever_status=fever_status,
             fever_temp=fever_temp,
-            symptom_difficult_to_breath=symptom_difficult_to_breath,
-            symptom_cough=symptom_cough,
+
+            symptom_chest_tightness=symptom_chest_tightness,
+            symptom_chills=symptom_chills,
+            symptom_disorientation=symptom_disorientation,
+            symptom_dizziness=symptom_dizziness,
+            symptom_diarrhoea=symptom_diarrhoea,
+            symptom_dry_cough=symptom_dry_cough,
+            symptom_fatigue=symptom_fatigue,
+            symptom_loss_of_smell=symptom_loss_of_smell,
+            symptom_loss_of_taste=symptom_loss_of_taste,
+            symptom_nasal_congestion=symptom_nasal_congestion,
+            symptom_nausea_vomiting=symptom_nausea_vomiting,
+            symptom_muscle_joint_pain=symptom_muscle_joint_pain,
+            symptom_sputum_production=symptom_sputum_production,
+            symptom_shortness_breath=symptom_shortness_breath,
             symptom_sore_throat=symptom_sore_throat,
-            symptom_muscle_pain=symptom_muscle_pain,
-            symptom_new1=symptom_new1,
-            symptom_new2=symptom_new2,
-            symptom_new3=symptom_new3,
-            symptom_new4=symptom_new4,
-            symptom_new5=symptom_new5,
-            symptom_new6=symptom_new6,
-            symptom_new7=symptom_new7,
+            symptom_headache=symptom_headache,
+            
             diagnosed_covid19=diagnosed_covid19,
             location_country_code=location_country_code,
             location_postal_code=location_postal_code,
@@ -294,17 +317,22 @@ class SubmissionResource(Resource):
             'device_id': device_id,
             'fever_status': fever_status,
             'fever_temp': fever_temp,
-            'symptom_difficult_to_breath': symptom_difficult_to_breath,
-            'symptom_cough': symptom_cough,
+            'symptom_chest_tightness': symptom_chest_tightness,
+            'symptom_chills': symptom_chills,
+            'symptom_disorientation': symptom_disorientation,
+            'symptom_dizziness': symptom_dizziness,
+            'symptom_diarrhoea': symptom_diarrhoea,
+            'symptom_dry_cough': symptom_dry_cough,
+            'symptom_fatigue': symptom_fatigue,
+            'symptom_loss_of_smell': symptom_loss_of_smell,
+            'symptom_loss_of_taste': symptom_loss_of_taste,
+            'symptom_nasal_congestion': symptom_nasal_congestion,
+            'symptom_nausea_vomiting': symptom_nausea_vomiting,
+            'symptom_muscle_joint_pain': symptom_muscle_joint_pain,
+            'symptom_sputum_production': symptom_sputum_production,
+            'symptom_shortness_breath': symptom_shortness_breath,
             'symptom_sore_throat': symptom_sore_throat,
-            'symptom_muscle_pain': symptom_muscle_pain,
-            'symptom_new1': symptom_new1,
-            'symptom_new2': symptom_new2,
-            'symptom_new3': symptom_new3,
-            'symptom_new4': symptom_new4,
-            'symptom_new5': symptom_new5,
-            'symptom_new6': symptom_new6,
-            'symptom_new7': symptom_new7,
+            'symptom_headache': symptom_headache,
             'diagnosed_covid19': diagnosed_covid19,
             'birth_year': birth_year,
             'location_country_code': location_country_code,

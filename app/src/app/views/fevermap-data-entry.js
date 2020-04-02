@@ -51,6 +51,7 @@ class FevermapDataEntry extends LitElement {
     const lastLocation = localStorage.getItem('LAST_LOCATION');
     const gender = localStorage.getItem('GENDER');
     const birthYear = localStorage.getItem('BIRTH_YEAR');
+    const diagnosedCovid19 = localStorage.getItem('COVID_DIAGNOSIS');
 
     this.errorMessage = null;
     this.hasFever = null;
@@ -58,6 +59,7 @@ class FevermapDataEntry extends LitElement {
     this.feverAmountNotKnown = false;
     this.birthYear = birthYear || null;
     this.gender = gender || null;
+    this.covidDiagnosed = diagnosedCovid19 || null;
     this.location = latestEntry ? latestEntry.location : null;
     this.latestEntry = latestEntry || null;
     this.geoCodingInfo = latestEntry ? JSON.parse(lastLocation) : null;
@@ -68,7 +70,7 @@ class FevermapDataEntry extends LitElement {
     this.queuedEntries = [];
 
     this.currentQuestion = 1;
-    this.questionCount = 6;
+    this.questionCount = 7;
     this.symptoms = [];
   }
 
@@ -81,8 +83,7 @@ class FevermapDataEntry extends LitElement {
         this.nextQuestion();
       });
     }
-    const covidDiagnosed = localStorage.getItem('COVID_DIAGNOSIS');
-    this.selectTestResult(covidDiagnosed)
+    this.selectTestResult(this.diagnosed_covid19)
   }
 
   createCountrySelectOptions() {
@@ -235,17 +236,22 @@ class FevermapDataEntry extends LitElement {
     feverData.location_lat = geoCodingInfo.location_lat.toFixed(7);
 
     const possibleSymptoms = [
-      'symptom_difficult_to_breath',
-      'symptom_cough',
+      'symptom_chest_tightness',
+      'symptom_chills',
+      'symptom_disorientation',
+      'symptom_dizziness',
+      'symptom_diarrhoea',
+      'symptom_dry_cough',
+      'symptom_fatigue',
+      'symptom_loss_of_smell',
+      'symptom_loss_of_taste',
+      'symptom_nasal_congestion',
+      'symptom_nausea_vomiting',
+      'symptom_muscle_joint_pain',
+      'symptom_sputum_production',
+      'symptom_shortness_breath',
       'symptom_sore_throat',
-      'symptom_muscle_pain',
-      'symptom_new1',
-      'symptom_new2',
-      'symptom_new3',
-      'symptom_new4',
-      'symptom_new5',
-      'symptom_new6',
-      'symptom_new7',
+      'symptom_headache',
     ];
     possibleSymptoms.forEach(symp => {
       feverData[symp] = this.symptoms.includes(symp);
@@ -505,16 +511,9 @@ class FevermapDataEntry extends LitElement {
     if (!hasFever) {
       // Skip symptoms
       this.nextQuestion();
+      this.nextQuestion();
+      this.nextQuestion();
     }
-  }
-
-  handleCommonSymptomSubmit() {
-    this.covidDiagnosed = this.querySelector('#covid-diagnosed').checked;
-    this.nextQuestion();
-  }
-
-  handleRareSymptomSubmit() {
-    this.nextQuestion();
   }
 
   previousQuestion() {
@@ -532,7 +531,7 @@ class FevermapDataEntry extends LitElement {
     this.currentQuestion += 1;
     this.scrollToCurrentQuestion();
   }
-
+  
   scrollToCurrentQuestion(forwards = true) {
     const targetElem = this.querySelector(`#question-${this.currentQuestion}`);
     if (!targetElem) {
@@ -602,7 +601,7 @@ class FevermapDataEntry extends LitElement {
       <div class="container view-wrapper fevermap-entry-dialog fevermap-entry-dialog--hidden">
         <div class="fevermap-data-entry-content">
           <div
-            class="fevermap-entry-carousel${this.questionCount === 6
+            class="fevermap-entry-carousel${this.questionCount === 7
               ? ' fevermap-entry-carousel--full-width'
               : ' fevermap-entry-carousel--smaller-width'}"
           >
@@ -614,6 +613,28 @@ class FevermapDataEntry extends LitElement {
   }
 
   renderQuestions() {
+    const symptomsPage1 = [
+    'chest_tightness',
+    'chills',
+    'disorientation',
+    'dizziness',
+    'diarrhoea',
+    'dry_cough',
+  ];
+  const symptomsPage2 = [
+    'fatigue',
+    'loss_of_smell',
+    'loss_of_taste',
+    'nasal_congestion',
+    'nausea_vomiting',
+  ];
+  const symptomsPage3 = [
+    'muscle_joint_pain',
+    'sputum_production',
+    'shortness_breath',
+    'sore_throat',
+    'headache',
+  ];
     return html`
       <div class="entry-dialog-close-button">
         <material-icon @click="${this.closeView}" icon="close"></material-icon>
@@ -631,17 +652,23 @@ class FevermapDataEntry extends LitElement {
         class="fevermap-entry-window mdc-elevation--z9 fevermap-other-symptoms-questions"
         id="question-4"
       >
-        ${this.getCommonSymptomsFields()}
+        ${this.getSymptomsFields(4, symptomsPage1)}
       </div>
       <div
         class="fevermap-entry-window mdc-elevation--z9 fevermap-other-symptoms-questions"
         id="question-5"
       >
-        ${this.getRareSymptomsFields()}
+        ${this.getSymptomsFields(5, symptomsPage2)}
+      </div>
+      <div
+        class="fevermap-entry-window mdc-elevation--z9 fevermap-other-symptoms-questions"
+        id="question-6"
+      >
+        ${this.getSymptomsFields(6, symptomsPage3)}
       </div>
       <div
         class="fevermap-entry-window mdc-elevation--z9 fevermap-location-questions"
-        id="question-6"
+        id="question-7"
       >
         ${this.getGeoLocationInput()}
       </div>
@@ -770,9 +797,9 @@ class FevermapDataEntry extends LitElement {
         2/${this.questionCount}
       </div>
       <div class="title-holder">
-        <h4>COVID-19 Diagnosis</h4>
+        <h3>${Translator.get('entry.questions.covid_diagnosis')}</h3>
       </div>
-      <p class="subtitle">Choose only one</p>
+      <p class="subtitle">${Translator.get('entry.questions.choose_only_one')}</p>
       <div class="symptom-holder">
         <div class="symptom" id="test_positive" @click="${this.handleTestSelect}">
           <p>${Translator.get('entry.questions.positive')}</p>
@@ -793,85 +820,34 @@ class FevermapDataEntry extends LitElement {
           <div class="mdc-button__ripple"></div>
 
           <i class="material-icons mdc-button__icon" aria-hidden="true">done</i>
-          <span class="mdc-button__label">Set Diagnosis</span>
+          <span class="mdc-button__label">${Translator.get('entry.questions.set_diagnosis')}</span>
         </button>
       </div>
     `;
   }
 
-  getCommonSymptomsFields() {
+  getSymptomsFields(pageNumber, symptoms) {
+    let symptomButtons = "";
+    for(let symptom of symptoms) {
+      let symptomButton = 
+      html`<div class="symptom" id="symptom_${symptom}" @click="${this.handleSymptomAdd}">
+         <p>${Translator.get(`entry.questions.${symptom}`)}</p>
+       </div>`;
+       symptomButtons = html`${symptomButtons} ${symptomButton}`;
+    }
     return html`
       <div class="back-button" @click="${this.previousQuestion}">
         <material-icon icon="keyboard_arrow_left"></material-icon>${Translator.get('back')}
       </div>
       <div class="question-number-holder">
-        4/${this.questionCount}
+        ${pageNumber}/${this.questionCount}
       </div>
       <div class="title-holder">
-        <h4>Common Symptoms</h4>
+        <h2>${Translator.get('entry.symptoms')}</h2>
       </div>
       <p class="subtitle">${Translator.get('entry.questions.choose_all_that_apply')}</p>
       <div class="symptom-holder">
-        <div class="symptom" id="symptom_difficult_to_breath" @click="${this.handleSymptomAdd}">
-          <p>${Translator.get('entry.questions.difficulty_to_breathe')}</p>
-        </div>
-        <div class="symptom" id="symptom_cough" @click="${this.handleSymptomAdd}">
-          <p>${Translator.get('entry.questions.cough')}</p>
-        </div>
-        <div class="symptom" id="symptom_sore_throat" @click="${this.handleSymptomAdd}">
-          <p>${Translator.get('entry.questions.sore_throat')}</p>
-        </div>
-        <div class="symptom" id="symptom_muscle_pain" @click="${this.handleSymptomAdd}">
-          <p>${Translator.get('entry.questions.muscular_pain')}</p>
-        </div>
-        <div class="symptom" id="symptom_new1" @click="${this.handleSymptomAdd}">
-          <p>${Translator.get('entry.questions.symptom_new1')}</p>
-        </div>
-        </div>
-      </div>
-
-      <div class="proceed-button">
-        <button class="mdc-button mdc-button--raised" @click="${this.nextQuestion}">
-          <div class="mdc-button__ripple"></div>
-
-          <i class="material-icons mdc-button__icon" aria-hidden="true">done</i>
-          <span class="mdc-button__label">${Translator.get('entry.questions.set_symptoms')}</span>
-        </button>
-      </div>
-    `;
-  }
-
-  getRareSymptomsFields() {
-    return html`
-      <div class="back-button" @click="${this.previousQuestion}">
-        <material-icon icon="keyboard_arrow_left"></material-icon>${Translator.get('back')}
-      </div>
-      <div class="question-number-holder">
-        5/${this.questionCount}
-      </div>
-      <div class="title-holder">
-        <h4>Less Common</h4>
-      </div>
-      <p class="subtitle">${Translator.get('entry.questions.choose_all_that_apply')}</p>
-      <div class="symptom-holder">
-        <div class="symptom" id="symptom_new2" @click="${this.handleSymptomAdd}">
-          <p>${Translator.get('entry.questions.symptom_new2')}</p>
-        </div>
-        <div class="symptom" id="symptom_new3" @click="${this.handleSymptomAdd}">
-          <p>${Translator.get('entry.questions.symptom_new3')}</p>
-        </div>
-        <div class="symptom" id="symptom_new4" @click="${this.handleSymptomAdd}">
-          <p>${Translator.get('entry.questions.symptom_new4')}</p>
-        </div>
-        <div class="symptom" id="symptom_new5" @click="${this.handleSymptomAdd}">
-          <p>${Translator.get('entry.questions.symptom_new5')}</p>
-        </div>
-        <div class="symptom" id="symptom_new6" @click="${this.handleSymptomAdd}">
-          <p>${Translator.get('entry.questions.symptom_new6')}</p>
-        </div>
-        <div class="symptom" id="symptom_new7" @click="${this.handleSymptomAdd}">
-          <p>${Translator.get('entry.questions.symptom_new7')}</p>
-        </div>
+        ${symptomButtons}
       </div>
 
       <div class="proceed-button">
@@ -891,7 +867,7 @@ class FevermapDataEntry extends LitElement {
         <material-icon icon="keyboard_arrow_left"></material-icon>${Translator.get('back')}
       </div>
       <div class="question-number-holder">
-        6/${this.questionCount}
+        7/${this.questionCount}
       </div>
       <div class="title-holder">
         <h2>${Translator.get('entry.new_entry')}</h2>

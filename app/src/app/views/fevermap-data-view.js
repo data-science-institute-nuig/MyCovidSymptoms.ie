@@ -120,24 +120,32 @@ class FevermapDataView extends LitElement {
 
   // eslint-disable-next-line class-methods-use-this
   getSymptomsForSubmission(sub) {
-    const symptoms = [
-      {
-        translation: Translator.get('entry.questions.difficulty_to_breathe'),
-        hasSymptom: sub.symptom_difficult_to_breath,
-      },
-      {
-        translation: Translator.get('entry.questions.cough'),
-        hasSymptom: sub.symptom_cough,
-      },
-      {
-        translation: Translator.get('entry.questions.sore_throat'),
-        hasSymptom: sub.symptom_sore_throat,
-      },
-      {
-        translation: Translator.get('entry.questions.muscular_pain'),
-        hasSymptom: sub.symptom_muscle_pain,
-      },
+    const possibleSymptoms = [
+      'chest_tightness',
+      'chills',
+      'disorientation',
+      'dizziness',
+      'diarrhoea',
+      'dry_cough',
+      'fatigue',
+      'loss_of_smell',
+      'loss_of_taste',
+      'nasal_congestion',
+      'nausea_vomiting',
+      'muscle_joint_pain',
+      'sputum_production',
+      'shortness_breath',
+      'sore_throat',
+      'headache',
     ];
+    console.log(sub)
+    const symptoms = [];
+    for(let symptom of possibleSymptoms) {
+      symptoms.push( {
+        translation: Translator.get(`entry.questions.${symptom}`),
+        hasSymptom: sub[`symptom_${symptom}`],
+      })
+    }
     return symptoms.filter(symp => symp.hasSymptom);
   }
 
