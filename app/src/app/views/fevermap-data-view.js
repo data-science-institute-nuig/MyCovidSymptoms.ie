@@ -3,11 +3,12 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import Translator from '../util/translator.js';
 import DBUtil, { FEVER_ENTRIES, QUEUED_ENTRIES } from '../util/db-util.js';
-import GeolocatorService from '../services/geolocator-service.js';
 import FeverDataUtil from '../util/fever-data-util.js';
 import '../components/fever-chart.js';
 import GoogleAnalyticsService from '../services/google-analytics-service.js';
 import ScrollService from '../services/scroll-service.js';
+import DataEntryService from '../services/data-entry-service.js';
+import SnackBar from '../components/snackbar.js';
 
 class FevermapDataView extends LitElement {
   static get properties() {
@@ -18,11 +19,15 @@ class FevermapDataView extends LitElement {
       previousSubmissions: { type: Array },
       geoCodingInfo: { type: Object },
       firstTimeSubmitting: { type: Boolean },
+      lastSubmissionIsTooCloseToNow: { type: Boolean },
+      nextAllowedSubmitTime: { type: String },
 
       setGender: { type: String },
       setBirthYear: { type: String },
       setCovidDiagnosis: { type: Boolean },
       showEditFields: { type: Boolean },
+
+      queuedEntries: { type: Array },
     };
   }
 
@@ -34,10 +39,7 @@ class FevermapDataView extends LitElement {
     this.submissionStreak = submissionStreak || 0;
     dayjs.extend(utc);
 
-    const lastEntryTime = localStorage.getItem('LAST_ENTRY_SUBMISSION_TIME');
-    if (lastEntryTime && lastEntryTime !== 'undefined') {
-      this.lastSubmissionTime = dayjs(Number(lastEntryTime)).format('DD-MM-YYYY : HH:mm');
-    }
+    this.checkLastSubmissionTime();
 
     const gender = localStorage.getItem('GENDER');
     const birthYear = localStorage.getItem('BIRTH_YEAR');
@@ -54,7 +56,6 @@ class FevermapDataView extends LitElement {
   }
 
   firstUpdated() {
-    this.getGeoLocationInfo();
     document.addEventListener('update-submission-list', () => {
       this.getPreviousSubmissionsFromIndexedDb();
 
@@ -67,22 +68,30 @@ class FevermapDataView extends LitElement {
 
       this.submissionCount = submissionCount || 0;
       this.submissionStreak = submissionStreak || 0;
+      this.checkLastSubmissionTime();
+    });
+    document.addEventListener('update-queued-count', () => {
+      this.getQueuedEntriesFromIndexedDb();
     });
     if (this.firstTimeSubmitting) {
       this.showEntryDialog();
     }
+    this.getQueuedEntriesFromIndexedDb();
     GoogleAnalyticsService.reportNavigationAction('Your Data View');
   }
 
-  async getGeoLocationInfo(forceUpdate) {
-    if (!this.geoCodingInfo || forceUpdate) {
-      navigator.geolocation.getCurrentPosition(async success => {
-        this.geoCodingInfo = await GeolocatorService.getGeoCodingInfo(
-          success.coords.latitude,
-          success.coords.longitude,
-        );
-        delete this.geoCodingInfo.success;
-      });
+  checkLastSubmissionTime() {
+    const lastEntryTime = localStorage.getItem('LAST_ENTRY_SUBMISSION_TIME');
+    if (lastEntryTime && lastEntryTime !== 'undefined') {
+      this.lastSubmissionTime = dayjs(Number(lastEntryTime)).format('DD-MM-YYYY : HH:mm');
+      this.lastSubmissionIsTooCloseToNow = dayjs(Number(lastEntryTime))
+        .local()
+        .add(1, 'hour')
+        .isAfter(dayjs(Date.now()));
+      this.nextAllowedSubmitTime = dayjs(Number(lastEntryTime))
+        .add(1, 'hour')
+        .local()
+        .format('DD-MM-YYYY : HH:mm');
     }
   }
 
@@ -115,6 +124,8 @@ class FevermapDataView extends LitElement {
     const queuedSubmissions = await db.getAll(QUEUED_ENTRIES);
     if (queuedSubmissions && queuedSubmissions.length > 0) {
       this.queuedEntries = queuedSubmissions;
+    } else {
+      this.queuedEntries = null;
     }
   }
 
@@ -138,13 +149,13 @@ class FevermapDataView extends LitElement {
       'sore_throat',
       'headache',
     ];
-    console.log(sub)
+    console.log(sub);
     const symptoms = [];
-    for(let symptom of possibleSymptoms) {
-      symptoms.push( {
+    for (let symptom of possibleSymptoms) {
+      symptoms.push({
         translation: Translator.get(`entry.questions.${symptom}`),
         hasSymptom: sub[`symptom_${symptom}`],
-      })
+      });
     }
     return symptoms.filter(symp => symp.hasSymptom);
   }
@@ -172,6 +183,39 @@ class FevermapDataView extends LitElement {
     localStorage.setItem('COVID_DIAGNOSIS', this.setCovidDiagnosis);
   }
 
+  async syncQueuedEntries() {
+    const db = await DBUtil.getInstance();
+    let successfulSyncCount = 0;
+    await this.queuedEntries.map(async (entry, i) => {
+      const { id } = entry;
+      // delete entry.id;
+      const submissionResponse = await DataEntryService.handleDataEntrySubmission(entry, false);
+      if (submissionResponse.success) {
+        db.delete(QUEUED_ENTRIES, id);
+        DataEntryService.setEntriesToIndexedDb(submissionResponse);
+        successfulSyncCount += 1;
+      } else {
+        SnackBar.success(Translator.get('system_messages.success.entry_send_failed_queued'));
+      }
+      if (i === this.queuedEntries.length - 1) {
+        if (successfulSyncCount > 0) {
+          this.getQueuedEntriesFromIndexedDb();
+          this.getPreviousSubmissionsFromIndexedDb();
+          SnackBar.success(Translator.get('system_messages.success.sync_finished'));
+        }
+      }
+    });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  showSubmissionTooCloseSnackbar() {
+    SnackBar.success(
+      Translator.get('system_messages.error.do_not_submit_new_temp_until', {
+        dateTime: this.nextAllowedSubmitTime,
+      }),
+    );
+  }
+
   render() {
     return html`
       <div class="container view-wrapper fevermap-entry-view">
@@ -179,8 +223,12 @@ class FevermapDataView extends LitElement {
           <div class="entry-history-title-area">
             <h2>${Translator.get('history.title')}</h2>
             <material-button
-              @button-clicked="${this.showEntryDialog}"
-              class="add-new-entry-button"
+              @button-clicked="${this.lastSubmissionIsTooCloseToNow
+                ? this.showSubmissionTooCloseSnackbar
+                : this.showEntryDialog}"
+              class="add-new-entry-button${this.lastSubmissionIsTooCloseToNow
+                ? ' add-new-entry-button--disabled'
+                : ''}"
               icon="add_circle"
               label="${Translator.get('history.add_entry')}"
             ></material-button>
@@ -206,6 +254,18 @@ class FevermapDataView extends LitElement {
                 <p class="statistics-field--subtitle">${Translator.get('history.measurements')}</p>
               </div>
             </div>
+            ${this.queuedEntries && this.queuedEntries.length > 0
+              ? html`
+                  <div class="queued-entries">
+                    <p>${Translator.get('entry.queued_entries')}</p>
+                    <material-button
+                      label="${Translator.get('entry.send_now')}"
+                      icon="sync"
+                      @click="${() => this.syncQueuedEntries()}"
+                    ></material-button>
+                  </div>
+                `
+              : ''}
             ${this.createPersistentDataFields()}
             <div class="previous-submissions-list">
               ${this.previousSubmissions &&

@@ -52,7 +52,20 @@ class SelectField extends LitElement {
         this.typedCharacters = '';
       }
     });
+
     this.elem.listen('MDCSelect:change', () => {
+      if (this.id === 'location-county' && !!this.elem.value) {
+        this.dispatchEvent(
+          new CustomEvent('update-town', {
+            detail: {
+              message: 'update town list',
+              county: this.elem.value,
+            },
+            bubbles: true,
+            composed: true,
+          }),
+        );
+      }
       this.dispatchEvent(
         new CustomEvent('select-change', {
           detail: {

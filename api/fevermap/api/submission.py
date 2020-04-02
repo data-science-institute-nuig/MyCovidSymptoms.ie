@@ -141,19 +141,19 @@ class SubmissionResource(Resource):
         if not re.fullmatch(r'[MF]{1}', data['gender']):
             errors += ('gender', 'Value not M or F')
 
-        if not re.fullmatch(r'[A-Z]{2}', data['location_country_code']):
-            errors += ('location_country_code', 'Value not two capitals')
+        if not re.fullmatch(r'[0-9a-z-A-Z-\-\)\(. ]{2,5}', data['location_county_code']):
+            errors += ('location_county_code', 'Value not two capitals')
 
-        if not re.fullmatch(r'[0-9a-z-A-Z-\. ]{5,10}', data['location_postal_code']):
-            errors += ('location_postal_code', 'Incorrect characters or length')
+        if not re.fullmatch(r'[0-9a-z-A-Z-\-\)\(. ]{4,40}', data['location_town_name']):
+            errors += ('location_town_name', 'Incorrect characters or length')
 
         # Allowed values from -180 to 180 with 2 decimals
-        if not re.fullmatch(r'(-)?[0-9]{1,3}\.[0-9]{2,}', data['location_lng']):
-            errors += ('location_lng', 'Incorrect form or length')
+        # if not re.fullmatch(r'(-)?[0-9]{1,3}\.[0-9]{2,}', data['location_lng']):
+        #     errors += ('location_lng', 'Incorrect form or length')
 
-        # Allowed values from -90 to 90 with 2 decimals
-        if not re.fullmatch(r'(-)?[0-9]{1,2}\.[0-9]{2,}', data['location_lat']):
-            errors += ('location_lat', 'Incorrect form or length')
+        # # Allowed values from -90 to 90 with 2 decimals
+        # if not re.fullmatch(r'(-)?[0-9]{1,2}\.[0-9]{2,}', data['location_lat']):
+        #     errors += ('location_lat', 'Incorrect form or length')
 
         # Abort if validation failed
         if errors:
@@ -169,11 +169,8 @@ class SubmissionResource(Resource):
         # Cut precision to neares decade
         birth_year = round(int(data['birth_year']), -1)
         gender = str(data['gender'])
-        location_country_code = str(data['location_country_code'])
-        location_postal_code = str(data['location_postal_code'])
-        # Cut precision to have 3 decimals, not more
-        location_lng = round(float(data['location_lng']), 3)
-        location_lat = round(float(data['location_lat']), 3)
+        location_county_code = str(data['location_county_code'])
+        location_town_name = str(data['location_town_name'])
 
         # Time 1584649859812 when this was written
         if not 1584000000000 < device_id:
@@ -239,7 +236,8 @@ class SubmissionResource(Resource):
             last_submission = submitter.submissions[-1]
 
             earliest_next_submission_time = \
-                last_submission.timestamp_modified + datetime.timedelta(hours=1)
+                last_submission.timestamp_modified + \
+                datetime.timedelta(hours=1)
 
             if earliest_next_submission_time > datetime.datetime.now():
                 app.logger.warning(
@@ -291,12 +289,10 @@ class SubmissionResource(Resource):
             symptom_shortness_breath=symptom_shortness_breath,
             symptom_sore_throat=symptom_sore_throat,
             symptom_headache=symptom_headache,
-            
+
             diagnosed_covid19=diagnosed_covid19,
-            location_country_code=location_country_code,
-            location_postal_code=location_postal_code,
-            location_lng=location_lng,
-            location_lat=location_lat,
+            location_county_code=location_county_code,
+            location_town_name=location_town_name
         )
 
         # Add new submission for submitter
@@ -335,10 +331,8 @@ class SubmissionResource(Resource):
             'symptom_headache': symptom_headache,
             'diagnosed_covid19': diagnosed_covid19,
             'birth_year': birth_year,
-            'location_country_code': location_country_code,
-            'location_postal_code': location_postal_code,
-            'location_lng': location_lng,
-            'location_lat': location_lat,
+            'location_county_code': location_county_code,
+            'location_town_name': location_town_name,
             'history': history
         }
         return {

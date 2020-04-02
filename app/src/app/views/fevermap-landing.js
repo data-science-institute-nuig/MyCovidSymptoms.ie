@@ -119,11 +119,15 @@ class FevermapLanding extends LitElement {
             </ul>
           </div>
           <div class="scope mb-4">
-            <p class="participant-count-subtitle">
-              ${Translator.get('landing.about_current_participant_count', {
-                participantCount: this.currentParticipantCount,
-              })}
-            </p>
+            ${this.currentParticipantCount > 2000
+              ? html`
+                  <p class="participant-count-subtitle">
+                    ${Translator.get('landing.about_current_participant_count', {
+                      participantCount: this.currentParticipantCount,
+                    })}
+                  </p>
+                `
+              : ''}
           </div>
           <div class="data-use">
             <material-button

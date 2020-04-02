@@ -38,14 +38,12 @@ class Submission(Base):
     symptom_headache = Column(Boolean)
     diagnosed_covid19 = Column(String(13))
 
-    location_country_code = Column(String(2))
-    location_postal_code = Column(String(10))
+    location_county_code = Column(String(5))
+    location_town_name = Column(String(40))
 
     # Convert to Column(Point) when a custom field type that matches the
     # MariaDB geospatial data type is written
     # See https://docs.sqlalchemy.org/en/13/core/types.html
-    location_lng = Column(Integer)
-    location_lat = Column(Integer)
 
     submitter_id = Column(Integer, ForeignKey('submitters.id'))
 
