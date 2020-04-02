@@ -36,7 +36,7 @@ class Submission(Base):
     symptom_shortness_breath = Column(Boolean)
     symptom_sore_throat = Column(Boolean)
     symptom_headache = Column(Boolean)
-    diagnosed_covid19 = Column(String(13))
+    diagnosed_covid19 = Column(String(20))
 
     location_county_code = Column(String(5))
     location_town_name = Column(String(40))
