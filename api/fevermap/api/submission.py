@@ -147,14 +147,6 @@ class SubmissionResource(Resource):
         if not re.fullmatch(r'[0-9a-z-A-Z-\-\)\(. ]{4,40}', data['location_town_name']):
             errors += ('location_town_name', 'Incorrect characters or length')
 
-        # Allowed values from -180 to 180 with 2 decimals
-        # if not re.fullmatch(r'(-)?[0-9]{1,3}\.[0-9]{2,}', data['location_lng']):
-        #     errors += ('location_lng', 'Incorrect form or length')
-
-        # # Allowed values from -90 to 90 with 2 decimals
-        # if not re.fullmatch(r'(-)?[0-9]{1,2}\.[0-9]{2,}', data['location_lat']):
-        #     errors += ('location_lat', 'Incorrect form or length')
-
         # Abort if validation failed
         if errors:
             app.logger.warning('Syntax errors: {}'.format(errors))
@@ -167,7 +159,7 @@ class SubmissionResource(Resource):
         # Convert strings into correct Python data types for processing
         device_id = int(data['device_id'])
         # Cut precision to neares decade
-        birth_year = round(int(data['birth_year']), -1)
+        birth_year = int(data['birth_year'])
         gender = str(data['gender'])
         location_county_code = str(data['location_county_code'])
         location_town_name = str(data['location_town_name'])
