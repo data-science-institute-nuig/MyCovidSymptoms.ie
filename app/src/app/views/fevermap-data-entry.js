@@ -40,6 +40,10 @@ class FevermapDataEntry extends LitElement {
 
       symptoms: { type: Array },
       covidDiagnosed: { type: String },
+
+      symptomsFirstPage:  { type: Number },
+      symptomsPagesCount:  { type: Number },
+
     };
   }
 
@@ -71,6 +75,9 @@ class FevermapDataEntry extends LitElement {
     this.currentQuestion = 1;
     this.questionCount = 6;
     this.symptoms = [];
+    
+    this.symptomsFirstPage = 3;
+    this.symptomsPagesCount = 3;
   }
 
   firstUpdated() {
@@ -719,7 +726,7 @@ class FevermapDataEntry extends LitElement {
       <div class="title-holder">
         <h3>${Translator.get('entry.questions.covid_diagnosis')}</h3>
       </div>
-      <p class="subtitle">${Translator.get('entry.questions.choose_only_one')}</p>
+      <p class="subtitle">${Translator.get('entry.questions.prompt_diagnosis')}</p>
       <div class="symptom-holder">
         <div class="symptom" id="test_positive" @click="${this.handleTestSelect}">
           <p>${Translator.get('entry.questions.positive')}</p>
@@ -757,6 +764,8 @@ class FevermapDataEntry extends LitElement {
         ${symptomButtons} ${symptomButton}
       `;
     }
+    let symptomPageNumber = pageNumber - this.symptomsFirstPage + 1;
+    let symptomsPagesCount = this.symptomsPagesCount;
     return html`
       <div class="back-button" @click="${this.previousQuestion}">
         <material-icon icon="keyboard_arrow_left"></material-icon>${Translator.get('back')}
@@ -765,7 +774,7 @@ class FevermapDataEntry extends LitElement {
         ${pageNumber}/${this.questionCount}
       </div>
       <div class="title-holder">
-        <h2>${Translator.get('entry.symptoms')}</h2>
+        <h2>${Translator.get('entry.symptoms')} ${symptomPageNumber}/${symptomsPagesCount}</h2>
       </div>
       <p class="subtitle">${Translator.get('entry.questions.choose_all_that_apply')}</p>
       <div class="symptom-holder">
