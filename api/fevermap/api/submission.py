@@ -30,10 +30,22 @@ class SubmissionResource(Resource):
                 'fever_status': s.fever_status,
                 # E.g. 37.5
                 'fever_temp': s.fever_temp,
-                'symptom_difficult_to_breath': s.symptom_difficult_to_breath,
-                'symptom_cough': s.symptom_cough,
+                'symptom_chest_tightness': s.symptom_chest_tightness,
+                'symptom_chills': s.symptom_chills,
+                'symptom_disorientation': s.symptom_disorientation,
+                'symptom_dizziness': s.symptom_dizziness,
+                'symptom_diarrhoea': s.symptom_diarrhoea,
+                'symptom_dry_cough': s.symptom_dry_cough,
+                'symptom_fatigue': s.symptom_fatigue,
+                'symptom_loss_of_smell': s.symptom_loss_of_smell,
+                'symptom_loss_of_taste': s.symptom_loss_of_taste,
+                'symptom_nasal_congestion': s.symptom_nasal_congestion,
+                'symptom_nausea_vomiting': s.symptom_nausea_vomiting,
+                'symptom_muscle_joint_pain': s.symptom_muscle_joint_pain,
+                'symptom_sputum_production': s.symptom_sputum_production,
+                'symptom_shortness_breath': s.symptom_shortness_breath,
                 'symptom_sore_throat': s.symptom_sore_throat,
-                'symptom_muscle_pain': s.symptom_muscle_pain,
+                'symptom_headache': s.symptom_headache,
                 'diagnosed_covid19': s.diagnosed_covid19,
             }]
         return history
@@ -86,11 +98,22 @@ class SubmissionResource(Resource):
         # Check boolean values from multiple fields
         boolean_fields = [
             'fever_status',
-            'symptom_difficult_to_breath',
-            'symptom_cough',
+            'symptom_chest_tightness',
+            'symptom_chills',
+            'symptom_disorientation',
+            'symptom_dizziness',
+            'symptom_diarrhoea',
+            'symptom_dry_cough',
+            'symptom_fatigue',
+            'symptom_loss_of_smell',
+            'symptom_loss_of_taste',
+            'symptom_nasal_congestion',
+            'symptom_nausea_vomiting',
+            'symptom_muscle_joint_pain',
+            'symptom_sputum_production',
+            'symptom_shortness_breath',
             'symptom_sore_throat',
-            'symptom_muscle_pain',
-            'diagnosed_covid19',
+            'symptom_headache',
         ]
         for f in boolean_fields:
             if f not in data:
@@ -118,19 +141,19 @@ class SubmissionResource(Resource):
         if not re.fullmatch(r'[MF]{1}', data['gender']):
             errors += ('gender', 'Value not M or F')
 
-        if not re.fullmatch(r'[A-Z]{2}', data['location_country_code']):
-            errors += ('location_country_code', 'Value not two capitals')
+        if not re.fullmatch(r'[0-9a-z-A-Z-\-\)\(. ]{2,5}', data['location_county_code']):
+            errors += ('location_county_code', 'Value not two capitals')
 
-        if not re.fullmatch(r'[0-9a-z-A-Z-\. ]{5,10}', data['location_postal_code']):
-            errors += ('location_postal_code', 'Incorrect characters or length')
+        if not re.fullmatch(r'[0-9a-z-A-Z-\-\)\(. ]{4,40}', data['location_town_name']):
+            errors += ('location_town_name', 'Incorrect characters or length')
 
         # Allowed values from -180 to 180 with 2 decimals
-        if not re.fullmatch(r'(-)?[0-9]{1,3}\.[0-9]{2,}', data['location_lng']):
-            errors += ('location_lng', 'Incorrect form or length')
+        # if not re.fullmatch(r'(-)?[0-9]{1,3}\.[0-9]{2,}', data['location_lng']):
+        #     errors += ('location_lng', 'Incorrect form or length')
 
-        # Allowed values from -90 to 90 with 2 decimals
-        if not re.fullmatch(r'(-)?[0-9]{1,2}\.[0-9]{2,}', data['location_lat']):
-            errors += ('location_lat', 'Incorrect form or length')
+        # # Allowed values from -90 to 90 with 2 decimals
+        # if not re.fullmatch(r'(-)?[0-9]{1,2}\.[0-9]{2,}', data['location_lat']):
+        #     errors += ('location_lat', 'Incorrect form or length')
 
         # Abort if validation failed
         if errors:
@@ -146,11 +169,8 @@ class SubmissionResource(Resource):
         # Cut precision to neares decade
         birth_year = round(int(data['birth_year']), -1)
         gender = str(data['gender'])
-        location_country_code = str(data['location_country_code'])
-        location_postal_code = str(data['location_postal_code'])
-        # Cut precision to have 3 decimals, not more
-        location_lng = round(float(data['location_lng']), 3)
-        location_lat = round(float(data['location_lat']), 3)
+        location_county_code = str(data['location_county_code'])
+        location_town_name = str(data['location_town_name'])
 
         # Time 1584649859812 when this was written
         if not 1584000000000 < device_id:
@@ -161,11 +181,24 @@ class SubmissionResource(Resource):
 
         # Convert namespace and ensure boolean
         fever_status = bool(data['fever_status'])
-        symptom_difficult_to_breath = bool(data['symptom_difficult_to_breath'])
-        symptom_cough = bool(data['symptom_cough'])
+        symptom_chest_tightness = bool(data['symptom_chest_tightness'])
+        symptom_chills = bool(data['symptom_chills'])
+        symptom_disorientation = bool(data['symptom_disorientation'])
+        symptom_dizziness = bool(data['symptom_dizziness'])
+        symptom_diarrhoea = bool(data['symptom_diarrhoea'])
+        symptom_dry_cough = bool(data['symptom_dry_cough'])
+        symptom_fatigue = bool(data['symptom_fatigue'])
+        symptom_loss_of_smell = bool(data['symptom_loss_of_smell'])
+        symptom_loss_of_taste = bool(data['symptom_loss_of_taste'])
+        symptom_nasal_congestion = bool(data['symptom_nasal_congestion'])
+        symptom_nausea_vomiting = bool(data['symptom_nausea_vomiting'])
+        symptom_muscle_joint_pain = bool(data['symptom_muscle_joint_pain'])
+        symptom_sputum_production = bool(data['symptom_sputum_production'])
+        symptom_shortness_breath = bool(data['symptom_shortness_breath'])
         symptom_sore_throat = bool(data['symptom_sore_throat'])
-        symptom_muscle_pain = bool(data['symptom_muscle_pain'])
-        diagnosed_covid19 = bool(data['diagnosed_covid19'])
+        symptom_headache = bool(data['symptom_headache'])
+
+        diagnosed_covid19 = str(data['diagnosed_covid19'])
 
         if 'fever_temp' in data and data['fever_temp']:
             # Always convert to float if value exists
@@ -203,7 +236,8 @@ class SubmissionResource(Resource):
             last_submission = submitter.submissions[-1]
 
             earliest_next_submission_time = \
-                last_submission.timestamp_modified + datetime.timedelta(hours=1)
+                last_submission.timestamp_modified + \
+                datetime.timedelta(hours=1)
 
             if earliest_next_submission_time > datetime.datetime.now():
                 app.logger.warning(
@@ -238,15 +272,27 @@ class SubmissionResource(Resource):
         submission = Submission(
             fever_status=fever_status,
             fever_temp=fever_temp,
-            symptom_difficult_to_breath=symptom_difficult_to_breath,
-            symptom_cough=symptom_cough,
+
+            symptom_chest_tightness=symptom_chest_tightness,
+            symptom_chills=symptom_chills,
+            symptom_disorientation=symptom_disorientation,
+            symptom_dizziness=symptom_dizziness,
+            symptom_diarrhoea=symptom_diarrhoea,
+            symptom_dry_cough=symptom_dry_cough,
+            symptom_fatigue=symptom_fatigue,
+            symptom_loss_of_smell=symptom_loss_of_smell,
+            symptom_loss_of_taste=symptom_loss_of_taste,
+            symptom_nasal_congestion=symptom_nasal_congestion,
+            symptom_nausea_vomiting=symptom_nausea_vomiting,
+            symptom_muscle_joint_pain=symptom_muscle_joint_pain,
+            symptom_sputum_production=symptom_sputum_production,
+            symptom_shortness_breath=symptom_shortness_breath,
             symptom_sore_throat=symptom_sore_throat,
-            symptom_muscle_pain=symptom_muscle_pain,
+            symptom_headache=symptom_headache,
+
             diagnosed_covid19=diagnosed_covid19,
-            location_country_code=location_country_code,
-            location_postal_code=location_postal_code,
-            location_lng=location_lng,
-            location_lat=location_lat,
+            location_county_code=location_county_code,
+            location_town_name=location_town_name
         )
 
         # Add new submission for submitter
@@ -267,16 +313,26 @@ class SubmissionResource(Resource):
             'device_id': device_id,
             'fever_status': fever_status,
             'fever_temp': fever_temp,
-            'symptom_difficult_to_breath': symptom_difficult_to_breath,
-            'symptom_cough': symptom_cough,
+            'symptom_chest_tightness': symptom_chest_tightness,
+            'symptom_chills': symptom_chills,
+            'symptom_disorientation': symptom_disorientation,
+            'symptom_dizziness': symptom_dizziness,
+            'symptom_diarrhoea': symptom_diarrhoea,
+            'symptom_dry_cough': symptom_dry_cough,
+            'symptom_fatigue': symptom_fatigue,
+            'symptom_loss_of_smell': symptom_loss_of_smell,
+            'symptom_loss_of_taste': symptom_loss_of_taste,
+            'symptom_nasal_congestion': symptom_nasal_congestion,
+            'symptom_nausea_vomiting': symptom_nausea_vomiting,
+            'symptom_muscle_joint_pain': symptom_muscle_joint_pain,
+            'symptom_sputum_production': symptom_sputum_production,
+            'symptom_shortness_breath': symptom_shortness_breath,
             'symptom_sore_throat': symptom_sore_throat,
-            'symptom_muscle_pain': symptom_muscle_pain,
+            'symptom_headache': symptom_headache,
             'diagnosed_covid19': diagnosed_covid19,
             'birth_year': birth_year,
-            'location_country_code': location_country_code,
-            'location_postal_code': location_postal_code,
-            'location_lng': location_lng,
-            'location_lat': location_lat,
+            'location_county_code': location_county_code,
+            'location_town_name': location_town_name,
             'history': history
         }
         return {

@@ -3,11 +3,12 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import Translator from '../util/translator.js';
 import DBUtil, { FEVER_ENTRIES, QUEUED_ENTRIES } from '../util/db-util.js';
-import GeolocatorService from '../services/geolocator-service.js';
 import FeverDataUtil from '../util/fever-data-util.js';
 import '../components/fever-chart.js';
 import GoogleAnalyticsService from '../services/google-analytics-service.js';
 import ScrollService from '../services/scroll-service.js';
+import DataEntryService from '../services/data-entry-service.js';
+import SnackBar from '../components/snackbar.js';
 
 class FevermapDataView extends LitElement {
   static get properties() {
@@ -18,27 +19,26 @@ class FevermapDataView extends LitElement {
       previousSubmissions: { type: Array },
       geoCodingInfo: { type: Object },
       firstTimeSubmitting: { type: Boolean },
+      lastSubmissionIsTooCloseToNow: { type: Boolean },
+      nextAllowedSubmitTime: { type: String },
 
       setGender: { type: String },
       setBirthYear: { type: String },
       setCovidDiagnosis: { type: Boolean },
-      showEditFields: { type: Boolean },
+
+      queuedEntries: { type: Array },
     };
   }
 
   constructor() {
     super();
-
     const submissionCount = localStorage.getItem('SUBMISSION_COUNT');
     const submissionStreak = localStorage.getItem('SUBMISSION_STREAK');
     this.submissionCount = submissionCount || 0;
     this.submissionStreak = submissionStreak || 0;
     dayjs.extend(utc);
 
-    const lastEntryTime = localStorage.getItem('LAST_ENTRY_SUBMISSION_TIME');
-    if (lastEntryTime && lastEntryTime !== 'undefined') {
-      this.lastSubmissionTime = dayjs(Number(lastEntryTime)).format('DD-MM-YYYY : HH:mm');
-    }
+    this.checkLastSubmissionTime();
 
     const gender = localStorage.getItem('GENDER');
     const birthYear = localStorage.getItem('BIRTH_YEAR');
@@ -47,7 +47,6 @@ class FevermapDataView extends LitElement {
     this.setBirthYear = birthYear || '';
     this.setCovidDiagnosis = covidDiagnosis === 'true';
     this.previousSubmissions = null;
-    this.showEditFields = false;
 
     this.firstTimeSubmitting = this.setGender == null || this.setBirthYear == null;
 
@@ -55,7 +54,6 @@ class FevermapDataView extends LitElement {
   }
 
   firstUpdated() {
-    this.getGeoLocationInfo();
     document.addEventListener('update-submission-list', () => {
       this.getPreviousSubmissionsFromIndexedDb();
 
@@ -68,22 +66,30 @@ class FevermapDataView extends LitElement {
 
       this.submissionCount = submissionCount || 0;
       this.submissionStreak = submissionStreak || 0;
+      this.checkLastSubmissionTime();
+    });
+    document.addEventListener('update-queued-count', () => {
+      this.getQueuedEntriesFromIndexedDb();
     });
     if (this.firstTimeSubmitting) {
       this.showEntryDialog();
     }
+    this.getQueuedEntriesFromIndexedDb();
     GoogleAnalyticsService.reportNavigationAction('Your Data View');
   }
 
-  async getGeoLocationInfo(forceUpdate) {
-    if (!this.geoCodingInfo || forceUpdate) {
-      navigator.geolocation.getCurrentPosition(async success => {
-        this.geoCodingInfo = await GeolocatorService.getGeoCodingInfo(
-          success.coords.latitude,
-          success.coords.longitude,
-        );
-        delete this.geoCodingInfo.success;
-      });
+  checkLastSubmissionTime() {
+    const lastEntryTime = localStorage.getItem('LAST_ENTRY_SUBMISSION_TIME');
+    if (lastEntryTime && lastEntryTime !== 'undefined') {
+      this.lastSubmissionTime = dayjs(Number(lastEntryTime)).format('DD-MM-YYYY : HH:mm');
+      this.lastSubmissionIsTooCloseToNow = dayjs(Number(lastEntryTime))
+        .local()
+        .add(1, 'hour')
+        .isAfter(dayjs(Date.now()));
+      this.nextAllowedSubmitTime = dayjs(Number(lastEntryTime))
+        .add(1, 'hour')
+        .local()
+        .format('DD-MM-YYYY : HH:mm');
     }
   }
 
@@ -116,29 +122,39 @@ class FevermapDataView extends LitElement {
     const queuedSubmissions = await db.getAll(QUEUED_ENTRIES);
     if (queuedSubmissions && queuedSubmissions.length > 0) {
       this.queuedEntries = queuedSubmissions;
+    } else {
+      this.queuedEntries = null;
     }
   }
 
   // eslint-disable-next-line class-methods-use-this
   getSymptomsForSubmission(sub) {
-    const symptoms = [
-      {
-        translation: Translator.get('entry.questions.difficulty_to_breathe'),
-        hasSymptom: sub.symptom_difficult_to_breath,
-      },
-      {
-        translation: Translator.get('entry.questions.cough'),
-        hasSymptom: sub.symptom_cough,
-      },
-      {
-        translation: Translator.get('entry.questions.sore_throat'),
-        hasSymptom: sub.symptom_sore_throat,
-      },
-      {
-        translation: Translator.get('entry.questions.muscular_pain'),
-        hasSymptom: sub.symptom_muscle_pain,
-      },
+    const possibleSymptoms = [
+      'chest_tightness',
+      'chills',
+      'disorientation',
+      'dizziness',
+      'diarrhoea',
+      'dry_cough',
+      'fatigue',
+      'loss_of_smell',
+      'loss_of_taste',
+      'nasal_congestion',
+      'nausea_vomiting',
+      'muscle_joint_pain',
+      'sputum_production',
+      'shortness_breath',
+      'sore_throat',
+      'headache',
     ];
+    console.log(sub);
+    const symptoms = [];
+    for (let symptom of possibleSymptoms) {
+      symptoms.push({
+        translation: Translator.get(`entry.questions.${symptom}`),
+        hasSymptom: sub[`symptom_${symptom}`],
+      });
+    }
     return symptoms.filter(symp => symp.hasSymptom);
   }
 
@@ -165,6 +181,39 @@ class FevermapDataView extends LitElement {
     localStorage.setItem('COVID_DIAGNOSIS', this.setCovidDiagnosis);
   }
 
+  async syncQueuedEntries() {
+    const db = await DBUtil.getInstance();
+    let successfulSyncCount = 0;
+    await this.queuedEntries.map(async (entry, i) => {
+      const { id } = entry;
+      // delete entry.id;
+      const submissionResponse = await DataEntryService.handleDataEntrySubmission(entry, false);
+      if (submissionResponse.success) {
+        db.delete(QUEUED_ENTRIES, id);
+        DataEntryService.setEntriesToIndexedDb(submissionResponse);
+        successfulSyncCount += 1;
+      } else {
+        SnackBar.success(Translator.get('system_messages.success.entry_send_failed_queued'));
+      }
+      if (i === this.queuedEntries.length - 1) {
+        if (successfulSyncCount > 0) {
+          this.getQueuedEntriesFromIndexedDb();
+          this.getPreviousSubmissionsFromIndexedDb();
+          SnackBar.success(Translator.get('system_messages.success.sync_finished'));
+        }
+      }
+    });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  showSubmissionTooCloseSnackbar() {
+    SnackBar.success(
+      Translator.get('system_messages.error.do_not_submit_new_temp_until', {
+        dateTime: this.nextAllowedSubmitTime,
+      }),
+    );
+  }
+
   render() {
     return html`
       <div class="container view-wrapper fevermap-entry-view">
@@ -172,8 +221,12 @@ class FevermapDataView extends LitElement {
           <div class="entry-history-title-area">
             <h2>${Translator.get('history.title')}</h2>
             <material-button
-              @button-clicked="${this.showEntryDialog}"
-              class="add-new-entry-button"
+              @button-clicked="${this.lastSubmissionIsTooCloseToNow
+                ? this.showSubmissionTooCloseSnackbar
+                : this.showEntryDialog}"
+              class="add-new-entry-button${this.lastSubmissionIsTooCloseToNow
+                ? ' add-new-entry-button--disabled'
+                : ''}"
               icon="add_circle"
               label="${Translator.get('history.add_entry')}"
             ></material-button>
@@ -199,7 +252,18 @@ class FevermapDataView extends LitElement {
                 <p class="statistics-field--subtitle">${Translator.get('history.measurements')}</p>
               </div>
             </div>
-            ${this.createPersistentDataFields()}
+            ${this.queuedEntries && this.queuedEntries.length > 0
+              ? html`
+                  <div class="queued-entries">
+                    <p>${Translator.get('entry.queued_entries')}</p>
+                    <material-button
+                      label="${Translator.get('entry.send_now')}"
+                      icon="sync"
+                      @click="${() => this.syncQueuedEntries()}"
+                    ></material-button>
+                  </div>
+                `
+              : ''}
             <div class="previous-submissions-list">
               ${this.previousSubmissions &&
                 this.previousSubmissions.map((sub, i) => {
@@ -291,94 +355,6 @@ class FevermapDataView extends LitElement {
     }
     return html`
       <material-icon class="green-text" icon="done"></material-icon>
-    `;
-  }
-
-  createPersistentDataFields() {
-    if (!this.setBirthYear && !this.setGender) {
-      return html``;
-    }
-    return html`
-      <div class="persistent-info-fields">
-        <p>
-          ${Translator.get('user_description', {
-            age: this.getAge(),
-            gender: this.getGenderTranslated(),
-            diagnosis: this.getCovidStatusTranslated(),
-          })}.
-        </p>
-        <material-icon
-          icon="edit"
-          @click="${() => {
-            this.showEditFields = !this.showEditFields;
-          }}"
-        ></material-icon>
-      </div>
-      <div
-        class="persistent-info-editing-fields ${this.showEditFields
-          ? ''
-          : ' persistent-info-editing-fields--hidden'}"
-      >
-        <div class="persistent-info-editing-fields--age-input">
-          <p>${Translator.get('entry.questions.birth_year')}</p>
-          <input-field
-            @input-blur="${e => this.handleAgeChange(e.detail.age)}"
-            placeHolder=${Translator.get('entry.questions.birth_year_placeholder')}
-            fieldId="year-of-birth-input"
-            id="birth-year"
-            value="${this.setBirthYear}"
-            type="number"
-          ></input-field>
-        </div>
-
-        <div class="persistent-info-editing-fields--gender-input">
-          <p>${Translator.get('entry.questions.gender_in_passport')}</p>
-          <gender-input
-            gender="${this.setGender}"
-            @gender-changed="${e => this.handleGenderChange(e.detail.gender)}"
-          ></gender-input>
-        </div>
-        <p>${Translator.get('entry.questions.positive_covid_diagnosis')}</p>
-        <div
-          class="persistent-info-editing-fields--covid-input"
-          @click="${() => this.handleCovidDiagnosisChange()}"
-        >
-          <div class="mdc-form-field">
-            <div class="mdc-checkbox">
-              <input
-                type="checkbox"
-                class="mdc-checkbox__native-control"
-                id="covid-diagnosed"
-                ?checked="${this.covidDiagnosed}"
-              />
-              <div class="mdc-checkbox__background">
-                <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
-                  <path
-                    class="mdc-checkbox__checkmark-path"
-                    fill="none"
-                    d="M1.73,12.91 8.1,19.28 22.79,4.59"
-                  />
-                </svg>
-                <div class="mdc-checkbox__mixedmark"></div>
-              </div>
-              <div class="mdc-checkbox__ripple"></div>
-            </div>
-            <label for="checkbox-1"
-              >${Translator.get('entry.questions.positive_covid_diagnosis')}</label
-            >
-          </div>
-        </div>
-        <div class="persistent-info-editing-fields--submit-button">
-          <material-button
-            @click="${() => {
-              this.showEditFields = false;
-              ScrollService.scrollToTop();
-            }}"
-            icon="save"
-            label="${Translator.get('entry.save')}"
-          ></material-button>
-        </div>
-      </div>
     `;
   }
 

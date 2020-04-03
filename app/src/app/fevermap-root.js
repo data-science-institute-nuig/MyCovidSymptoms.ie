@@ -1,5 +1,7 @@
 import { LitElement, html } from 'lit-element';
 import './views/fevermap-landing.js';
+import './views/fevermap-landing-cookie-policy.js';
+import './views/fevermap-landing-privacy-policy.js';
 import './views/fevermap-stats.js';
 import './views/fevermap-data-entry.js';
 import './views/fevermap-data-view.js';

@@ -2,9 +2,6 @@
 import { LitElement, html } from 'lit-element';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { MDCCheckbox } from '@material/checkbox/component';
-import dayjs from 'dayjs';
-import dayOfYear from 'dayjs/plugin/dayOfYear';
-import GeolocatorService from '../services/geolocator-service.js';
 import '../components/input-field.js';
 import '../components/select-field.js';
 import SnackBar from '../components/snackbar.js';
@@ -16,6 +13,7 @@ import FeverDataUtil from '../util/fever-data-util.js';
 import '../components/gender-input.js';
 import GoogleAnalyticsService from '../services/google-analytics-service.js';
 import PWAService from '../services/pwa-service.js';
+import IrishTownsService from '../services/irish-towns-service.js';
 
 class FevermapDataEntry extends LitElement {
   static get properties() {
@@ -41,7 +39,7 @@ class FevermapDataEntry extends LitElement {
       questionCount: { type: Number },
 
       symptoms: { type: Array },
-      covidDiagnosed: { type: Boolean },
+      covidDiagnosed: { type: String },
     };
   }
 
@@ -51,7 +49,7 @@ class FevermapDataEntry extends LitElement {
     const lastLocation = localStorage.getItem('LAST_LOCATION');
     const gender = localStorage.getItem('GENDER');
     const birthYear = localStorage.getItem('BIRTH_YEAR');
-    const covidDiagnosed = localStorage.getItem('COVID_DIAGNOSIS');
+    const diagnosedCovid19 = localStorage.getItem('COVID_DIAGNOSIS');
 
     this.errorMessage = null;
     this.hasFever = null;
@@ -59,72 +57,61 @@ class FevermapDataEntry extends LitElement {
     this.feverAmountNotKnown = false;
     this.birthYear = birthYear || null;
     this.gender = gender || null;
+    this.covidDiagnosed = diagnosedCovid19 || null;
     this.location = latestEntry ? latestEntry.location : null;
     this.latestEntry = latestEntry || null;
     this.geoCodingInfo = latestEntry ? JSON.parse(lastLocation) : null;
-    this.covidDiagnosed = covidDiagnosed === 'true';
 
     this.firstTimeSubmitting = this.gender == null || this.birthYear == null;
 
-    this.createCountrySelectOptions();
+    this.createCountySelectOptions();
+    this.createTownSelectOptions();
     this.queuedEntries = [];
 
     this.currentQuestion = 1;
-    this.questionCount = 4;
+    this.questionCount = 6;
     this.symptoms = [];
   }
 
   firstUpdated() {
     this.initSlider();
-    this.getGeoLocationInfo();
     this.carouselWrapper = this.querySelector('.fevermap-data-entry-content');
     if (!this.firstTimeSubmitting) {
       setTimeout(() => {
         this.nextQuestion();
       });
     }
+    this.selectTestResult(this.diagnosed_covid19);
   }
 
-  createCountrySelectOptions() {
-    this.countrySelectionOptions = GeolocatorService.getCountryList().map(entry => ({
-      id: entry.country.country_id,
-      name: `${entry.country.country_name.substring(0, 1)}${entry.country.country_name
-        .substring(1)
-        .toLowerCase()} (${entry.country.country_id})`,
+  createCountySelectOptions() {
+    this.countySelectionOptions = IrishTownsService.getCounties().map(entry => ({
+      id: entry.county.county_id,
+      name: `${entry.county.county_name} (${entry.county.county_id})`,
+      towns: entry.county.towns,
     }));
-    this.selectedCountryIndex = 0;
+    this.selectedCountyIndex = 0;
   }
 
-  async getGeoLocationInfo(forceUpdate) {
-    if (!this.geoCodingInfo || forceUpdate) {
-      navigator.geolocation.getCurrentPosition(async success => {
-        this.geoCodingInfo = await GeolocatorService.getGeoCodingInfo(
-          success.coords.latitude,
-          success.coords.longitude,
-        );
+  createTownSelectOptions() {
+    this.townSelectionOptions = [
+      {
+        id: 0,
+        name: `Please select a county first`,
+      },
+    ];
+    this.selectedTownIndex = 0;
+  }
 
-        delete this.geoCodingInfo.success;
-
-        const countryInSelect = this.countrySelectionOptions.find(
-          opt => opt.id === this.geoCodingInfo.countryShort,
-        );
-        if (countryInSelect) {
-          this.selectedCountryIndex = this.countrySelectionOptions.indexOf(countryInSelect) + 1; // Take into account the empty option
-        }
-
-        this.performUpdate();
-        if (forceUpdate) {
-          SnackBar.success(Translator.get('system_messages.success.location_update'));
-        }
-      });
-    } else {
-      const countryInSelect = this.countrySelectionOptions.find(
-        opt => opt.id === this.geoCodingInfo.countryShort,
-      );
-      if (countryInSelect) {
-        this.selectedCountryIndex = this.countrySelectionOptions.indexOf(countryInSelect) + 1; // Take into account the empty option
-      }
-    }
+  updateTownSelectOpts(countyName) {
+    let selectedCounty = this.countySelectionOptions.filter(
+      county => county.name.toLowerCase() === countyName,
+    )[0];
+    this.townSelectionOptions = selectedCounty.towns.map(town => ({
+      id: town,
+      name: town,
+    }));
+    this.requestUpdate('townSelectionOptions');
   }
 
   handleFeverButton(hasFever) {
@@ -229,16 +216,26 @@ class FevermapDataEntry extends LitElement {
     feverData.birth_year = this.birthYear;
     feverData.gender = this.gender;
 
-    feverData.location_country_code = geoCodingInfo.country_code;
-    feverData.location_postal_code = geoCodingInfo.postal_code;
-    feverData.location_lng = geoCodingInfo.location_lng.toFixed(7);
-    feverData.location_lat = geoCodingInfo.location_lat.toFixed(7);
+    feverData.location_county_code = geoCodingInfo.county_code;
+    feverData.location_town_name = geoCodingInfo.town_name;
 
     const possibleSymptoms = [
-      'symptom_difficult_to_breath',
-      'symptom_cough',
+      'symptom_chest_tightness',
+      'symptom_chills',
+      'symptom_disorientation',
+      'symptom_dizziness',
+      'symptom_diarrhoea',
+      'symptom_dry_cough',
+      'symptom_fatigue',
+      'symptom_loss_of_smell',
+      'symptom_loss_of_taste',
+      'symptom_nasal_congestion',
+      'symptom_nausea_vomiting',
+      'symptom_muscle_joint_pain',
+      'symptom_sputum_production',
+      'symptom_shortness_breath',
       'symptom_sore_throat',
-      'symptom_muscle_pain',
+      'symptom_headache',
     ];
     possibleSymptoms.forEach(symp => {
       feverData[symp] = this.symptoms.includes(symp);
@@ -306,12 +303,7 @@ class FevermapDataEntry extends LitElement {
   }
 
   locationDataIsInvalid(feverData) {
-    return (
-      !feverData.location_country_code ||
-      !feverData.location_postal_code ||
-      !feverData.location_lng ||
-      !feverData.location_lat
-    );
+    return !feverData || !feverData.location_town_name;
   }
 
   async handleSubmit() {
@@ -348,75 +340,19 @@ class FevermapDataEntry extends LitElement {
     localStorage.setItem('COVID_DIAGNOSIS', feverData.diagnosed_covid19);
     localStorage.setItem('LAST_ENTRY_SUBMISSION_TIME', submissionTime);
 
-    this.lastSubmissionIsTooCloseToNow = true;
-
     if (!entryGotQueued) {
-      this.addEntriesToIndexedDb(submissionResponse);
+      DataEntryService.setEntriesToIndexedDb(submissionResponse);
       SnackBar.success(Translator.get('system_messages.success.data_entry'));
 
       GoogleAnalyticsService.reportSubmission();
       PWAService.launchInstallDialog();
       this.closeView();
     } else {
-      SnackBar.success(Translator.get('system_messages.success.offline_entry_queued'));
+      document.dispatchEvent(new CustomEvent('update-queued-count'));
+      SnackBar.success(Translator.get('system_messages.success.entry_send_failed_queued'));
+      this.closeView();
     }
     ScrollService.scrollToTop();
-  }
-
-  async addEntriesToIndexedDb(submissionResponse) {
-    const submissionHistory = submissionResponse.data.history;
-
-    if (submissionResponse && submissionHistory != null) {
-      const db = await DBUtil.getInstance();
-
-      // Check entries returned as history from API, and see if there are values that don't match
-      // the values in IDB. if yes, delete those values to make room for new ones.
-
-      // Example is if you've prodded with the DB and changed the timestamp_modified for example.
-      const allEntries = await db.getAll(FEVER_ENTRIES);
-      const submissionHistoryTimeStamps = submissionHistory.map(entry => entry.timestamp);
-      allEntries.map(async entry => {
-        if (!submissionHistoryTimeStamps.includes(entry.timestamp)) {
-          await db.delete(FEVER_ENTRIES, entry.timestamp);
-        }
-      });
-
-      const submissionHistoryLength = submissionHistory.length - 1;
-      submissionHistory.map(async (submission, i) => {
-        const entryInDb = await db.get(FEVER_ENTRIES, submission.timestamp);
-        if (!entryInDb) {
-          await db.add(FEVER_ENTRIES, submission);
-        }
-        if (i >= submissionHistoryLength) {
-          document.dispatchEvent(new CustomEvent('update-submission-list'));
-        }
-      });
-
-      localStorage.setItem('SUBMISSION_COUNT', submissionHistoryLength + 1);
-      localStorage.setItem('SUBMISSION_STREAK', this.determineStreak(submissionHistory));
-    }
-  }
-
-  determineStreak(history) {
-    const dates = history.map(entry => dayjs(entry.timestamp));
-    const latest = dates.sort((a, b) => b.unix() - a.unix())[0];
-
-    let streak = 1;
-    let streakWasBroken = false;
-    let dateToFind = latest;
-    dayjs.extend(dayOfYear);
-
-    while (!streakWasBroken) {
-      dateToFind = dateToFind.subtract(1, 'day');
-      const dayOfYearToFind = dateToFind.dayOfYear();
-      const entriesOnDate = dates.find(date => date.dayOfYear() === dayOfYearToFind);
-      if (entriesOnDate > 0) {
-        streak += 1;
-      } else {
-        streakWasBroken = true;
-      }
-    }
-    return streak;
   }
 
   closeView() {
@@ -457,26 +393,14 @@ class FevermapDataEntry extends LitElement {
   }
 
   async getGeoCodingInputInfo() {
-    const postalCode = this.querySelector('#location-postal-code').getValue();
-    const country = this.querySelector('#location-country').getValue();
-
-    const geoCodingInfo = await GeolocatorService.getGeoCodingInfoByPostalCodeAndCountry(
-      postalCode,
-      country.value.id,
-    );
-    localStorage.setItem('LAST_LOCATION', JSON.stringify(geoCodingInfo));
-
-    if (!geoCodingInfo.countryShort || !geoCodingInfo.coords || !geoCodingInfo.postal_code) {
-      SnackBar.error(Translator.get('system_messages.error.location_data_invalid'));
-      return null;
-    }
-
-    return {
-      country_code: geoCodingInfo.countryShort,
-      location_lat: geoCodingInfo.coords.lat,
-      location_lng: geoCodingInfo.coords.lng,
-      postal_code: geoCodingInfo.postal_code,
+    const town = this.querySelector('#location-town').getValue();
+    const county = this.querySelector('#location-county').getValue();
+    const locationData = {
+      county_code: county.value.id,
+      town_name: town.value.name,
     };
+    localStorage.setItem('LAST_LOCATION', JSON.stringify(locationData));
+    return locationData;
   }
 
   handlePersonalInfoSubmit() {
@@ -484,8 +408,23 @@ class FevermapDataEntry extends LitElement {
     if (!this.validateAge(this.birthYear) || !this.validateGender(this.gender)) {
       return;
     }
+    let townSelect = this.querySelector('#location-town').getValue();
+    let countySelect = this.querySelector('#location-county').getValue();
+    if (!townSelect.value || !countySelect.value) {
+      this.errorMessage = Translator.get('system_messages.error.location_data_invalid');
+      SnackBar.error(this.errorMessage);
+      return false;
+    }
     this.nextQuestion();
   }
+
+  // handlePersonalInfoSubmit() {
+  //   this.birthYear = this.querySelector('#birth-year').getValue();
+  //   if (!this.validateAge(this.birthYear) || !this.validateGender(this.gender)) {
+  //     return;
+  //   }
+  //   this.nextQuestion();
+  // }
 
   handleFeverInfoSubmit() {
     this.nextQuestion();
@@ -498,12 +437,9 @@ class FevermapDataEntry extends LitElement {
     if (!hasFever) {
       // Skip symptoms
       this.nextQuestion();
+      this.nextQuestion();
+      this.nextQuestion();
     }
-  }
-
-  handleSymptomSubmit() {
-    this.covidDiagnosed = this.querySelector('#covid-diagnosed').checked;
-    this.nextQuestion();
   }
 
   previousQuestion() {
@@ -568,12 +504,29 @@ class FevermapDataEntry extends LitElement {
     }
   }
 
+  handleTestSelect(e) {
+    let { target } = e;
+    if (e.target.nodeName === 'P') {
+      target = target.parentNode;
+    }
+    this.covidDiagnosed = e.target.id;
+    let testResultOptions = ['positive', 'negative', 'awaitingTests', 'unTested'];
+    for (let testResultOption of testResultOptions) {
+      document.getElementById(`test_${testResultOption}`).classList.remove('symptom--selected');
+    }
+    target.classList.add('symptom--selected');
+  }
+
+  selectTestResult(testResult) {
+    if (testResult) document.getElementById(`${testResult}`).classList.add('symptom--selected');
+  }
+
   render() {
     return html`
       <div class="container view-wrapper fevermap-entry-dialog fevermap-entry-dialog--hidden">
         <div class="fevermap-data-entry-content">
           <div
-            class="fevermap-entry-carousel${this.questionCount === 4
+            class="fevermap-entry-carousel${this.questionCount === 6
               ? ' fevermap-entry-carousel--full-width'
               : ' fevermap-entry-carousel--smaller-width'}"
           >
@@ -585,6 +538,28 @@ class FevermapDataEntry extends LitElement {
   }
 
   renderQuestions() {
+    const symptomsPage1 = [
+      'chest_tightness',
+      'chills',
+      'disorientation',
+      'dizziness',
+      'diarrhoea',
+      'dry_cough',
+    ];
+    const symptomsPage2 = [
+      'fatigue',
+      'loss_of_smell',
+      'loss_of_taste',
+      'nasal_congestion',
+      'nausea_vomiting',
+    ];
+    const symptomsPage3 = [
+      'muscle_joint_pain',
+      'sputum_production',
+      'shortness_breath',
+      'sore_throat',
+      'headache',
+    ];
     return html`
       <div class="entry-dialog-close-button">
         <material-icon @click="${this.closeView}" icon="close"></material-icon>
@@ -599,13 +574,22 @@ class FevermapDataEntry extends LitElement {
         class="fevermap-entry-window mdc-elevation--z9 fevermap-other-symptoms-questions"
         id="question-3"
       >
-        ${this.getSymptomsFields()}
+        ${this.getSymptomsFields(3, symptomsPage1)}
       </div>
       <div
-        class="fevermap-entry-window mdc-elevation--z9 fevermap-location-questions"
+        class="fevermap-entry-window mdc-elevation--z9 fevermap-other-symptoms-questions"
         id="question-4"
       >
-        ${this.getGeoLocationInput()}
+        ${this.getSymptomsFields(4, symptomsPage2)}
+      </div>
+      <div
+        class="fevermap-entry-window mdc-elevation--z9 fevermap-other-symptoms-questions"
+        id="question-5"
+      >
+        ${this.getSymptomsFields(5, symptomsPage3)}
+      </div>
+      <div class="fevermap-entry-window mdc-elevation--z9 fevermap-fever-questions" id="question-6">
+        ${this.getTestFields()}
       </div>
     `;
   }
@@ -620,7 +604,7 @@ class FevermapDataEntry extends LitElement {
       <div class="question-number-holder">
         1/${this.questionCount}
       </div>
-      ${this.getYearOfBirthInput()} ${this.getGenderInput()}
+      ${this.getYearOfBirthInput()} ${this.getGenderInput()} ${this.getIrishLocationInput()}
       <div class="proceed-button">
         <button class="mdc-button mdc-button--raised" @click="${this.handlePersonalInfoSubmit}">
           <div class="mdc-button__ripple"></div>
@@ -723,60 +707,72 @@ class FevermapDataEntry extends LitElement {
     `;
   }
 
-  getSymptomsFields() {
+  getTestFields() {
     return html`
       <div class="back-button" @click="${this.previousQuestion}">
         <material-icon icon="keyboard_arrow_left"></material-icon>${Translator.get('back')}
       </div>
       <div class="question-number-holder">
-        3/${this.questionCount}
+        6/${this.questionCount}
       </div>
       <div class="title-holder">
-        <h2>${Translator.get('entry.new_entry')}</h2>
-        <p class="symptoms-title">${Translator.get('entry.questions.other_symptoms')}</p>
+        <h3>${Translator.get('entry.questions.covid_diagnosis')}</h3>
       </div>
-      <p class="subtitle">${Translator.get('entry.questions.choose_all_that_apply')}</p>
+      <p class="subtitle">${Translator.get('entry.questions.choose_only_one')}</p>
       <div class="symptom-holder">
-        <div class="symptom" id="symptom_difficult_to_breath" @click="${this.handleSymptomAdd}">
-          <p>${Translator.get('entry.questions.difficulty_to_breathe')}</p>
+        <div class="symptom" id="test_positive" @click="${this.handleTestSelect}">
+          <p>${Translator.get('entry.questions.positive')}</p>
         </div>
-        <div class="symptom" id="symptom_cough" @click="${this.handleSymptomAdd}">
-          <p>${Translator.get('entry.questions.cough')}</p>
+        <div class="symptom" id="test_negative" @click="${this.handleTestSelect}">
+          <p>${Translator.get('entry.questions.negative')}</p>
         </div>
-        <div class="symptom" id="symptom_sore_throat" @click="${this.handleSymptomAdd}">
-          <p>${Translator.get('entry.questions.sore_throat')}</p>
+        <div class="symptom" id="test_awaitingTests" @click="${this.handleTestSelect}">
+          <p>${Translator.get('entry.questions.awaitingTests')}</p>
         </div>
-        <div class="symptom" id="symptom_muscle_pain" @click="${this.handleSymptomAdd}">
-          <p>${Translator.get('entry.questions.muscular_pain')}</p>
+        <div class="symptom" id="test_unTested" @click="${this.handleTestSelect}">
+          <p>${Translator.get('entry.questions.unTested')}</p>
         </div>
       </div>
 
-      <div class="mdc-form-field">
-        <div class="mdc-checkbox">
-          <input
-            type="checkbox"
-            class="mdc-checkbox__native-control"
-            id="covid-diagnosed"
-            ?checked="${this.covidDiagnosed}"
-          />
-          <div class="mdc-checkbox__background">
-            <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
-              <path
-                class="mdc-checkbox__checkmark-path"
-                fill="none"
-                d="M1.73,12.91 8.1,19.28 22.79,4.59"
-              />
-            </svg>
-            <div class="mdc-checkbox__mixedmark"></div>
-          </div>
-          <div class="mdc-checkbox__ripple"></div>
-        </div>
-        <label for="checkbox-1"
-          >${Translator.get('entry.questions.positive_covid_diagnosis')}</label
-        >
-      </div>
       <div class="proceed-button">
-        <button class="mdc-button mdc-button--raised" @click="${this.handleSymptomSubmit}">
+        <button class="mdc-button mdc-button--raised" @click="${this.handleSubmit}">
+          <div class="mdc-button__ripple"></div>
+          <i class="material-icons mdc-button__icon" aria-hidden="true">done</i>
+          <span class="mdc-button__label">${Translator.get('entry.questions.set_diagnosis')}</span>
+        </button>
+      </div>
+    `;
+  }
+
+  getSymptomsFields(pageNumber, symptoms) {
+    let symptomButtons = '';
+    for (let symptom of symptoms) {
+      let symptomButton = html`
+        <div class="symptom" id="symptom_${symptom}" @click="${this.handleSymptomAdd}">
+          <p>${Translator.get(`entry.questions.${symptom}`)}</p>
+        </div>
+      `;
+      symptomButtons = html`
+        ${symptomButtons} ${symptomButton}
+      `;
+    }
+    return html`
+      <div class="back-button" @click="${this.previousQuestion}">
+        <material-icon icon="keyboard_arrow_left"></material-icon>${Translator.get('back')}
+      </div>
+      <div class="question-number-holder">
+        ${pageNumber}/${this.questionCount}
+      </div>
+      <div class="title-holder">
+        <h2>${Translator.get('entry.symptoms')}</h2>
+      </div>
+      <p class="subtitle">${Translator.get('entry.questions.choose_all_that_apply')}</p>
+      <div class="symptom-holder">
+        ${symptomButtons}
+      </div>
+
+      <div class="proceed-button">
+        <button class="mdc-button mdc-button--raised" @click="${this.nextQuestion}">
           <div class="mdc-button__ripple"></div>
 
           <i class="material-icons mdc-button__icon" aria-hidden="true">done</i>
@@ -786,58 +782,32 @@ class FevermapDataEntry extends LitElement {
     `;
   }
 
-  getGeoLocationInput() {
+  getIrishLocationInput() {
     return html`
-      <div class="back-button" @click="${this.previousQuestion}">
-        <material-icon icon="keyboard_arrow_left"></material-icon>${Translator.get('back')}
-      </div>
-      <div class="question-number-holder">
-        4/${this.questionCount}
-      </div>
       <div class="title-holder">
-        <h2>${Translator.get('entry.new_entry')}</h2>
         <p>${Translator.get('entry.questions.whats_your_location')}</p>
       </div>
       <div class="entry-field">
-        <div class="location-select-fields">
+        <div
+          @update-town="${e => {
+            this.updateTownSelectOpts(e.detail.county);
+          }}"
+          class="location-select-fields"
+        >
           <select-field
-            id="location-country"
-            label="${Translator.get('entry.questions.country')}"
-            .options="${this.countrySelectionOptions}"
-            selectedValueIndex="${this.selectedCountryIndex}"
+            id="location-county"
+            label="${Translator.get('entry.questions.county')}"
+            .options="${this.countySelectionOptions}"
+            selectedValueIndex="${this.selectedCountyIndex}"
           ></select-field>
-          <input-field
-            placeHolder="${Translator.get('entry.questions.postal_code')}"
-            fieldId="location-postal-code"
-            id="location-postal-code"
-            value="${this.geoCodingInfo && this.geoCodingInfo.postal_code
-              ? this.geoCodingInfo.postal_code
-              : ''}"
-          ></input-field>
-        </div>
-        <p class="subtitle">
-          ${Translator.get('entry.questions.location_change_subtitle')}
-        </p>
-        <div class="geolocation-button">
-          <button
-            class="mdc-button mdc-button--outlined"
-            @click="${() => this.getGeoLocationInfo(true)}"
-          >
-            <div class="mdc-button__ripple"></div>
 
-            <i class="material-icons mdc-button__icon" aria-hidden="true">my_location</i>
-            <span class="mdc-button__label">${Translator.get('entry.questions.use_gps')}</span>
-          </button>
+          <select-field
+            id="location-town"
+            label="${Translator.get('entry.questions.town')}"
+            .options="${this.townSelectionOptions}"
+            selectedValueIndex="${this.selectedTownIndex}"
+          ></select-field>
         </div>
-      </div>
-
-      <div class="proceed-button">
-        <button class="mdc-button mdc-button--raised" @click="${this.handleSubmit}">
-          <i class="material-icons mdc-button__icon" aria-hidden="true">done</i>
-          <span class="mdc-button__label"
-            >${Translator.get('entry.questions.set_location_and_submit')}</span
-          >
-        </button>
       </div>
     `;
   }
