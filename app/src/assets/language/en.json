@@ -143,8 +143,8 @@
   },
   "dialog": {
     "pwa_installer": {
-      "title": "Install Fevermap",
-      "content": "Fevermap can be installed as a Progressive Web Application. If installed, we can provide you with great extra features like faster runtime and push notifications (coming soon).",
+      "title": "Install MyCovidSymptoms",
+      "content": "MyCovidSymptoms can be installed as a Progressive Web Application. If installed, we can provide you with great extra features like faster runtime and push notifications (coming soon).",
       "approve_text": "Install",
       "decline_text": "Maybe later"
     }
