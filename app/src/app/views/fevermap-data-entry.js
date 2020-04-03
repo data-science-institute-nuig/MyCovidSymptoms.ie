@@ -242,7 +242,6 @@ class FevermapDataEntry extends LitElement {
     });
 
     feverData.diagnosed_covid19 = this.covidDiagnosed;
-
     return feverData;
   }
 
@@ -393,12 +392,22 @@ class FevermapDataEntry extends LitElement {
   }
 
   async getGeoCodingInputInfo() {
-    const town = this.querySelector('#location-town').getValue();
-    const county = this.querySelector('#location-county').getValue();
-    const locationData = {
-      county_code: county.value.id,
-      town_name: town.value.name,
-    };
+    let locationData = {};
+    console.log('(!this.geoCodingInfo) ', !this.geoCodingInfo);
+    console.log('(geoCodingInfo) ', this.geoCodingInfo);
+    if (!this.geoCodingInfo) {
+      const town = this.querySelector('#location-town').getValue();
+      const county = this.querySelector('#location-county').getValue();
+      locationData = {
+        county_code: county.value.id,
+        town_name: town.value.name,
+      };
+    } else {
+      locationData = {
+        county_code: this.geoCodingInfo.county_code,
+        town_name: this.geoCodingInfo.town_name,
+      };
+    }
     localStorage.setItem('LAST_LOCATION', JSON.stringify(locationData));
     return locationData;
   }
@@ -417,14 +426,6 @@ class FevermapDataEntry extends LitElement {
     }
     this.nextQuestion();
   }
-
-  // handlePersonalInfoSubmit() {
-  //   this.birthYear = this.querySelector('#birth-year').getValue();
-  //   if (!this.validateAge(this.birthYear) || !this.validateGender(this.gender)) {
-  //     return;
-  //   }
-  //   this.nextQuestion();
-  // }
 
   handleFeverInfoSubmit() {
     this.nextQuestion();
