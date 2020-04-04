@@ -111,6 +111,8 @@ class FevermapDataEntry extends LitElement {
   }
 
   updateTownSelectOpts(countyName) {
+    let townElement = document.querySelector('#location-town div.mdc-select__selected-text');
+    // this.querySelector('#location-town').init();
     let selectedCounty = this.countySelectionOptions.filter(
       county => county.name.toLowerCase() === countyName,
     )[0];
@@ -119,6 +121,7 @@ class FevermapDataEntry extends LitElement {
       name: town,
     }));
     this.requestUpdate('townSelectionOptions');
+    this.selectedTownIndex = this.querySelector('#location-town').getValue().index;
   }
 
   handleFeverButton(hasFever) {
@@ -161,7 +164,6 @@ class FevermapDataEntry extends LitElement {
       this.handleCommaInput(e);
       this.feverAmount = FeverDataUtil.fahrenheitToCelsius(e.target.value);
       celcius.value = this.feverAmount;
-      tempMeter.value = this.feverAmount;
     });
 
     celcius.addEventListener('focus', e => {
@@ -400,8 +402,6 @@ class FevermapDataEntry extends LitElement {
 
   async getGeoCodingInputInfo() {
     let locationData = {};
-    console.log('(!this.geoCodingInfo) ', !this.geoCodingInfo);
-    console.log('(geoCodingInfo) ', this.geoCodingInfo);
     if (!this.geoCodingInfo) {
       const town = this.querySelector('#location-town').getValue();
       const county = this.querySelector('#location-county').getValue();
