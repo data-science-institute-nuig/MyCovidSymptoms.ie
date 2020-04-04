@@ -1,6 +1,6 @@
 {
-  "name": "Fevermap",
-  "short_name": "Fevermap",
+  "name": "MyCovidSymptoms",
+  "short_name": "MyCovidSymptoms",
   "theme_color": "#2196f3",
   "background_color": "#2196f3",
   "display": "standalone",

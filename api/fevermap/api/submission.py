@@ -82,9 +82,9 @@ class SubmissionResource(Resource):
         # No need to care about header name case as Flask always normalizes
         # them to the same camel-case forma
         if 'X-Real-Ip' in request.headers:
-            data['X-Real-Ip'] = request.headers['X-Real-Ip']
+            data['X-Real-Ip-Hashed'] = hash(request.headers['X-Real-Ip'])
         if 'X-Forwarded-For' in request.headers:
-            data['X-Forwarded-For'] = request.headers['X-Forwarded-For']
+            data['X-Forwarded-For-Hashed'] = hash(request.headers['X-Forwarded-For'])
 
         app.logger.info('Processing: {}'.format(data))
 
