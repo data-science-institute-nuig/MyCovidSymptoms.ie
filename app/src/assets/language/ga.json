@@ -1,7 +1,7 @@
 {
   "lang_name": "Gaeilge",
   "language": "Teanga",
-  "fevermap_title": "Fevermap",
+  "fevermap_title": "MyCovidSymptoms",
   "back": "Siar",
   "today": "Inniu",
   "user_description": "Tá tú %{age} -bliain d'aois %{gender}, le %{diagnosis}",
@@ -10,21 +10,29 @@
 
   "landing": {
     "about": "Faoi",
-    "about_title": "Cad é Fevermap?",
-    "about_content_explanation": " Is feidhm don ghréasán agus móibíleach é cruthaite chun sonraí simplí agus fíor-am a chur ar fáil mar gheall ar an paindéím de COVID 19",
-    "about_current_methods": "Ní thugann na modhanna atá ann faoi láthair léargas iomlán de cé chomh coitianta is atá an Córónvírús. Tá méid mór daoine nach ndearna tástáil orthu mar gheall ar easpa ama agus áiseanna.",
-    "about_solution": "S'éárd atá i gceist le Fevermap ná réiteach ar an bhfadhb seo. Le Fevermap, is féidir le gnáth daoine mórthimpeall an domhain a cuid fiabhras agus stiomptoim a thuairisciú. Ciallaíonn sé sin gur féidir linn a thomhas cé chomh coitianta is atá an galar in fíor am agus tugann sé sonraí do na húdaráis chun cinnithe cruinn, bunaithe ar sonraí agus ag am cuí faoi beartaí cosanta.",
-    "about_data_collection": "Tá na sonraí a bhailíonn Fevermap anaithnidithe agus úsáidfear é chun aird a tharraingt ar an staid reatha domhanda.",
-    "about_current_participant_count": "Go dtí an lá seo, bhain %{participantCount} úsáideoirí  leas as Fevermap chun a siomptióim a thuairisciú.",
+    "about_title": "Cad é MyCovidSymptoms?",
+    "about_text": "Is uirlis fheidhmchlár taighde é MyCovidSymptoms chun lorg scaipeadh COVID-19 a leanúint go héasca trí sonraí siomptóm a bhailiú gan ainm. Mar sin de, is féidir linn forleithne an ghalair a mheas níos cruinne agus cabhair a thabhairt do na húdaráis chun gur féidir leó cinntí a dhéanamh go tapaidh, de réir sonraí, maidir le beartais cosanta.",
 
-    "how_to_participate": "Conas ar féidir liom páirt a ghlacadh?",
-    "participation_info": "Tá sé éasca. Ní gá duit ach do theocht a thógáil agus cuir an tortha chomh maith le roinnt eolais staitistiúi, ar nós do dáta breithe agus area code - isteach sa fotha.",
-    "info_disclaimer": "Ní chuireann muid ceisteanna ina mbeadh tú aitheanta. Tá do phríobháideachas agus neamhainmníocht tábhachtach.",
+    "scope_title": "Scope",
+    "scope_text": "Is é cuspóir an Corona Virus Checker ná eolas taighde acadúil maidir le cur i láthair cliniciúil COVID-19 a bhailiú. Ní hé diagnóis nó cóireáil galair nó riochtaí eile, COVID-19 san áireamh, an úsáid a ceapadh don chóras. Tá na sonraí taighde ar fad a bhailítear gan ainm. Chuir comhphairtíocht acadúil idir OÉG, UL agus Orreco ar chumas an tionscadal taighde seo a dhéanamh.",
 
-    "how_will_my_data_be_used": "Conas a úsáidfear mo chuid sonraí?",
-    "data_use_explanation": "Déanfar na sonraí anaithnid, ina dhiaidh sin, déanfar é a roinnt mar sonraí oscailte tríd idirfhásáil APIni",
+    "data_title": "Conas a úsáidfear mo shonraí?",
+    "data_text_p1": "Ní bhailíonn MyCovidSymptoms sonraí péarsanta ar bith, is é sin le rá go mbailítear na sonraí ar fad gan ainm, agus ní féidir ceangal a dhéanamh idir sonraí agus duine ar leith.",
+    "data_text_p2":  "Tabharfar na sonraí ar fad, gan ainm, d’údaráis sláinte na hÉireann chun cabhair a thabhairt dóibh lena gcuid pleanála, agus déanfar taighde leis na sonraí in OÉG chomh maith chun cosc a chur ar aon phandéime eile, agus a tionchar a laghdú.",
 
-    "policy": "Polasaí Príobháideachais"
+    "participate_title": "Conas a ghlacaim páirt?",
+    "participate_text_p1": "Tá sé simplí. Cliceáil ar “My Symptoms” sa bharra nascleanúna íochtair, tar éis sin cliceáil ar “Log Symptoms” ar an scáthlán.",
+    "participate_text_p2": "An chéad uair a logáiltear siomptóim iarrtar sonraí bunúsacha déimeagrafacha (dáta breithe ⁊ gnéas). Tar éis sin beidh tú in ann siomptóim atá agat faoi láthair a roghnú, agus do gharsuíomh a chur ar fáil.",
+    "participate_text_p3": "Ba chóir duit do chuid siomptóim a logáil gach lá más féidir.",
+
+    "credits_title": "Creidiúintí",
+    "credits_text": "MyCovidSymptoms is a collaboration initiative between NUIG, UL & Orreco and made possible by the open source project Fevermap.net",
+    "credits_people": "Daoine an-tábhachtacha",
+
+    "about_current_participant_count": "Go dtí an lá seo, bhain %{participantCount} úsáideoirí  leas as MyCovidSymptoms chun a siomptióim a thuairisciú.",
+    "policy": "Polasaí Príobháideachais",
+    "cookie_policy": "Polasaí Cookie"
+
   },
 
   "entry": {
