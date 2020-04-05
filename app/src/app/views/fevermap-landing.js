@@ -118,7 +118,7 @@ class FevermapLanding extends LitElement {
                 Carlos Tighe (<a href="https://twitter.com/DSIatNUIG">@DSIatNUIG</a>), 
                 Dr. Andrew Simpkin (<a href="https://twitter.com/AndrewSimpkin1">@AndrewSimpkin1</a>), 
                 Marc Mellotte (<a href="https://twitter.com/DSIatNUIG">@DSIatNUIG</a>)
-              </li>DrKevinJohnson4 
+              </li>
               <li>
               University of Limerick: 
               Dr. Kevin Johnson (<a href="https://twitter.com/DrKevinJohnson4">@DrKevinJohnson4</a>)
@@ -129,7 +129,7 @@ class FevermapLanding extends LitElement {
                 Conor Maguire (<a href="https://twitter.com/MaguireConor">@MaguireConor</a>), 
                 Gearoid Hynes (<a href="https://twitter.com/gearoid">@gearoid</a>)
               </li>
-              <li><a href="https://eamonwhyte.com">eamonwhyte.com</a>: Eamon Whyte</li>
+              <li><a href="http://whyteandthursday.com/">whyteandthursday.com</a>: Eamon Whyte</li>
             </ul>
           </div>
           <div class="about mb-4">
