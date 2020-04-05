@@ -112,11 +112,34 @@ class FevermapLanding extends LitElement {
               ${Translator.get('landing.credits_people')}:
             </p>
             <ul>
-              <li>NUIG: Prof. Derek O’Keeffe, Carlos Tighe, Dr. Andrew Simpkin, Marc Mellotte</li>
-              <li>UL: Dr. Kevin Johnson</li>
-              <li>Orreco: Kevin McGinley, Conor Maguire, Gearoid Hynes</li>
-              <li>eamonwhyte.com: Eamon Whyte</li>
+              <li>
+                National University of Ireland, Galway: 
+                Prof. Derek O’Keeffe (<a href="https://twitter.com/Physicianeer">@Physicianeer</a>), 
+                Carlos Tighe (<a href="https://twitter.com/DSIatNUIG">@DSIatNUIG</a>), 
+                Dr. Andrew Simpkin (<a href="https://twitter.com/AndrewSimpkin1">@AndrewSimpkin1</a>), 
+                Marc Mellotte (<a href="https://twitter.com/DSIatNUIG">@DSIatNUIG</a>)
+              </li>DrKevinJohnson4 
+              <li>
+              University of Limerick: 
+              Dr. Kevin Johnson (<a href="https://twitter.com/DrKevinJohnson4">@DrKevinJohnson4</a>)
+              </li>
+              <li>
+                Orreco: 
+                Kevin McGinley (<a href="https://twitter.com/kevin_caoimhin">@kevin_caoimhin</a>), 
+                Conor Maguire (<a href="https://twitter.com/MaguireConor">@MaguireConor</a>), 
+                Gearoid Hynes (<a href="https://twitter.com/gearoid">@gearoid</a>)
+              </li>
+              <li><a href="https://eamonwhyte.com">eamonwhyte.com</a>: Eamon Whyte</li>
             </ul>
+          </div>
+          <div class="about mb-4">
+            <h2>Contact</h2>
+            <p>
+             For any queries, please contact: 
+            </p>
+            <p>
+            <a href="mailto:mycovidsymptoms@gmail.com">mycovidsymptoms@gmail.com</a>
+            </p>
           </div>
           <div class="scope mb-4">
             ${this.currentParticipantCount > 2000

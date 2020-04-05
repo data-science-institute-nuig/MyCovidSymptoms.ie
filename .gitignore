@@ -4,3 +4,8 @@
 
 # Deploy specific environment settings
 .env
+api/fevermap.ini
+api/build
+api/dist
+api/fevermap/fevermap.egg-info
+

@@ -15,7 +15,7 @@
     "about_text": "is a research application tool to quickly and easily track the spread of COVID-19 by gathering anonymous symptom data. This means that we can more accurately estimate the prevalence of COVID-19 infections and help authorities make timely, data-driven decisions about protective measures.",
     
     "scope_title": "Scope",
-    "scope_text": "The purpose of the Coronavirus Symptom Checker is to gather academic research information about the clinical presentation of COVID-19. This system is not intended for the diagnosis or treatment of disease or other conditions, including COVID-19. All of the collected research data is anonymous. This research project was made possible through an academic partnership of NUIG with UL and Orreco.",
+    "scope_text": "The purpose of the Coronavirus Symptom Checker is to gather academic research information about the clinical presentation of COVID-19. This system is not intended for the diagnosis or treatment of disease or other conditions, including COVID-19. All of the collected research data is anonymous. This research project was made possible through an academic partnership of the National University of Ireland Galway with University of Limerick and Orreco.",
     
     "data_title": "How will my data be used?",
     "data_text_p1": "No personal data is collected by MyCovidSymptoms, meaning that all data captured is anonymous and there is no way for it to be connected back to an individual.",
@@ -23,11 +23,11 @@
 
     "participate_title": "How do I participate?",
     "participate_text_p1": "It’s easy. Simply click on “My Symptoms” in the bottom navigation bar, then click “Log Symptoms” on that screen.",
-    "participate_text_p2": "Your first time logging symptoms you will be asked for some basic demographic data (year of birth & sex). After that you can select your current symptoms, followed by providing a rough indication of your location.",
-    "participate_text_p3": "If possible, please log your symptoms every day.",
+    "participate_text_p2": "Your first time logging symptoms you will be asked for some basic demographic data (year of birth & sex). After that you can select your symptoms, followed by providing a rough indication of your location.",
+    "participate_text_p3": "If you have recovered and your symptoms are over, then please just enter your symptoms once, with your test status. If you are still experiencing symptoms then please log your symptoms every day until you are recovered.",
 
     "credits_title": "Credits",
-    "credits_text": "MyCovidSymptoms is a collaboration initiative between NUIG, UL & Orreco and made possible by the open source project Fevermap.net",
+    "credits_text": "MyCovidSymptoms is a collaboration initiative between National University of Ireland Galway (NUIG), University of Limerick (UL) & Orreco and made possible by the open source project Fevermap.net",
     "credits_people": "Key People",
 
     "about_current_participant_count": "To this day, %{participantCount} users have used MyCovidSymptoms to report their symptoms. ",
@@ -43,7 +43,7 @@
     "sync_now": "Sync now",
     "new_entry": "New entry",
     "symptoms": "Symptoms",
-    "first_time_disclaimer": "As this is your first time using Fevermap, we will ask you a few questions first.",
+    "first_time_disclaimer": "As this is your first time using MyCovidSymptoms, we will ask you a few questions first.",
     "these_questions_wont_be_repeated": "These questions won't be repeated on future submissions.",
     "queued_entries": "You have queued entries",
     "send_now": "Send now",
