@@ -115,7 +115,7 @@ class FevermapLanding extends LitElement {
                 Prof. Derek O’Keeffe (<a href="https://twitter.com/Physicianeer">@Physicianeer</a>), 
                 Carlos Tighe (<a href="https://twitter.com/DSIatNUIG">@DSIatNUIG</a>), 
                 Dr. Andrew Simpkin (<a href="https://twitter.com/AndrewSimpkin1">@AndrewSimpkin1</a>), 
-                Marc Mellotte (<a href="https://twitter.com/DSIatNUIG">@DSIatNUIG</a>)
+                Marc Mellotte (<a href="@insight_centre">@insight_centre</a>)
               </li>
               <li>
               University of Limerick: 

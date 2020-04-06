@@ -29,4 +29,13 @@ export default class IrishTownsService {
   static getCounty(countyName) {
     return countyList.filter(a => a.county.county_name === countyName);
   }
+
+  static getTowns(selectedCounty) {
+    return selectedCounty.towns.sort((a, b) => {
+      return this.naturalSort(a, b);
+    }).map(town => ({
+      id: town,
+      name: town,
+    }));
+  }
 }
