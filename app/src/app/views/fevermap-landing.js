@@ -2,7 +2,6 @@ import { LitElement, html } from 'lit-element';
 import Translator from '../util/translator.js';
 import logoImg from '../../assets/images/landing-logo.png';
 import DataEntryService from '../services/data-entry-service.js';
-import GoogleAnalyticsService from '../services/google-analytics-service.js';
 import PWAService from '../services/pwa-service.js';
 
 class FevermapLanding extends LitElement {
@@ -23,7 +22,6 @@ class FevermapLanding extends LitElement {
 
   firstUpdated() {
     this.getCurrentStats();
-    GoogleAnalyticsService.reportNavigationAction('About View');
   }
 
   async getCurrentStats() {

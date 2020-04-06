@@ -1,6 +1,5 @@
 import { LitElement, html } from 'lit-element';
 import Translator from '../util/translator.js';
-import GoogleAnalyticsService from '../services/google-analytics-service.js';
 import placeholderImage from '../../assets/images/chart.png';
 
 class FevermapStats extends LitElement {
@@ -9,7 +8,7 @@ class FevermapStats extends LitElement {
   }
 
   firstUpdated() {
-    GoogleAnalyticsService.reportNavigationAction('Stats View');
+
   }
 
   render() {

@@ -11,7 +11,6 @@ import DataEntryService from '../services/data-entry-service.js';
 import Translator from '../util/translator.js';
 import FeverDataUtil from '../util/fever-data-util.js';
 import '../components/gender-input.js';
-import GoogleAnalyticsService from '../services/google-analytics-service.js';
 import PWAService from '../services/pwa-service.js';
 import IrishTownsService from '../services/irish-towns-service.js';
 
@@ -352,7 +351,6 @@ class FevermapDataEntry extends LitElement {
       DataEntryService.setEntriesToIndexedDb(submissionResponse);
       SnackBar.success(Translator.get('system_messages.success.data_entry'));
 
-      GoogleAnalyticsService.reportSubmission();
       PWAService.launchInstallDialog();
       this.closeView();
     } else {

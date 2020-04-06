@@ -5,7 +5,6 @@ import Translator from '../util/translator.js';
 import DBUtil, { FEVER_ENTRIES, QUEUED_ENTRIES } from '../util/db-util.js';
 import FeverDataUtil from '../util/fever-data-util.js';
 import '../components/fever-chart.js';
-import GoogleAnalyticsService from '../services/google-analytics-service.js';
 import ScrollService from '../services/scroll-service.js';
 import DataEntryService from '../services/data-entry-service.js';
 import SnackBar from '../components/snackbar.js';
@@ -75,7 +74,6 @@ class FevermapDataView extends LitElement {
       this.showEntryDialog();
     }
     this.getQueuedEntriesFromIndexedDb();
-    GoogleAnalyticsService.reportNavigationAction('Your Data View');
   }
 
   checkLastSubmissionTime() {

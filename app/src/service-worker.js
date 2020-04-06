@@ -5,14 +5,11 @@ import { cleanupOutdatedCaches, precacheAndRoute } from 'workbox-precaching';
 import { ExpirationPlugin } from 'workbox-expiration';
 import { CacheableResponsePlugin } from 'workbox-cacheable-response';
 import { clientsClaim, skipWaiting } from 'workbox-core';
-import * as googleAnalytics from 'workbox-google-analytics';
 
 self.__WB_DISABLE_DEV_LOGS = true;
 
 skipWaiting();
 clientsClaim();
-
-googleAnalytics.initialize();
 
 registerRoute(/\.js$/, new NetworkFirst());
 
