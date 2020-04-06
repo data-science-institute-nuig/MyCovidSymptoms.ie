@@ -13,7 +13,7 @@
     "about_title": "Cad é MyCovidSymptoms?",
     "about_text": "; Is uirlis fheidhmchlár taighde é chun lorg scaipeadh COVID-19 a leanúint go héasca trí sonraí siomptóm a bhailiú gan ainm. Mar sin de, is féidir linn forleithne an ghalair a mheas níos cruinne agus cabhair a thabhairt do na húdaráis chun gur féidir leó cinntí a dhéanamh go tapaidh, de réir sonraí, maidir le beartais cosanta.",
 
-    "scope_title": "Scope",
+    "scope_title": "Scóip",
     "scope_text": "Is é cuspóir an Corona Virus Checker ná eolas taighde acadúil maidir le cur i láthair cliniciúil COVID-19 a bhailiú. Ní hé diagnóis nó cóireáil galair nó riochtaí eile, COVID-19 san áireamh, an úsáid a ceapadh don chóras. Tá na sonraí taighde ar fad a bhailítear gan ainm. Chuir comhphairtíocht acadúil idir OÉG, UL agus Orreco ar chumas an tionscadal taighde seo a dhéanamh.",
 
     "data_title": "Conas a úsáidfear mo shonraí?",
@@ -26,11 +26,11 @@
     "participate_text_p3": "Má tá biseach tagtha ort agus tá deireadh le do shiomptóimí, le do thoil cur isteach do shiomptóimí uair amháin in éineacht le stadas do theist. Má tá siomptóimí fós ort, le do thoil cur isteach do shiomptóimí gach lá go dtí go bhfuil biseach tagtha ort.",
 
     "credits_title": "Creidiúintí",
-    "credits_text": "MyCovidSymptoms is a collaboration initiative between National University of Ireland Galway (NUIG), University of Limerick (UL) & Orreco and made possible by the open source project Fevermap.net",
+    "credits_text": "Comhfhiontar idir OÉ Gaillimh, Ollscoil Luimnigh ⁊ Orreco atá sa MyCovidSymptoms, a chur an tionscadal foinse oscailte, Fevermap.net, ar chumas.",
     "credits_people": "Daoine an-tábhachtacha",
 
     "about_current_participant_count": "Go dtí an lá seo, bhain %{participantCount} úsáideoirí  leas as MyCovidSymptoms chun a siomptióim a thuairisciú.",
-    "policy": "Polasaí Príobháideachais",
+    "privacy_policy": "Polasaí Príobháideachais",
     "cookie_policy": "Polasaí Cookie"
 
   },
