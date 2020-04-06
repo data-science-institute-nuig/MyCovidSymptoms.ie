@@ -89,7 +89,7 @@
           "Miltown Malbay",
           "Mountshannon",
           "Newmarket-on-Fergus",
-          "O'Briensbridge - Montpelier",
+          "O Briensbridge - Montpelier",
           "Quilty",
           "Quin",
           "Scarriff - Tuamgraney",
@@ -216,7 +216,7 @@
           "Unionhall",
           "Watergrasshill",
           "Whitechurch",
-          "Whitegate__1",
+          "Whitegate",
           "Youghal"
         ]
       }
@@ -273,7 +273,7 @@
           "Loughanure",
           "Malin",
           "Manorcunningham",
-          "Milford__1",
+          "Milford",
           "Meenlaragh",
           "Mountcharles",
           "Moville",
@@ -303,7 +303,7 @@
           "Mountjoy Sq",
           "Marlboro St",
           "North Wall",
-          "O'Connell St",
+          "O Connell St",
           "Parnell Sq",
           "Talbot St"
         ]
@@ -397,19 +397,19 @@
         "county_id": "DN2",
         "county_name": "Dublin 2",
         "towns": [
-          "Baggot St Upper, and Lower",
+          "Baggot St (Upper and Lower)",
           "College Green",
           "Fitzwilliam Square",
           "Harcourt Street",
           "Kildare Street",
           "Lord Edward Street",
           "Merrion Square",
-          "Mount Street, Upper, and Lower",
+          "Mount Street (Upper and Lower)",
           "Nassau Street",
           "Pearse Street",
-          "St. Stephen’s Green",
+          "St. Stephens Green",
           "South Great Georges Street",
-          "Leeson Street, Upper and Lower"
+          "Leeson Street (Upper and Lower)"
         ]
       }
     },
@@ -480,7 +480,7 @@
           "Ranelagh",
           "Rathmines",
           "Rathgar",
-          "Harold’s Cross",
+          "Harolds Cross",
           "Templeogue",
           "Terenure"
         ]
@@ -498,7 +498,7 @@
         "county_id": "DN8",
         "county_name": "Dublin 8",
         "towns": [
-          "Dolphin’s Barn",
+          "Dolphins Barn",
           "Inchicore",
           "Island Bridge",
           "Kilmainham",
@@ -630,7 +630,7 @@
           "Knightstown",
           "Listowel",
           "Lixnaw",
-          "Milltown__1",
+          "Milltown",
           "Newtownsandes",
           "Portmagee",
           "Rathmore",
@@ -681,7 +681,7 @@
           "Leixlip Town",
           "Maddenstown",
           "Maynooth",
-          "Milltown__2",
+          "Milltown",
           "Monasterevin",
           "Naas",
           "Narraghmore",
@@ -713,7 +713,7 @@
           "Gowran",
           "Graiguenamanagh - Tinnahinch",
           "Inistioge",
-          "Johnstown__1",
+          "Johnstown",
           "Kells",
           "Kilkenny",
           "Kilmacow",
@@ -828,7 +828,7 @@
           "Mountcollins",
           "Mungret",
           "Newcastle West",
-          "O'Briensbridge - Montpelier",
+          "O Briensbridge - Montpelier",
           "Oola",
           "Pallas Grean",
           "Pallaskenry",
@@ -1107,7 +1107,7 @@
       "county": {
         "county_id": "DNS",
         "county_name": "Dublin South",
-        "towns": ["Brittas", "Blackrock", "Dun Laoghaire", "Newcastle", "Rathcoole__1", "Saggart", "Stillorgan"]
+        "towns": ["Brittas", "Blackrock", "Dun Laoghaire", "Newcastle", "Rathcoole", "Saggart", "Stillorgan"]
       }
     },
     {
@@ -1117,7 +1117,7 @@
         "towns": [
           "Ardfinnan",
           "Ballina",
-          "Ballingarry__1",
+          "Ballingarry",
           "Ballyclerahan",
           "Ballynonty",
           "Ballyporeen",
@@ -1149,9 +1149,9 @@
           "Monard",
           "Mullinahone",
           "Nenagh",
-          "Newcastle__1",
-          "Newport__1",
-          "Newtown__1",
+          "Newcastle",
+          "Newport",
+          "Newtown",
           "Portroe",
           "Puckaun",
           "Reardnogy",
@@ -1185,14 +1185,14 @@
           "Dungarvan",
           "Dunhill",
           "Dunmore East",
-          "Kill__1",
+          "Kill",
           "Kilmacthomas",
           "Kilmeaden",
           "Lemybrien",
           "Lismore",
           "Passage East",
           "Portlaw",
-          "Stradbally__1",
+          "Stradbally",
           "Tallow",
           "Tramore",
           "Villierstown",
@@ -1266,7 +1266,7 @@
           "Gorey",
           "Grahormac",
           "Killinierin",
-          "Killurin__1",
+          "Killurin",
           "Kilmore",
           "Kilmore Quay",
           "Kilmuckeridge (Ford)",
@@ -1313,7 +1313,7 @@
           "Knockananna",
           "Laragh",
           "Manor Kilbride",
-          "Newcastle__2",
+          "Newcastle",
           "Newtownmountkennedy",
           "Rathdrum",
           "Rathnew",
