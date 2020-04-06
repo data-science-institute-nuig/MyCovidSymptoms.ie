@@ -111,15 +111,10 @@ class FevermapDataEntry extends LitElement {
   }
 
   updateTownSelectOpts(countyName) {
-    let townElement = document.querySelector('#location-town div.mdc-select__selected-text');
-    // this.querySelector('#location-town').init();
     let selectedCounty = this.countySelectionOptions.filter(
       county => county.name.toLowerCase() === countyName,
     )[0];
-    this.townSelectionOptions = selectedCounty.towns.map(town => ({
-      id: town,
-      name: town,
-    }));
+    this.townSelectionOptions = IrishTownsService.getTowns(selectedCounty);
     this.requestUpdate('townSelectionOptions');
     this.selectedTownIndex = this.querySelector('#location-town').getValue().index;
   }
