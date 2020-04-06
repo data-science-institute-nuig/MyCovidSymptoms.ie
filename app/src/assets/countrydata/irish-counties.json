@@ -1106,8 +1106,8 @@
     {
       "county": {
         "county_id": "DNS",
-        "county_name": "South Dublin",
-        "towns": ["Brittas", "Newcastle", "Rathcoole__1", "Saggart"]
+        "county_name": "Dublin South",
+        "towns": ["Brittas", "Blackrock", "Dun Laoghaire", "Newcastle", "Rathcoole__1", "Saggart", "Stillorgan"]
       }
     },
     {
