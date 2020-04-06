@@ -4,34 +4,12 @@ import Polyglot from 'node-polyglot';
 /* Split each translation into a separate file for easier source code management */
 
 import translation_en from '../../assets/language/en.json';
-import translation_fi from '../../assets/language/fi.json';
-import translation_sv from '../../assets/language/sv.json';
-import translation_it from '../../assets/language/it.json';
-import translation_de from '../../assets/language/de.json';
-import translation_cn from '../../assets/language/cn.json';
-import translation_es from '../../assets/language/es.json';
-import translation_fr from '../../assets/language/fr.json';
-import translation_ru from '../../assets/language/ru.json';
-import translation_uk from '../../assets/language/uk.json';
-import translation_be from '../../assets/language/be.json';
-import translation_ar from '../../assets/language/ar.json';
-import translation_pl from '../../assets/language/pl.json';
 import translation_ga from '../../assets/language/ga.json';
+import translation_ar from '../../assets/language/ar.json';
 
 const translations = {
   en: translation_en,
-  fi: translation_fi,
-  sv: translation_sv,
-  it: translation_it,
-  de: translation_de,
-  cn: translation_cn,
-  es: translation_es,
-  fr: translation_fr,
-  ru: translation_ru,
-  uk: translation_uk,
-  be: translation_be,
   ar: translation_ar,
-  pl: translation_pl,
   ga: translation_ga,
 };
 
