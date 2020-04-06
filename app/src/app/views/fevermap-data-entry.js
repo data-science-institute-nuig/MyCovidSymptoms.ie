@@ -204,13 +204,13 @@ class FevermapDataEntry extends LitElement {
   async buildFeverData() {
     const feverData = {};
     const geoCodingInfo = await this.getGeoCodingInputInfo();
-    let deviceId = localStorage.getItem('DEVICE_ID');
-    if (!deviceId) {
-      deviceId = Date.now();
-      localStorage.setItem('DEVICE_ID', deviceId);
+    let initialTimestamp = localStorage.getItem('INITIAL_TIMESTAMP');
+    if (!initialTimestamp) {
+      initialTimestamp = Date.now();
+      localStorage.setItem('INITIAL_TIMESTAMP', initialTimestamp);
     }
 
-    feverData.device_id = deviceId;
+    feverData.initial_timestamp = initialTimestamp;
     feverData.fever_status = this.hasFever;
     feverData.fever_temp = this.feverAmount;
     if (this.hasFever) {

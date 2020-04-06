@@ -91,9 +91,9 @@ class SubmissionResource(Resource):
         # Validate submission
         errors = []
 
-        if not isinstance(data['device_id'], int) and \
-           not re.fullmatch(r'[0-9]{13}', data['device_id']):
-            errors += ('device_id', 'Incorrect form for device identifier')
+        if not isinstance(data['initial_timestamp'], int) and \
+           not re.fullmatch(r'[0-9]{13}', data['initial_timestamp']):
+            errors += ('initial_timestamp', 'Incorrect form for initial timestamp')
 
         # Check boolean values from multiple fields
         boolean_fields = [
@@ -157,7 +157,7 @@ class SubmissionResource(Resource):
             }, 400
 
         # Convert strings into correct Python data types for processing
-        device_id = int(data['device_id'])
+        initial_timestamp = int(data['initial_timestamp'])
         # Cut precision to neares decade
         birth_year = int(data['birth_year'])
         gender = str(data['gender'])
@@ -165,8 +165,8 @@ class SubmissionResource(Resource):
         location_town_name = str(data['location_town_name'])
 
         # Time 1584649859812 when this was written
-        if not 1584000000000 < device_id:
-            errors += ('device_id', 'Value not in range')
+        if not 1584000000000 < initial_timestamp:
+            errors += ('initial_timestamp', 'Value not in range')
 
         if not 1900 <= birth_year <= 2020:
             errors += ('birth_year', 'Value not in range')
@@ -213,14 +213,14 @@ class SubmissionResource(Resource):
                 'data': errors
             }, 400
 
-        # Get submitter if device_id already exists
+        # Get submitter if initial_timestamp already exists
         submitter = db_session.query(Submitter).filter(
-            Submitter.device_id == device_id).one_or_none()
+            Submitter.initial_timestamp == initial_timestamp).one_or_none()
 
-        # Create a new submitter if device_id is new
+        # Create a new submitter if initial_timestamp is new
         if submitter is None:
             submitter = Submitter(
-                device_id=device_id,
+                initial_timestamp=initial_timestamp,
                 birth_year=birth_year,
                 gender=gender)
         elif len(submitter.submissions) > 0:
@@ -246,18 +246,18 @@ class SubmissionResource(Resource):
             if submitter.birth_year != birth_year:
                 submitter.birth_year = birth_year
                 app.logger.warning(
-                    f'Submitter {device_id} changed birth year from '
+                    f'Submitter {initial_timestamp} changed birth year from '
                     f'{submitter.birth_year} to {birth_year}')
 
             if submitter.gender != gender:
                 submitter.gender = gender
                 app.logger.warning(
-                    f'Submitter {device_id} changed gender from '
+                    f'Submitter {initial_timestamp} changed gender from '
                     f'{submitter.gender} to {gender}')
 
         else:
             app.logger.warning(
-                f'Submitter {device_id} existed but had no previous '
+                f'Submitter {initial_timestamp} existed but had no previous '
                 f'submissions.')
 
         # Create new submission
@@ -302,7 +302,7 @@ class SubmissionResource(Resource):
         history = self._fever_status_history(submitter)
 
         saved_data = {
-            'device_id': device_id,
+            'initial_timestamp': initial_timestamp,
             'fever_status': fever_status,
             'fever_temp': fever_temp,
             'symptom_chest_tightness': symptom_chest_tightness,
