@@ -62,15 +62,15 @@
       "covid_diagnosis": "Diagnóis COVID-19",
       "prompt_diagnosis": "Ar cuireadh tástáil ort do COVID-19?",
       "set_diagnosis": "Diagnóis Socraithe",
-      "chest_tightness": "Chest Tightness",
+      "chest_tightness": "Teannas sa Chliabhrach",
       "chills": "Crithfhuacht",
-      "disorientation": "Disorientation",
-      "dizziness": "Dizziness",
+      "disorientation": "Mearbhall",
+      "dizziness": "Meadhrán",
       "diarrhoea": "Buinneach",
       "dry_cough": "Casacht Thirim",
       "fatigue": "Tuirse",
-      "loss_of_smell": "Loss of Smell",
-      "loss_of_taste": "Loss of Taste",
+      "loss_of_smell": "Cailleadh Bolaidh",
+      "loss_of_taste": "Cailleadh Blais",
       "nasal_congestion": "Plúchadh Sróine",
       "nausea_vomiting": "Masmas/Urlacan",
       "muscle_joint_pain": "Pian sna Matáin/Ailt",
@@ -145,8 +145,8 @@
   },
   "dialog": {
     "pwa_installer": {
-      "title": "Suiteáil Fevermap",
-      "content": "Is féidir Fevermap a suiteáil mar Fheidhmiú Forásach Gréasáin. Má dhéantar é a shuiteáil, is féidir linn áiseanna breise ar nós am rite níos tapúla agus fógraí brú (ag teacht go luath) .",
+      "title": "Suiteáil MyCovidSymptoms",
+      "content": "Is féidir MyCovidSymptoms a suiteáil mar Fheidhmiú Forásach Gréasáin. Má dhéantar é a shuiteáil, is féidir linn áiseanna breise ar nós am rite níos tapúla agus fógraí brú (ag teacht go luath) .",
       "approve_text": "Suiteáil",
       "decline_text": "B'fhéidir ar ball"
     }
