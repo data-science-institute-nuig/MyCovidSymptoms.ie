@@ -11,7 +11,7 @@
   "landing": {
     "about": "Faoi",
     "about_title": "Cad é MyCovidSymptoms?",
-    "about_text": "Is uirlis fheidhmchlár taighde é MyCovidSymptoms chun lorg scaipeadh COVID-19 a leanúint go héasca trí sonraí siomptóm a bhailiú gan ainm. Mar sin de, is féidir linn forleithne an ghalair a mheas níos cruinne agus cabhair a thabhairt do na húdaráis chun gur féidir leó cinntí a dhéanamh go tapaidh, de réir sonraí, maidir le beartais cosanta.",
+    "about_text": "; Is uirlis fheidhmchlár taighde é chun lorg scaipeadh COVID-19 a leanúint go héasca trí sonraí siomptóm a bhailiú gan ainm. Mar sin de, is féidir linn forleithne an ghalair a mheas níos cruinne agus cabhair a thabhairt do na húdaráis chun gur féidir leó cinntí a dhéanamh go tapaidh, de réir sonraí, maidir le beartais cosanta.",
 
     "scope_title": "Scope",
     "scope_text": "Is é cuspóir an Corona Virus Checker ná eolas taighde acadúil maidir le cur i láthair cliniciúil COVID-19 a bhailiú. Ní hé diagnóis nó cóireáil galair nó riochtaí eile, COVID-19 san áireamh, an úsáid a ceapadh don chóras. Tá na sonraí taighde ar fad a bhailítear gan ainm. Chuir comhphairtíocht acadúil idir OÉG, UL agus Orreco ar chumas an tionscadal taighde seo a dhéanamh.",
@@ -62,15 +62,15 @@
       "covid_diagnosis": "Diagnóis COVID-19",
       "prompt_diagnosis": "Ar cuireadh tástáil ort do COVID-19?",
       "set_diagnosis": "Diagnóis Socraithe",
-      "chest_tightness": "Chest Tightness",
+      "chest_tightness": "Teannas sa Chliabhrach",
       "chills": "Crithfhuacht",
-      "disorientation": "Disorientation",
-      "dizziness": "Dizziness",
+      "disorientation": "Mearbhall",
+      "dizziness": "Meadhrán",
       "diarrhoea": "Buinneach",
       "dry_cough": "Casacht Thirim",
       "fatigue": "Tuirse",
-      "loss_of_smell": "Loss of Smell",
-      "loss_of_taste": "Loss of Taste",
+      "loss_of_smell": "Cailleadh Bolaidh",
+      "loss_of_taste": "Cailleadh Blais",
       "nasal_congestion": "Plúchadh Sróine",
       "nausea_vomiting": "Masmas/Urlacan",
       "muscle_joint_pain": "Pian sna Matáin/Ailt",
@@ -145,8 +145,8 @@
   },
   "dialog": {
     "pwa_installer": {
-      "title": "Suiteáil Fevermap",
-      "content": "Is féidir Fevermap a suiteáil mar Fheidhmiú Forásach Gréasáin. Má dhéantar é a shuiteáil, is féidir linn áiseanna breise ar nós am rite níos tapúla agus fógraí brú (ag teacht go luath) .",
+      "title": "Suiteáil MyCovidSymptoms",
+      "content": "Is féidir MyCovidSymptoms a suiteáil mar Fheidhmiú Forásach Gréasáin. Má dhéantar é a shuiteáil, is féidir linn áiseanna breise ar nós am rite níos tapúla agus fógraí brú (ag teacht go luath) .",
       "approve_text": "Suiteáil",
       "decline_text": "B'fhéidir ar ball"
     }
