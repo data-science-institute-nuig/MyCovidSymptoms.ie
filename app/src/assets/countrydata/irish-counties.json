@@ -290,105 +290,28 @@
         ]
       }
     },
+
     {
       "county": {
         "county_id": "DN1",
         "county_name": "Dublin 1",
         "towns": [
-          "Abbey St",
-          "Amiens St",
-          "Capel St",
-          "Dorset St",
-          "Henry St",
-          "Mountjoy Sq",
-          "Marlboro St",
+          "Abbey Street",
+          "Amiens Street",
+          "Capel Street",
+          "Docklands",
+          "Dorset Street",
+          "Henry Street",
+          "IFSC",
+          "Marlborough Street",
+          "Mary Street",
+          "Mountjoy Square",
+          "North Circular Road",
+          "North City Centre",
           "North Wall",
-          "O'Connell St",
-          "Parnell Sq",
-          "Talbot St"
-        ]
-      }
-    },
-    {
-      "county": {
-        "county_id": "DN10",
-        "county_name": "Dublin 10",
-        "towns": ["Ballyfermot"]
-      }
-    },
-    {
-      "county": {
-        "county_id": "DN11",
-        "county_name": "Dublin 11",
-        "towns": [
-          "Ballygal",
-          "Cappagh",
-          "Cremore",
-          "Dubber",
-          "Finglas",
-          "Jamestown",
-          "Kilshane",
-          "Wadelai"
-        ]
-      }
-    },
-    {
-      "county": {
-        "county_id": "DN12",
-        "county_name": "Dublin 12",
-        "towns": ["Bluebell", "Crumlin", "Drimnagh", "Walkinstown"]
-      }
-    },
-    {
-      "county": {
-        "county_id": "DN13",
-        "county_name": "Dublin 13",
-        "towns": ["Baldoyle", "Bayside", "Donaghmede", "Sutton", "Howth"]
-      }
-    },
-    {
-      "county": {
-        "county_id": "DN14",
-        "county_name": "Dublin 14",
-        "towns": ["Churchtown", "Dundrum", "Goatstown", "Roebuck", "Windy Arbour", "Clonskeagh"]
-      }
-    },
-    {
-      "county": {
-        "county_id": "DN15",
-        "county_name": "Dublin 15",
-        "towns": ["Blanchardstown", "Castleknock", "Clonee", "Clonsilla", "Corduff", "Mulhuddart"]
-      }
-    },
-    {
-      "county": {
-        "county_id": "DN16",
-        "county_name": "Dublin 16",
-        "towns": ["Ballinteer", "Ballyboden", "Knocklyon", "Sandyford"]
-      }
-    },
-    {
-      "county": {
-        "county_id": "DN17",
-        "county_name": "Dublin 17",
-        "towns": ["Belcamp", "Balgrifin", "Clonshaugh", "Priorswood", "Darndale", "Riverside"]
-      }
-    },
-    {
-      "county": {
-        "county_id": "DN18",
-        "county_name": "Dublin 18",
-        "towns": [
-          "Cabinteely",
-          "Carrickmines",
-          "Foxrock",
-          "Glencullen",
-          "Kilternan",
-          "Sandyford",
-          "Ticknock",
-          "Ballyedmonduff",
-          "Stepaside",
-          "Leopardstown"
+          "O'Connell Street",
+          "Parnell Square",
+          "Talbot Street"
         ]
       }
     },
@@ -397,41 +320,17 @@
         "county_id": "DN2",
         "county_name": "Dublin 2",
         "towns": [
-          "Baggot St Upper, and Lower",
-          "College Green",
-          "Fitzwilliam Square",
-          "Harcourt Street",
-          "Kildare Street",
-          "Lord Edward Street",
+          "Baggot Street",
+          "Dame Street",
+          "Grafton Street",
+          "Grand Canal Dk",
+          "Leeson Street",
           "Merrion Square",
-          "Mount Street, Upper, and Lower",
-          "Nassau Street",
-          "Pearse Street",
-          "St. Stephen’s Green",
-          "South Great Georges Street",
-          "Leeson Street, Upper and Lower"
+          "South City Centre",
+          "South Great George's Street",
+          "Temple Bar",
+          "Wexford Street"
         ]
-      }
-    },
-    {
-      "county": {
-        "county_id": "DN20",
-        "county_name": "Dublin 20",
-        "towns": ["Chapelizod", "Palmerstown"]
-      }
-    },
-    {
-      "county": {
-        "county_id": "DN22",
-        "county_name": "Dublin 22",
-        "towns": ["Bawnogue", "Clondalkin", "Neilstown"]
-      }
-    },
-    {
-      "county": {
-        "county_id": "DN24",
-        "county_name": "Dublin 24",
-        "towns": ["Firhouse", "Jobstown", "Kilnamanagh", "Oldbawn", "Tallaght"]
       }
     },
     {
@@ -440,12 +339,15 @@
         "county_name": "Dublin 3",
         "towns": [
           "Ballybough",
-          "Cloniffe",
+          "Clonliffe",
           "Clontarf",
           "Dollymount",
+          "Donnycarney",
+          "Drumcondra",
           "East Wall",
           "Fairview",
-          "Marino"
+          "Marino",
+          "North Strand"
         ]
       }
     },
@@ -456,9 +358,9 @@
         "towns": [
           "Ballsbridge",
           "Donnybrook",
+          "Grand Canal Dk",
           "Irishtown",
           "Merrion",
-          "Pembroke",
           "Ringsend",
           "Sandymount"
         ]
@@ -468,7 +370,16 @@
       "county": {
         "county_id": "DN5",
         "county_name": "Dublin 5",
-        "towns": ["Artane", "Harmonstown", "Raheny"]
+        "towns": [
+          "Artane",
+          "Coolock",
+          "Donnycarney",
+          "Edenmore",
+          "Kilbarrack",
+          "Killester",
+          "Kilmore",
+          "Raheny"
+        ]
       }
     },
     {
@@ -477,20 +388,38 @@
         "county_name": "Dublin 6",
         "towns": [
           "Dartry",
+          "Harold's Cross",
+          "Milltown",
           "Ranelagh",
-          "Rathmines",
           "Rathgar",
-          "Harold’s Cross",
-          "Templeogue",
+          "Rathmines",
           "Terenure"
         ]
       }
     },
     {
       "county": {
+        "county_id": "DN6W",
+        "county_name": "Dublin 6 West",
+        "towns": ["Harold's Cross", "Kimmage", "Templeogue", "Terenure"]
+      }
+    },
+    {
+      "county": {
         "county_id": "DN7",
         "county_name": "Dublin 7",
-        "towns": ["Arbour Hill", "Cabra", "Phibsborough", "Four Courts"]
+        "towns": [
+          "Arbour Hill",
+          "Blackhorse Ave",
+          "Broadstone",
+          "Cabra",
+          "Navan Road",
+          "North Circular Road",
+          "North City Centre",
+          "Phibsboro",
+          "Smithfield",
+          "Stoneybatter"
+        ]
       }
     },
     {
@@ -498,14 +427,18 @@
         "county_id": "DN8",
         "county_name": "Dublin 8",
         "towns": [
-          "Dolphin’s Barn",
+          "Blackpits",
+          "Christchurch",
+          "Dolphins Barn",
           "Inchicore",
-          "Island Bridge",
+          "Islandbridge",
           "Kilmainham",
-          "Merchants Quay",
           "Portobello",
+          "Rialto",
           "South Circular Road",
-          "The Coombev"
+          "South City Centre",
+          "South City Centre - D8",
+          "The Coombe"
         ]
       }
     },
@@ -513,7 +446,551 @@
       "county": {
         "county_id": "DN9",
         "county_name": "Dublin 9",
-        "towns": ["Beaumont", "Drumcondra", "Elm Mount", "Griffith Avenue", "Santry", "Whitehall"]
+        "towns": [
+          "Ballymun",
+          "Beaumont",
+          "Donnycarney",
+          "Drumcondra",
+          "Elm Mount",
+          "Glasnevin",
+          "Glasnevin Nth",
+          "Griffith Ave",
+          "Santry",
+          "Whitehall"
+        ]
+      }
+    },
+    {
+      "county": {
+        "county_id": "DN10",
+        "county_name": "Dublin 10",
+        "towns": ["Ballyfermot", "Cherry Orchard"]
+      }
+    },
+    {
+      "county": {
+        "county_id": "DN11",
+        "county_name": "Dublin 11",
+        "towns": [
+          "Ballymun",
+          "Cappagh Road",
+          "Finglas",
+          "Glasnevin",
+          "Glasnevin Nth",
+          "Griffith Ave",
+          "Poppintree"
+        ]
+      }
+    },
+    {
+      "county": {
+        "county_id": "DN12",
+        "county_name": "Dublin 12",
+        "towns": [
+          "Ballymount",
+          "Bluebell",
+          "Crumlin",
+          "Drimnagh",
+          "Greenhills",
+          "Harold's Cross - D12",
+          "Kimmage",
+          "Kylemore Road",
+          "Longmile road",
+          "Naas Road",
+          "Park West",
+          "Perrystown",
+          "Terenure",
+          "Walkinstown"
+        ]
+      }
+    },
+    {
+      "county": {
+        "county_id": "DN13",
+        "county_name": "Dublin 13",
+        "towns": [
+          "Ard Na Greine",
+          "Ayrfield",
+          "Baldoyle",
+          "Balgriffin",
+          "Bayside",
+          "Beaupark",
+          "Belmayne",
+          "Clarehall",
+          "Clongriffin",
+          "Donaghmede",
+          "Northern Cross",
+          "Sutton"
+        ]
+      }
+    },
+    {
+      "county": {
+        "county_id": "DN14",
+        "county_name": "Dublin 14",
+        "towns": [
+          "Churchtown",
+          "Clonskeagh",
+          "Dundrum",
+          "Goatstown",
+          "Kilmacud",
+          "Rathfarnham",
+          "Rathgar - D14",
+          "Windy Arbour"
+        ]
+      }
+    },
+    {
+      "county": {
+        "county_id": "DN15",
+        "county_name": "Dublin 15",
+        "towns": [
+          "Abbotstown",
+          "Ashtown",
+          "Blanchardstown",
+          "Carpenterstown",
+          "Castleknock",
+          "Clonee",
+          "Clonsilla",
+          "Coolmine",
+          "Corduff",
+          "Damastown",
+          "Hartstown",
+          "Hollystown",
+          "Huntstown",
+          "Mulhuddart",
+          "Northwest Business Park",
+          "Ongar",
+          "Porterstown",
+          "Tyrrelstown"
+        ]
+      }
+    },
+    {
+      "county": {
+        "county_id": "DN16",
+        "county_name": "Dublin 16",
+        "towns": [
+          "Ballinteer",
+          "Ballyboden",
+          "Ballycullen Road",
+          "Churchtown",
+          "Dundrum",
+          "Knocklyon",
+          "Rathfarnham",
+          "Sandyford",
+          "Templeogue"
+        ]
+      }
+    },
+    {
+      "county": {
+        "county_id": "DN17",
+        "county_name": "Dublin 17",
+        "towns": ["Clarehall", "Clonshaugh", "Coolock", "Darndale", "Northern Cross"]
+      }
+    },
+    {
+      "county": {
+        "county_id": "DN18",
+        "county_name": "Dublin 18",
+        "towns": [
+          "Brennanstown Road",
+          "Cabinteely",
+          "Carrickmines",
+          "Cherrywood",
+          "Cornelscourt",
+          "Foxrock",
+          "Glencullen",
+          "Kilternan",
+          "Leopardstown",
+          "Loughlinstown",
+          "Rathmichael",
+          "Sandyford",
+          "Shankill",
+          "Stepaside",
+          "Ticknock"
+        ]
+      }
+    },
+    {
+      "county": {
+        "county_id": "DN20",
+        "county_name": "Dublin 20",
+        "towns": ["Chapelizod", "Palmerstown", "Strawberry Beds"]
+      }
+    },
+    {
+      "county": {
+        "county_id": "DN22",
+        "county_name": "Dublin 22",
+        "towns": [
+          "Baldonnel",
+          "Clondalkin",
+          "Liffey Valley",
+          "Naas Road",
+          "Nangor Road",
+          "Newlandscross",
+          "Red Cow Roundabout"
+        ]
+      }
+    },
+    {
+      "county": {
+        "county_id": "DN24",
+        "county_name": "Dublin 24",
+        "towns": [
+          "Aylesbury",
+          "Ballycoolin",
+          "Ballycullen",
+          "Bohernabreena",
+          "Citywest",
+          "Firhouse",
+          "Glenasmole",
+          "Greenhills",
+          "Kilnamanagh",
+          "Kingswood",
+          "Oldbawn",
+          "Tallaght"
+        ]
+      }
+    },
+    {
+      "county": {
+        "county_id": "DNNH",
+        "county_name": "Dublin North",
+        "towns": [
+          "Abbey Street",
+          "Amiens Street",
+          "Arbour Hill",
+          "Ard Na Greine",
+          "Artane",
+          "Ashtown",
+          "Ayrfield",
+          "Baldoyle",
+          "Balgriffin",
+          "Ballybough",
+          "Ballymun",
+          "Balscadden",
+          "Bayside",
+          "Beaumont",
+          "Beaupark",
+          "Blackhorse Ave",
+          "Broadstone",
+          "Cabra",
+          "Capel Street",
+          "Cappagh Road",
+          "Clarehall",
+          "Clongriffin",
+          "Clonliffe",
+          "Clonshaugh",
+          "Clontarf",
+          "Coolock",
+          "Darndale",
+          "Docklands",
+          "Dollymount",
+          "Donaghmede",
+          "Donnycarney",
+          "Dorset Street",
+          "Drumcondra",
+          "East Wall",
+          "Edenmore",
+          "Elm Mount",
+          "Fairview",
+          "Finglas",
+          "Glasnevin",
+          "Glasnevin Nth",
+          "Gormanston",
+          "Griffith Ave",
+          "Henry Street",
+          "IFSC",
+          "Islandbridge",
+          "Kilbarrack",
+          "Killester",
+          "Kilmore",
+          "Loughshinny",
+          "Marino",
+          "Marlborough Street",
+          "Mary Street",
+          "Meakstown",
+          "Mountjoy Square",
+          "Mulhuddart",
+          "Navan Road",
+          "North Circular Road",
+          "North City Centre",
+          "North Strand",
+          "North Wall",
+          "Northern Cross",
+          "Northwest Business Park",
+          "O'Connell Street",
+          "Parnell Square",
+          "Phibsboro",
+          "Poppintree",
+          "Raheny",
+          "Roseville",
+          "Santry",
+          "Smithfield",
+          "Stoneybatter",
+          "Sutton",
+          "Talbot Street",
+          "Whitehall"
+        ]
+      }
+    },
+    {
+      "county": {
+        "county_id": "DNS",
+        "county_name": "Dublin South",
+        "towns": [
+          "Ballinteer",
+          "Ballsbridge",
+          "Ballyboden",
+          "Ballybrack",
+          "Ballycullen",
+          "Blackpits",
+          "Bohernabreena",
+          "Brennanstown Road",
+          "Brittas",
+          "Cabinteely",
+          "Carrickmines",
+          "Cherrywood",
+          "Christchurch",
+          "Churchtown",
+          "Clonskeagh",
+          "Cornelscourt",
+          "Crumlin",
+          "Dame Street",
+          "Dartry",
+          "Dolphins Barn",
+          "Donnybrook",
+          "Drimnagh",
+          "Dundrum",
+          "Firhouse",
+          "Foxrock",
+          "Goatstown",
+          "Grafton Street",
+          "Grand Canal Dk",
+          "Harold's Cross",
+          "Inchicore",
+          "Irishtown",
+          "Islandbridge",
+          "Kilmacud",
+          "Kilmainham",
+          "Kilternan",
+          "Kimmage",
+          "Knocklyon",
+          "Leeson Street",
+          "Leopardstown",
+          "Loughlinstown",
+          "Merrion Square",
+          "Milltown",
+          "Mount Merrion",
+          "Perrystown",
+          "Portobello",
+          "Ranelagh",
+          "Rathfarnham",
+          "Rathgar",
+          "Rathmichael",
+          "Rathmines",
+          "Rialto",
+          "Ringsend",
+          "Sandyford",
+          "Sandymount",
+          "Shankill",
+          "South Circular Road",
+          "South City Centre",
+          "South City Centre - D8",
+          "Temple Bar",
+          "Templeogue",
+          "Terenure",
+          "The Coombe",
+          "Ticknock",
+          "Wexford Street",
+          "Windy Arbour"
+        ]
+      }
+    },
+    {
+      "county": {
+        "county_id": "DNCTY",
+        "county_name": "Dublin County",
+        "towns": [
+          "Adamstown",
+          "Balbriggan",
+          "Balgaddy",
+          "Balgriffin",
+          "Ballyboden",
+          "Ballyboughal",
+          "Balrothery",
+          "Blackrock",
+          "Booterstown",
+          "Brittas",
+          "Citywest",
+          "Cloghran",
+          "Dalkey",
+          "Deansgrange",
+          "Dermotstown",
+          "Donabate",
+          "Dun Laoghaire",
+          "Garristown",
+          "Glasthule",
+          "Glenageary",
+          "Glencullen",
+          "Gormanston",
+          "Howth",
+          "Killiney",
+          "Kilsallaghan",
+          "Kilternan",
+          "Kinsealy",
+          "Loughshinny",
+          "Lucan",
+          "Lusk",
+          "Malahide",
+          "Monkstown",
+          "Mount Merrion",
+          "Naas Road",
+          "Naul",
+          "Newcastle",
+          "Oldtown",
+          "Portmarnock",
+          "Portrane",
+          "Rathcoole",
+          "Rathmichael",
+          "Ring Commons",
+          "Rolestown",
+          "Roseville",
+          "Rush",
+          "Saggart",
+          "Sallynoggin",
+          "Sandycove",
+          "Sandyford",
+          "Shankill",
+          "Skerries",
+          "St Margarets",
+          "Stepaside",
+          "Stillorgan",
+          "Sutton",
+          "Swords",
+          "The Ward"
+        ]
+      }
+    },
+    {
+      "county": {
+        "county_id": "DNCTYN",
+        "county_name": "Dublin County North",
+        "towns": [
+          "Balbriggan",
+          "Balgriffin",
+          "Ballyboughal",
+          "Balrothery",
+          "Cloghran",
+          "Dermotstown",
+          "Donabate",
+          "Feltrim",
+          "Garristown",
+          "Howth",
+          "Kinsealy",
+          "Loughshinny",
+          "Lusk",
+          "Malahide",
+          "Naul",
+          "Oldtown",
+          "Portmarnock",
+          "Portrane",
+          "Ring Commons",
+          "Rolestown",
+          "Rush",
+          "Skerries",
+          "St Margarets",
+          "Sutton",
+          "Swords",
+          "The Ward"
+        ]
+      }
+    },
+    {
+      "county": {
+        "county_id": "DNCTYS",
+        "county_name": "Dublin County South",
+        "towns": [
+          "Ballybrack",
+          "Blackrock",
+          "Booterstown",
+          "Bray",
+          "Cherrywood",
+          "Dalkey",
+          "Deansgrange",
+          "Dun Laoghaire",
+          "Glasthule",
+          "Glenageary",
+          "Glencullen",
+          "Killiney",
+          "Kilternan",
+          "Monkstown",
+          "Mount Merrion",
+          "Rathmichael",
+          "Sallynoggin",
+          "Sandycove",
+          "Shankill",
+          "Stepaside",
+          "Stillorgan"
+        ]
+      }
+    },
+    {
+      "county": {
+        "county_id": "DNW",
+        "county_name": "Dublin West",
+        "towns": [
+          "Abbotstown",
+          "Adamstown",
+          "Aylesbury",
+          "Baldonnel",
+          "Balgaddy",
+          "Ballycoolin",
+          "Ballyfermot",
+          "Ballymount",
+          "Blanchardstown",
+          "Bluebell",
+          "Carpenterstown",
+          "Castleknock",
+          "Chapelizod",
+          "Cherry Orchard",
+          "Citywest",
+          "Clondalkin",
+          "Clonee",
+          "Clonsilla",
+          "Corduff",
+          "Damastown",
+          "Glenasmole",
+          "Greenhills",
+          "Hartstown",
+          "Hollystown",
+          "Kilnamanagh",
+          "Kiltipper",
+          "Kingswood",
+          "Kylemore Road",
+          "Longmile road",
+          "Lucan",
+          "Mulhuddart",
+          "Naas Road",
+          "Nangor Road",
+          "Newcastle",
+          "Newlandscross",
+          "Oldbawn",
+          "Ongar",
+          "Palmerstown",
+          "Park West",
+          "Porterstown",
+          "Rathcoole",
+          "Red Cow Roundabout",
+          "Saggart",
+          "Strawberry Beds",
+          "Tallaght",
+          "Tyrrelstown",
+          "Walkinstown"
+        ]
       }
     },
     {
@@ -1107,7 +1584,15 @@
       "county": {
         "county_id": "DNS",
         "county_name": "Dublin South",
-        "towns": ["Brittas", "Blackrock", "Dun Laoghaire", "Newcastle", "Rathcoole__1", "Saggart", "Stillorgan"]
+        "towns": [
+          "Brittas",
+          "Blackrock",
+          "Dun Laoghaire",
+          "Newcastle",
+          "Rathcoole__1",
+          "Saggart",
+          "Stillorgan"
+        ]
       }
     },
     {
