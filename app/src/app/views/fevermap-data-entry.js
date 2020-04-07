@@ -40,9 +40,8 @@ class FevermapDataEntry extends LitElement {
       symptoms: { type: Array },
       covidDiagnosed: { type: String },
 
-      symptomsFirstPage:  { type: Number },
-      symptomsPagesCount:  { type: Number },
-
+      symptomsFirstPage: { type: Number },
+      symptomsPagesCount: { type: Number },
     };
   }
 
@@ -74,7 +73,7 @@ class FevermapDataEntry extends LitElement {
     this.currentQuestion = 1;
     this.questionCount = 6;
     this.symptoms = [];
-    
+
     this.symptomsFirstPage = 3;
     this.symptomsPagesCount = 3;
   }
@@ -93,7 +92,7 @@ class FevermapDataEntry extends LitElement {
   createCountySelectOptions() {
     this.countySelectionOptions = IrishTownsService.getCounties().map(entry => ({
       id: entry.county.county_id,
-      name: `${entry.county.county_name} (${entry.county.county_id})`,
+      name: `${entry.county.county_name}`,
       towns: entry.county.towns,
     }));
     this.selectedCountyIndex = 0;
@@ -113,7 +112,10 @@ class FevermapDataEntry extends LitElement {
     let selectedCounty = this.countySelectionOptions.filter(
       county => county.name.toLowerCase() === countyName,
     )[0];
-    this.townSelectionOptions = IrishTownsService.getTowns(selectedCounty);
+    this.townSelectionOptions = selectedCounty.towns.map(town => ({
+      id: town,
+      name: town,
+    }));
     this.requestUpdate('townSelectionOptions');
     this.selectedTownIndex = this.querySelector('#location-town').getValue().index;
   }
@@ -123,7 +125,6 @@ class FevermapDataEntry extends LitElement {
     if (this.hasFever) {
       setTimeout(() => {
         const slider = this.initSlider();
-
         const checkboxElem = this.querySelector('.mdc-checkbox');
         const checkbox = new MDCCheckbox(checkboxElem);
         checkboxElem.addEventListener('change', () => {
