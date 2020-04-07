@@ -92,7 +92,7 @@ class FevermapDataEntry extends LitElement {
   createCountySelectOptions() {
     this.countySelectionOptions = IrishTownsService.getCounties().map(entry => ({
       id: entry.county.county_id,
-      name: `${entry.county.county_name} (${entry.county.county_id})`,
+      name: `${entry.county.county_name}`,
       towns: entry.county.towns,
     }));
     this.selectedCountyIndex = 0;
@@ -125,7 +125,6 @@ class FevermapDataEntry extends LitElement {
     if (this.hasFever) {
       setTimeout(() => {
         const slider = this.initSlider();
-
         const checkboxElem = this.querySelector('.mdc-checkbox');
         const checkbox = new MDCCheckbox(checkboxElem);
         checkboxElem.addEventListener('change', () => {

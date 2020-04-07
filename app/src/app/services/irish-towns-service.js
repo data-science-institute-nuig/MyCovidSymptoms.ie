@@ -21,7 +21,7 @@ export default class IrishTownsService {
   }
 
   static getCounties() {
-    return countyList;
+    return countyList.counties;
   }
 
   static getCounty(countyName) {

@@ -864,7 +864,7 @@
     },
     {
       "county": {
-        "county_id": "DNNH",
+        "county_id": "DNN",
         "county_name": "Dublin North",
         "towns": [
           "Abbey Street",
@@ -1019,7 +1019,7 @@
     },
     {
       "county": {
-        "county_id": "DNCTY",
+        "county_id": "DC",
         "county_name": "Dublin County",
         "towns": [
           "Adamstown",
@@ -1084,7 +1084,7 @@
     },
     {
       "county": {
-        "county_id": "DNCTYN",
+        "county_id": "DCN",
         "county_name": "Dublin County North",
         "towns": [
           "Balbriggan",
@@ -1118,7 +1118,7 @@
     },
     {
       "county": {
-        "county_id": "DNCTYS",
+        "county_id": "DCS",
         "county_name": "Dublin County South",
         "towns": [
           "Ballybrack",
@@ -1147,7 +1147,7 @@
     },
     {
       "county": {
-        "county_id": "DNW",
+        "county_id": "DW",
         "county_name": "Dublin West",
         "towns": [
           "Abbotstown",
