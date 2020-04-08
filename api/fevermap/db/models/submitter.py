@@ -16,7 +16,7 @@ class Submitter(Base):
 
     # Unique identifier created with JavaScript Date().getTime()
     # Assumed to stay the same across all submissions
-    device_id = Column(BigInteger, unique=True)
+    initial_timestamp = Column(BigInteger, unique=True)
 
     # Year of birth, e.g. 1983
     birth_year = Column(SmallInteger)
