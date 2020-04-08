@@ -23,10 +23,10 @@
     "participate_title": "Conas a ghlacaim páirt?",
     "participate_text_p1": "Tá sé simplí. Cliceáil ar “Iontráil Sonraí” sa bharra nascleanúna íochtair.",
     "participate_text_p2": "An chéad uair a logáiltear siomptóim iarrtar sonraí bunúsacha déimeagrafacha (dáta breithe ⁊ gnéas). Tar éis sin beidh tú in ann siomptóim atá agat faoi láthair a roghnú, agus do gharsuíomh a chur ar fáil.",
-    "participate_text_p3": "Má tá biseach tagtha ort agus tá deireadh le do shiomptóimí, le do thoil cur isteach do shiomptóimí uair amháin in éineacht le stadas do theist. Má tá siomptóimí fós ort, le do thoil cur isteach do shiomptóimí gach lá go dtí go bhfuil biseach tagtha ort.",
+    "participate_text_p3": "Má tá biseach tagtha ort agus tá deireadh le do shiomptóimí, le do thoil cuir isteach do shiomptóimí uair amháin in éineacht le stadas do theist. Má tá siomptóimí fós ort, le do thoil cuir isteach do shiomptóimí gach lá go dtí go bhfuil biseach tagtha ort.",
 
     "credits_title": "Creidiúintí",
-    "credits_text": "Comhfhiontar idir OÉ Gaillimh, Ollscoil Luimnigh ⁊ Orreco atá sa MyCovidSymptoms, a chur an tionscadal foinse oscailte, Fevermap.net, ar chumas.",
+    "credits_text": "Comhfhiontar idir OÉ Gaillimh, Ollscoil Luimnigh ⁊ Orreco atá sa MyCovidSymptoms, a chuir an tionscadal foinse oscailte, Fevermap.net, ar chumas.",
     "credits_people": "Daoine an-tábhachtacha",
 
     "about_current_participant_count": "Go dtí an lá seo, bhain %{participantCount} úsáideoirí  leas as MyCovidSymptoms chun a siomptióim a thuairisciú.",
@@ -94,7 +94,8 @@
       "whats_your_location": "Cá bhfuil tú?",
       "city": "Cathair",
       "country": "Tír",
-
+      "town": "Baile",
+      "county": "Contae",
       "postal_code": "Cód Poist",
       "location_determination_subtitle": "Tá an láthair aimsithe ag úsáid an Láthair API> Déan cinnte go bhfuil cead tugtha do bhraitheoirí Láthair. ",
       "location_change_subtitle": "Chun uasdátú a dhéanamh ar an eolas láthair, déan uasdátú ar an luach sa tír agus cód poist nó brú an cnaipe thíos.",
