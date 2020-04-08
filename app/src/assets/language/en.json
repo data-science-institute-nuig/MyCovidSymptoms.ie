@@ -100,7 +100,9 @@
       "location_change_subtitle": "To update location information, update the value in the county and town field.",
       "update_location": "Update location",
       "use_gps": "Get location from GPS",
-      "or" : "OR"
+      "or" : "OR",
+      "have_symptoms": "I have Symptoms",
+      "had_symptoms": "I had Symptoms"
     },
     "previous_submissions": "Previous submissions",
     "submit": "Submit",

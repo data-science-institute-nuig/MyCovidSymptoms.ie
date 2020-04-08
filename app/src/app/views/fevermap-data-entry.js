@@ -42,6 +42,8 @@ class FevermapDataEntry extends LitElement {
 
       symptomsFirstPage: { type: Number },
       symptomsPagesCount: { type: Number },
+
+      hadSymptoms: { type: Boolean }
     };
   }
 
@@ -54,6 +56,7 @@ class FevermapDataEntry extends LitElement {
     const diagnosedCovid19 = localStorage.getItem('COVID_DIAGNOSIS');
 
     this.errorMessage = null;
+    this.hadSymptoms = null;
     this.hasFever = null;
     this.feverAmount = 35;
     this.feverAmountNotKnown = false;
@@ -71,10 +74,10 @@ class FevermapDataEntry extends LitElement {
     this.queuedEntries = [];
 
     this.currentQuestion = 1;
-    this.questionCount = 6;
+    this.questionCount = 7;
     this.symptoms = [];
 
-    this.symptomsFirstPage = 3;
+    this.symptomsFirstPage = 4;
     this.symptomsPagesCount = 3;
   }
 
@@ -212,6 +215,7 @@ class FevermapDataEntry extends LitElement {
     }
 
     feverData.initial_timestamp = initialTimestamp;
+    feverData.had_symptoms = this.hadSymptoms === true;
     feverData.fever_status = this.hasFever;
     feverData.fever_temp = this.feverAmount;
     if (this.hasFever) {
@@ -437,6 +441,11 @@ class FevermapDataEntry extends LitElement {
     this.nextQuestion();
   }
 
+  handleHadSymptoms(hadSymptoms) {
+    this.hadSymptoms = hadSymptoms;
+    this.nextQuestion();
+  }
+
   previousQuestion() {
     if (this.currentQuestion === 1) {
       return;
@@ -521,7 +530,7 @@ class FevermapDataEntry extends LitElement {
       <div class="container view-wrapper fevermap-entry-dialog fevermap-entry-dialog--hidden">
         <div class="fevermap-data-entry-content">
           <div
-            class="fevermap-entry-carousel${this.questionCount === 6
+            class="fevermap-entry-carousel${this.questionCount === 7
               ? ' fevermap-entry-carousel--full-width'
               : ' fevermap-entry-carousel--smaller-width'}"
           >
@@ -563,27 +572,30 @@ class FevermapDataEntry extends LitElement {
         ${this.getPersonalQuestions()}
       </div>
       <div class="fevermap-entry-window mdc-elevation--z9 fevermap-fever-questions" id="question-2">
-        ${this.getFeverMeter()}
+        ${this.getHaveHadQuestion()}
       </div>
-      <div
-        class="fevermap-entry-window mdc-elevation--z9 fevermap-other-symptoms-questions"
-        id="question-3"
-      >
-        ${this.getSymptomsFields(3, symptomsPage1)}
+      <div class="fevermap-entry-window mdc-elevation--z9 fevermap-fever-questions" id="question-3">
+        ${this.getFeverMeter()}
       </div>
       <div
         class="fevermap-entry-window mdc-elevation--z9 fevermap-other-symptoms-questions"
         id="question-4"
       >
-        ${this.getSymptomsFields(4, symptomsPage2)}
+        ${this.getSymptomsFields(1, symptomsPage1)}
       </div>
       <div
         class="fevermap-entry-window mdc-elevation--z9 fevermap-other-symptoms-questions"
         id="question-5"
       >
-        ${this.getSymptomsFields(5, symptomsPage3)}
+        ${this.getSymptomsFields(2, symptomsPage2)}
       </div>
-      <div class="fevermap-entry-window mdc-elevation--z9 fevermap-fever-questions" id="question-6">
+      <div
+        class="fevermap-entry-window mdc-elevation--z9 fevermap-other-symptoms-questions"
+        id="question-6"
+      >
+        ${this.getSymptomsFields(3, symptomsPage3)}
+      </div>
+      <div class="fevermap-entry-window mdc-elevation--z9 fevermap-fever-questions" id="question-7">
         ${this.getTestFields()}
       </div>
     `;
@@ -611,13 +623,56 @@ class FevermapDataEntry extends LitElement {
     `;
   }
 
-  getFeverMeter() {
+  getHaveHadQuestion() {
     return html`
       <div class="back-button" @click="${this.previousQuestion}">
         <material-icon icon="keyboard_arrow_left"></material-icon>${Translator.get('back')}
       </div>
       <div class="question-number-holder">
         2/${this.questionCount}
+      </div>
+      <div class="title-holder">
+        <h2>${Translator.get('entry.symptoms')}</h2>
+      </div>
+      <div class="entry-field">
+
+        <div class="proceed-button had-symptoms">
+          <button
+            class="mdc-button mdc-button--raised"
+            @click="${() => this.handleHadSymptoms(false)}"
+          >
+            <div class="mdc-button__ripple"></div>
+
+            <i class="material-icons mdc-button__icon" aria-hidden="true">done</i>
+            <span class="mdc-button__label"
+              >${Translator.get('entry.questions.have_symptoms')}</span
+            >
+          </button>
+          <div class="or-text"> ${Translator.get('entry.questions.or')} </div>
+          <button
+            class="mdc-button mdc-button--raised"
+            @click="${() => this.handleHadSymptoms(true)}"
+          >
+            <div class="mdc-button__ripple"></div>
+
+            <i class="material-icons mdc-button__icon" aria-hidden="true">done</i>
+            <span class="mdc-button__label"
+              >${Translator.get('entry.questions.had_symptoms')}</span
+            >
+          </button>
+        </div>
+      </div>
+      <div class="spacing"></div>
+    `;
+  }
+
+  getFeverMeter() {
+    return html`
+      <div class="back-button" @click="${this.previousQuestion}">
+        <material-icon icon="keyboard_arrow_left"></material-icon>${Translator.get('back')}
+      </div>
+      <div class="question-number-holder">
+        3/${this.questionCount}
       </div>
       <div class="title-holder">
         <h2>${Translator.get('entry.questions.do_you_have_fever')}</h2>
@@ -699,7 +754,7 @@ class FevermapDataEntry extends LitElement {
         <material-icon icon="keyboard_arrow_left"></material-icon>${Translator.get('back')}
       </div>
       <div class="question-number-holder">
-        6/${this.questionCount}
+        7/${this.questionCount}
       </div>
       <div class="title-holder">
         <h3>${Translator.get('entry.questions.covid_diagnosis')}</h3>
@@ -742,17 +797,16 @@ class FevermapDataEntry extends LitElement {
         ${symptomButtons} ${symptomButton}
       `;
     }
-    let symptomPageNumber = pageNumber - this.symptomsFirstPage + 1;
-    let symptomsPagesCount = this.symptomsPagesCount;
+    let totalPageNumber = (pageNumber - 1) + this.symptomsFirstPage ;
     return html`
       <div class="back-button" @click="${this.previousQuestion}">
         <material-icon icon="keyboard_arrow_left"></material-icon>${Translator.get('back')}
       </div>
       <div class="question-number-holder">
-        ${pageNumber}/${this.questionCount}
+        ${totalPageNumber}/${this.questionCount}
       </div>
       <div class="title-holder">
-        <h2>${Translator.get('entry.symptoms')} ${symptomPageNumber}/${symptomsPagesCount}</h2>
+        <h2>${Translator.get('entry.symptoms')} ${pageNumber}/${this.symptomsPagesCount}</h2>
       </div>
       <p class="subtitle">${Translator.get('entry.questions.choose_all_that_apply')}</p>
       <div class="symptom-holder">

@@ -227,7 +227,7 @@ p.mdc-theme--error {
   padding-right: 4rem;
 
   &--full-width {
-    width: calc(100vw * 5.6);
+    width: calc(100vw * 6.5);
   }
 
   &--smaller-width {
@@ -662,5 +662,13 @@ input[type="range"]::-webkit-slider-runnable-track {
         }
       }
     }
+  }
+}
+
+.had-symptoms {
+  margin-bottom: 4rem;
+  
+  .or-text {
+    margin: 20px;
   }
 }

@@ -101,7 +101,9 @@
       "update_location": "Déan uasdátú ar an láthair",
       "use_gps": "Faigh láthair ón GPS",
       "set_location_and_submit": "Socraigh Láthair agus déan iontráil ",
-      "or" : "NÓ"
+      "or" : "NÓ",
+      "have_symptoms": "Tá Siomptóim agam",
+      "had_symptoms": "Bhí Siomptóim agam"
     },
     "previous_submissions": "Iontrálacha atá déanta roimhe",
     "submit": "Déan iontráil",
