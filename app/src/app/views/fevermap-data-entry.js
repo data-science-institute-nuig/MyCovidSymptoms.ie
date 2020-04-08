@@ -430,17 +430,10 @@ class FevermapDataEntry extends LitElement {
   handleFeverInfoSubmit() {
     this.nextQuestion();
   }
-
-  handleUnmeasuredFeverSubmit(hasFever) {
-    this.hasFever = hasFever;
+ 
+  handleNoFeverSubmit() {
     this.feverAmount = null;
     this.nextQuestion();
-    if (!hasFever) {
-      // Skip symptoms
-      this.nextQuestion();
-      this.nextQuestion();
-      this.nextQuestion();
-    }
   }
 
   previousQuestion() {
@@ -626,7 +619,7 @@ class FevermapDataEntry extends LitElement {
         2/${this.questionCount}
       </div>
       <div class="title-holder">
-        <h2>${Translator.get('entry.new_entry')}</h2>
+        <h2>${Translator.get('entry.questions.do_you_have_fever')}</h2>
         <p class="temperature-title">
           ${Translator.get('entry.questions.what_is_your_temperature')}
         </p>
@@ -681,27 +674,18 @@ class FevermapDataEntry extends LitElement {
                 >${Translator.get('entry.questions.set_temperature')}</span
               >
             </button>
-          </div>
-          <div class="fever-not-measured-prompt">
-            <p>${Translator.get('entry.questions.havent_measured_but')}</p>
-            <div class="fever-not-measured-buttons">
-              <div class="fever-not-measured-buttons--feverish">
-                <material-button
-                  @click="${() => this.handleUnmeasuredFeverSubmit(true)}"
-                  class="mdc-elevation--z3"
-                  icon="sentiment_very_dissatisfied"
-                  label="${Translator.get('entry.questions.feel_feverish')}"
-                ></material-button>
-              </div>
-              <div class="fever-not-measured-buttons--healthy">
-                <material-button
-                  @click="${() => this.handleUnmeasuredFeverSubmit(false)}"
-                  class="mdc-elevation--z3"
-                  icon="sentiment_very_satisfied"
-                  label="${Translator.get('entry.questions.feel_healthy')}"
-                ></material-button>
-              </div>
-            </div>
+            <div class="or-text"> ${Translator.get('entry.questions.or')} </div>
+            <button
+              class="mdc-button mdc-button--raised"
+              @click="${() => this.handleNoFeverSubmit()}"
+            >
+              <div class="mdc-button__ripple"></div>
+
+              <i class="material-icons mdc-button__icon" aria-hidden="true">clear</i>
+              <span class="mdc-button__label"
+                >${Translator.get('entry.questions.not_measured')}</span
+              >
+            </button>
           </div>
         </div>
       </div>

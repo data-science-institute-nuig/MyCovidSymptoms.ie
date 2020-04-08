@@ -475,6 +475,15 @@ label {
 
     .proceed-button {
       margin: 2rem 0;
+      justify-content: center;
+      display: grid;
+
+      button, .or-text {
+        margin-bottom: 10px;
+      }
+      .or-text {
+        font-weight: bold;
+      }
     }
   }
 }
