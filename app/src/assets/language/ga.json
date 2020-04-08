@@ -49,7 +49,7 @@
     "send_now": "Send now",
     "questions": {
       "do_you_have_fever": "An bhfuil fiabhras ort?",
-      "what_is_your_temperature": "Má tá, cad é do theocht?",
+      "what_is_your_temperature": "Déan iontráil ar do theocht má tá sé tomhaiste",
       "temperature": "Teocht",
       "how_much": "Cé mhéid?",
       "degrees_of_fever": "%{degrees} de fhiabhras",

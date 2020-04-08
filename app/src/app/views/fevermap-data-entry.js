@@ -77,8 +77,8 @@ class FevermapDataEntry extends LitElement {
     this.questionCount = 7;
     this.symptoms = [];
 
-    this.symptomsFirstPage = 4;
-    this.symptomsPagesCount = 3;
+    this.symptomsFirstPage = 2;
+    this.symptomsPagesCount = 5;
   }
 
   firstUpdated() {
@@ -581,19 +581,19 @@ class FevermapDataEntry extends LitElement {
         class="fevermap-entry-window mdc-elevation--z9 fevermap-other-symptoms-questions"
         id="question-4"
       >
-        ${this.getSymptomsFields(1, symptomsPage1)}
+        ${this.getSymptomsFields(3, symptomsPage1)}
       </div>
       <div
         class="fevermap-entry-window mdc-elevation--z9 fevermap-other-symptoms-questions"
         id="question-5"
       >
-        ${this.getSymptomsFields(2, symptomsPage2)}
+        ${this.getSymptomsFields(4, symptomsPage2)}
       </div>
       <div
         class="fevermap-entry-window mdc-elevation--z9 fevermap-other-symptoms-questions"
         id="question-6"
       >
-        ${this.getSymptomsFields(3, symptomsPage3)}
+        ${this.getSymptomsFields(5, symptomsPage3)}
       </div>
       <div class="fevermap-entry-window mdc-elevation--z9 fevermap-fever-questions" id="question-7">
         ${this.getTestFields()}
@@ -632,7 +632,7 @@ class FevermapDataEntry extends LitElement {
         2/${this.questionCount}
       </div>
       <div class="title-holder">
-        <h2>${Translator.get('entry.symptoms')}</h2>
+        <h2>${Translator.get('entry.symptoms')} 1/${this.symptomsPagesCount}</h2>
       </div>
       <div class="entry-field">
 
@@ -675,7 +675,7 @@ class FevermapDataEntry extends LitElement {
         3/${this.questionCount}
       </div>
       <div class="title-holder">
-        <h2>${Translator.get('entry.questions.do_you_have_fever')}</h2>
+        <h2>${Translator.get('entry.symptoms')} 2/${this.symptomsPagesCount}</h2>
         <p class="temperature-title">
           ${Translator.get('entry.questions.what_is_your_temperature')}
         </p>
@@ -797,7 +797,7 @@ class FevermapDataEntry extends LitElement {
         ${symptomButtons} ${symptomButton}
       `;
     }
-    let totalPageNumber = (pageNumber - 1) + this.symptomsFirstPage ;
+    let totalPageNumber = pageNumber + (this.symptomsFirstPage - 1);
     return html`
       <div class="back-button" @click="${this.previousQuestion}">
         <material-icon icon="keyboard_arrow_left"></material-icon>${Translator.get('back')}

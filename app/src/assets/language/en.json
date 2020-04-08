@@ -49,7 +49,7 @@
     "send_now": "Send now",
     "questions": {
       "do_you_have_fever": "Do you have a fever?",
-      "what_is_your_temperature": "If so, what's your temperature?",
+      "what_is_your_temperature": "Enter your temperature if you measured it",
       "temperature": "Temperature",
       "how_much": "How much?",
       "degrees_of_fever": "%{degrees} of fever",
