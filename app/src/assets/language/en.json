@@ -18,7 +18,7 @@
     "scope_text": "The purpose of the Coronavirus Symptom Checker is to gather academic research information about the clinical presentation of COVID-19. This system is not intended for the diagnosis or treatment of disease or other conditions, including COVID-19. All of the collected research data is anonymous. This research project was made possible through an academic partnership of the National University of Ireland Galway with University of Limerick and Orreco.",
     
     "data_title": "How will my data be used?",
-    "data_text_p1": "No personal data is collected by MyCovidSymptoms, meaning that all data captured is anonymous and there is no way for it to be connected back to an individual.",
+    "data_text_p1": "No data, seeking to identify a person, is collected by MyCovidSymptoms, meaning that all data captured is anonymised. Please see the cookie policy in relation to the use of a single cookie to facilitate your re-entry of data if applicable for re-entry of data. This cookie can be removed directly by you at any point if you wish and will not be used by the project team whatsoever to seek to identify you. The project team will conduct a deletion of all cookies as soon as they are not required.",
     "data_text_p2": "The aggregate anonymous data will be provided to the Irish health authorities to help with their planning and will be used in research by NUI Galway to help prevent and mitigate future pandemics.",
 
     "participate_title": "How do I participate?",
