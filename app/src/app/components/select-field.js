@@ -16,7 +16,6 @@ class SelectField extends LitElement {
       isOpen: { type: Boolean },
       inputListenerSet: { type: Boolean },
       typedCharacters: { type: String },
-      noSavedSelection: { type: Boolean },
     };
   }
 
@@ -118,17 +117,11 @@ class SelectField extends LitElement {
 
         <div class="mdc-select__menu mdc-menu mdc-menu-surface fevermap-select-width-class">
           <ul class="mdc-list">
-            ${this.noSavedSelection
-              ? html`
-                  <li
-                    class="mdc-list-item mdc-list-item--selected"
-                    data-value=""
-                    aria-selected="true"
-                  ></li>
-                `
-              : html`
-                  <li class="mdc-list-item" data-value="" aria-selected="true"></li>
-                `}
+            <li
+              class="mdc-list-item mdc-list-item--selected"
+              data-value=""
+              aria-selected="true"
+            ></li>
             ${this.options.map(
               opt => html`
                 <li class="mdc-list-item" data-value="${opt.name.toLowerCase()}">${opt.name}</li>
