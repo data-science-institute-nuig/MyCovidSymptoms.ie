@@ -28,8 +28,11 @@ class FevermapDataEntry extends LitElement {
       birthYear: { type: String },
 
       geoCodingInfo: { type: Object },
-      countrySelectionOptions: { type: Array },
-      selectedCountryIndex: { type: Number },
+
+      countySelectionOptions: { type: Array },
+      selectedCountyIndex: { type: Number },
+      townSelectionOptions: { type: Array },
+      selectedTownIndex: { type: Number },
 
       errorMessage: { type: String },
 
@@ -43,7 +46,7 @@ class FevermapDataEntry extends LitElement {
       symptomsFirstPage: { type: Number },
       symptomsPagesCount: { type: Number },
 
-      hadSymptoms: { type: Boolean }
+      hadSymptoms: { type: Boolean },
     };
   }
 
@@ -83,6 +86,7 @@ class FevermapDataEntry extends LitElement {
 
   firstUpdated() {
     this.initSlider();
+    this.getLocationInfo();
     this.carouselWrapper = this.querySelector('.fevermap-data-entry-content');
     if (!this.firstTimeSubmitting) {
       setTimeout(() => {
@@ -102,13 +106,29 @@ class FevermapDataEntry extends LitElement {
   }
 
   createTownSelectOptions() {
-    this.townSelectionOptions = [
-      {
-        id: 0,
-        name: `Please select a county first`,
-      },
-    ];
-    this.selectedTownIndex = 0;
+    if (this.geoCodingInfo) {
+      const countyInSelect = this.countySelectionOptions.find(
+        opt => opt.id === this.geoCodingInfo.county_code,
+      );
+      if (countyInSelect) {
+        this.townSelectionOptions = countyInSelect.towns.map(town => ({
+          id: town,
+          name: town,
+        }));
+        const townInSelect = countyInSelect.towns.find(opt =>
+          this.geoCodingInfo.town_name.includes(opt),
+        );
+        this.selectedTownIndex = countyInSelect.towns.indexOf(townInSelect) + 1;
+      }
+    } else {
+      this.townSelectionOptions = [
+        {
+          id: 0,
+          name: `Please select a county first`,
+        },
+      ];
+      this.selectedTownIndex = 0;
+    }
   }
 
   updateTownSelectOpts(countyName) {
@@ -399,22 +419,29 @@ class FevermapDataEntry extends LitElement {
   }
 
   async getGeoCodingInputInfo() {
-    let locationData = {};
-    if (!this.geoCodingInfo) {
-      const town = this.querySelector('#location-town').getValue();
-      const county = this.querySelector('#location-county').getValue();
-      locationData = {
-        county_code: county.value.id,
-        town_name: town.value.name,
-      };
-    } else {
-      locationData = {
-        county_code: this.geoCodingInfo.county_code,
-        town_name: this.geoCodingInfo.town_name,
-      };
-    }
+    const town = this.querySelector('#location-town').getValue();
+    const county = this.querySelector('#location-county').getValue();
+    let locationData = {
+      county_code: county.value.id,
+      town_name: town.value.name,
+    };
     localStorage.setItem('LAST_LOCATION', JSON.stringify(locationData));
     return locationData;
+  }
+
+  getLocationInfo() {
+    if (this.geoCodingInfo) {
+      const countyInSelect = this.countySelectionOptions.find(
+        opt => opt.id === this.geoCodingInfo.county_code,
+      );
+      if (countyInSelect) {
+        this.selectedCountyIndex = this.countySelectionOptions.indexOf(countyInSelect) + 1; // Take into account the empty option
+        const townInSelect = countyInSelect.towns.find(opt =>
+          this.geoCodingInfo.town_name.includes(opt),
+        );
+        this.selectedTownIndex = countyInSelect.towns.indexOf(townInSelect) + 1;
+      }
+    }
   }
 
   handlePersonalInfoSubmit() {
@@ -435,7 +462,7 @@ class FevermapDataEntry extends LitElement {
   handleFeverInfoSubmit() {
     this.nextQuestion();
   }
- 
+
   handleNoFeverSubmit() {
     this.feverAmount = null;
     this.nextQuestion();
@@ -635,7 +662,6 @@ class FevermapDataEntry extends LitElement {
         <h2>${Translator.get('entry.symptoms')} 1/${this.symptomsPagesCount}</h2>
       </div>
       <div class="entry-field">
-
         <div class="proceed-button had-symptoms">
           <button
             class="mdc-button mdc-button--raised"
@@ -648,7 +674,7 @@ class FevermapDataEntry extends LitElement {
               >${Translator.get('entry.questions.have_symptoms')}</span
             >
           </button>
-          <div class="or-text"> ${Translator.get('entry.questions.or')} </div>
+          <div class="or-text">${Translator.get('entry.questions.or')}</div>
           <button
             class="mdc-button mdc-button--raised"
             @click="${() => this.handleHadSymptoms(true)}"
@@ -656,9 +682,7 @@ class FevermapDataEntry extends LitElement {
             <div class="mdc-button__ripple"></div>
 
             <i class="material-icons mdc-button__icon" aria-hidden="true">done</i>
-            <span class="mdc-button__label"
-              >${Translator.get('entry.questions.had_symptoms')}</span
-            >
+            <span class="mdc-button__label">${Translator.get('entry.questions.had_symptoms')}</span>
           </button>
         </div>
       </div>
@@ -730,7 +754,7 @@ class FevermapDataEntry extends LitElement {
                 >${Translator.get('entry.questions.set_temperature')}</span
               >
             </button>
-            <div class="or-text"> ${Translator.get('entry.questions.or')} </div>
+            <div class="or-text">${Translator.get('entry.questions.or')}</div>
             <button
               class="mdc-button mdc-button--raised"
               @click="${() => this.handleNoFeverSubmit()}"
@@ -842,7 +866,6 @@ class FevermapDataEntry extends LitElement {
             .options="${this.countySelectionOptions}"
             selectedValueIndex="${this.selectedCountyIndex}"
           ></select-field>
-
           <select-field
             id="location-town"
             label="${Translator.get('entry.questions.town')}"

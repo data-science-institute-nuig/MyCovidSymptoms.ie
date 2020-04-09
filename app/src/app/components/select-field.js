@@ -31,6 +31,7 @@ class SelectField extends LitElement {
 
     this.inputListenerSet = false;
     this.typedCharacters = '';
+    this.noSavedSelection = true;
   }
 
   firstUpdated() {
