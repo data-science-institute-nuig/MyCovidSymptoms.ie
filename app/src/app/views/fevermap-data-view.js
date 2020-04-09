@@ -41,9 +41,11 @@ class FevermapDataView extends LitElement {
 
     const gender = localStorage.getItem('GENDER');
     const birthYear = localStorage.getItem('BIRTH_YEAR');
+    const lastLocation = localStorage.getItem('LAST_LOCATION');
     const covidDiagnosis = localStorage.getItem('COVID_DIAGNOSIS');
     this.setGender = gender || null;
     this.setBirthYear = birthYear || '';
+    this.location = lastLocation ? lastLocation : null;
     this.setCovidDiagnosis = covidDiagnosis === 'true';
     this.previousSubmissions = null;
 
@@ -145,7 +147,6 @@ class FevermapDataView extends LitElement {
       'sore_throat',
       'headache',
     ];
-    console.log(sub);
     const symptoms = [];
     for (let symptom of possibleSymptoms) {
       symptoms.push({
@@ -172,6 +173,16 @@ class FevermapDataView extends LitElement {
     }
     this.setBirthYear = newAge;
     localStorage.setItem('BIRTH_YEAR', newAge);
+  }
+
+  handleLocationChange() {
+    const town = this.querySelector('#location-town').getValue();
+    const county = this.querySelector('#location-county').getValue();
+    this.location = {
+      county_code: this.querySelector('#location-county').getValue().id,
+      town_name: this.querySelector('#location-town').getValue().name,
+    };
+    localStorage.setItem('LAST_LOCATION', JSON.stringify(this.location));
   }
 
   handleCovidDiagnosisChange() {
