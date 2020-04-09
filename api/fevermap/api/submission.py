@@ -193,7 +193,7 @@ class SubmissionResource(Resource):
         diagnosed_covid19 = str(data['diagnosed_covid19'])
 
         # Set timestamp_created to Unix epoch zero, if had_symptoms is true
-        timestamp_created = datetime.date.fromisoformat('1970-01-01') if bool(data['had_symptoms']) else datetime.datetime.now()
+        timestamp_created = '1970-01-01 00:00:00' if bool(data['had_symptoms']) else datetime.datetime.now()
         if 'fever_temp' in data and data['fever_temp']:
             # Always convert to float if value exists
             try:
